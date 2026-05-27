@@ -1,3 +1,4 @@
+Copyright 2026 The Ligconsolata Next Project Authors
 Copyright 2006 The Inconsolata Project Authors (https://github.com/cyrealtype/Inconsolata)
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.

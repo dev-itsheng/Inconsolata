@@ -1,0 +1,83 @@
+## Equality
+a != b
+a !== b
+a == b
+a === b
+a !! b
+
+## Arrows
+x -> y
+x => y
+x >= y
+x <- y
+x <= y
+a <=> b
+a <-> b
+x --> y
+x <-- y
+x ==> y
+x <== y
+
+## Long arrows
+x ----> y
+x <---- y
+x ====> y
+x <==== y
+a <---> b
+a <===> b
+
+## Pipes and brackets
+a <> b
+A::B
+x := y
+a && b
+a || b
+i++
+i--
+
+## Fira Code inspired
+value |> fn
+fn <| value
+type <|> type
+view <$> model
+list <+> item
+html </> body
+meta #_(
+hash #{x}
+arr #[i]
+www.site
+
+## Calt-inspired
+a =/= b
+a =!= b
+a /= b
+a =~ b
+a !~ b
+obj .= x
+list []
+x ->> y
+x <<- y
+x >-- y
+x ==< y
+f |-> g
+f |=> g
+md ### title
+md ####### title
+__init__
+______
+_______
+
+## Punctuation
+x ** y
+// note
+/* ok */
+a ?? b
+obj?.x
+...args
+range ..< n
+
+## Separators
+// ====
+// =====
+// ----
+// -----

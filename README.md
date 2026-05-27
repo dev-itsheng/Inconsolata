@@ -1,194 +1,182 @@
-# Inconsolata
-
-Open-source monospace font for code listings, originally by [**@raphlinus**](https://github.com/raphlinus/)
-
-### Ligatures
-
-Inconsolata includes ligatures for a few JavaScript operators:
+# Ligconsolata Next
 
 <img
-  src = "./documentation/img/ligature-sample.png"
-  alt = "Ligatures sample"
-  width = "404" height = "276"
+  src="./documentation/img/ligconsolata-next-overview.svg"
+  alt="Ligconsolata Next turns Inconsolata opt-in coding ligatures into default-on editor ligatures"
+  width="960"
 />
 
-They are available in two families.
+[中文说明](README.zh-CN.md)
 
-- **"Inconsolata"** exposes the ligatures as `dlig`.  These are disabled by default, and probably won't show up in your editor.  You can enable them in CSS with this rule:
-   ```css
-  font-variant-ligatures: discretionary-ligatures;
-  ```
-- **"Ligconsolata"** exposes the ligatures as `liga`.  These are enabled by default.  This is the family you should use in your text editor.
+Ligconsolata Next is a fork of [Inconsolata](https://github.com/googlefonts/inconsolata) for people who like Inconsolata's quiet texture, but want a more practical coding-ligature experience in modern editors.
 
-Note: the Ligconsolata variant has not yet been upgraded to version 3.000, as we're prioritizing the non-ligature variants.
+The original Inconsolata source already contains a small set of programming ligatures. In the upstream family, those ligatures live in `dlig`, which is usually disabled by default. The older Ligconsolata idea exposed them through `liga`, but that variant did not move forward with the Inconsolata v3 variable-font work. This fork picks that thread back up under a new family name: **Ligconsolata Next**.
 
-## Building the family
+## Why This Fork
 
-Family is built using Glyphs, fontmake and gftools post processing script. Tools are all python based.
+- Keep the feel of Inconsolata instead of switching to a completely different programming font.
+- Make the existing operator ligatures work by default in editors that enable standard font ligatures.
+- Add new ligatures gradually, using Inconsolata's own shapes as the design source.
+- Avoid shipping a modified font under the upstream `Inconsolata` family name.
 
-To install all the Python tools into a virtualenv, do the following:
+This project is not an official Google Fonts or upstream Inconsolata release. It keeps the upstream history and OFL license intact while making the derivative name explicit.
 
+## Relationship To Fira Code
+
+[Fira Code](https://github.com/tonsky/FiraCode) is an important source of inspiration for this fork. Its programming ligature coverage, contextual-arrow handling, and specimen style are excellent references for what developers expect from a modern coding font.
+
+Ligconsolata Next does not try to become a copy of Fira Code. The point of this project is to continue the Ligconsolata idea on top of Inconsolata: keep Inconsolata's letterforms, braces, rhythm, and texture, then improve the operator ligature experience around that existing design. For that reason, Fira Code is used as a product and OpenType-behavior reference, while the actual glyph outlines are drawn, assembled, or adjusted from Inconsolata-family shapes.
+
+## What Changed So Far
+
+- The source family is now named `Ligconsolata Next`.
+- The existing Inconsolata operator ligatures are exposed through `liga` as well as `dlig`.
+- The current default-on set includes the inherited operators, Fira Code-inspired fixed operator coverage, a first batch of Fira Code `calt`-inspired fixed forms, contextual long arrows, and separator-run helpers for `====` / `----` style comment dividers.
+- The build notes now point at the files that exist in this repo: `sources/Inconsolata.glyphs` and `sources/config.yaml`.
+
+## Ligatures
+
+Inconsolata used `dlig` for programming ligatures. Ligconsolata Next keeps `dlig` for compatibility and adds the same substitutions to `liga`, which is the feature most editors use when font ligatures are enabled.
+
+The current supported set is:
+
+- Inherited and refined: `!=`, `!==`, `==`, `===`, `->`, `=>`, `>=`, `<-`, `<=`.
+- Added common operators: `<=>`, `<->`, `-->`, `<--`, `==>`, `<==`, `...`, `<>`, `::`, `:=`, `&&`, `||`, `++`, `--`, `**`, `//`, `/*`, `*/`, `??`, `?.`.
+- Added Fira Code-inspired fixed coverage such as `<|>`, `<$>`, `<+>`, `</>`, `|>`, `<|`, `::=`, `:::`, `..=`, `..<`, `?=`, `!!`, `!!.`, `+++`, `***`, `///`, `#{`, `#[`, `#_(`, and related compact operator forms.
+- Added a cautious Fira Code `calt`-inspired fixed batch for forms that can be represented safely without importing Fira Code's full contextual machinery: `##` through `########`, `__` through `______`, `=/=`, `=!=`, `=:=`, `=~`, `!~`, `/=`, `/==`, `.=`, `.-`, `:-`, `[]`, `->>`, `<<-`, `=>>`, `=<<`, `>--`, `--<`, `|--`, `--|`, `>==`, `==<`, `|==`, `==|`, `==/`, `>>-`, `>-`, `-<`, `|->`, `<-|`, `|=>`, `<=|`, `||-`, `-||`, `|-`, `-|`.
+- Added Fira Code-style contextual arrow extension for longer `-` and `=` arrows, using `calt` start/middle/end segment glyphs rather than enumerating every length.
+- Added contextual underscore-run extension for runs longer than `______`, while keeping the shorter `__` through `______` fixed glyphs stable.
+- Separator-run helpers: `====`, `=====`, `----`, `-----`.
+
+The ordered feature rules, contextual arrow rules, and generated glyph blocks are maintained by `scripts/update-ligature-glyphs.py`. Fira Code is useful as a coverage reference, but new outlines are drawn, assembled, or scaled from Inconsolata-family glyphs rather than copied.
+
+For implementation notes and migration pitfalls, see [Ligconsolata Next ligature porting notes](documentation/ligature-porting-notes.md).
+
+## Building The Family
+
+The project source is in Glyphs format:
+
+- `sources/Inconsolata.glyphs`
+- `sources/config.yaml`
+
+The dependency set is old, so use a dedicated Python environment. On this machine, Python 3.10 is the safest first target:
+
+```sh
+/opt/homebrew/bin/python3.10 -m venv .venv
+source .venv/bin/activate
+python -m pip install "pip==23.3.2" "setuptools==58.5.3" "wheel==0.37.1"
+python -m pip install --no-build-isolation -r requirements.txt
 ```
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
+
+Then try the current Google Fonts builder entry:
+
+```sh
+gftools builder sources/config.yaml
 ```
 
-To build the fonts we must load sources/Inconsolata-vf.glyphs in Glyphs and do the following:
-- Run the decompose-transformed-components.py script
-- Run the gen_instances.py script
-- Run the inco_fix.py script
-- Save the file back in the sources directory with the filename "prod.glyphs"
+For a quicker source smoke test that does not overwrite the checked-in font binaries:
 
-We can now run the build script in the terminal:
-
-```
-cd sources # script needs to be run from sources dir
-sh build.sh
+```sh
+fontmake -g sources/Inconsolata.glyphs -o variable \
+  --master-dir "{tmp}" \
+  --output-path "/tmp/ligconsolata-next-smoke/LigconsolataNext[wdth,wght].ttf"
 ```
 
-Fonts will take approximately 25 minutes to build.
+Useful smoke checks after a build:
 
-## Changelog v.3.000
+```sh
+python - <<'PY'
+from fontTools.ttLib import TTFont
+
+font = TTFont("/tmp/ligconsolata-next-smoke/LigconsolataNext[wdth,wght].ttf")
+names = sorted({n.toUnicode() for n in font["name"].names if n.nameID in {1, 4, 6}})
+features = sorted({r.FeatureTag for r in font["GSUB"].table.FeatureList.FeatureRecord})
+print(names)
+print(features)
+PY
+```
+
+The expected result is that the name table uses `Ligconsolata Next`, and GSUB contains `liga`.
+
+To regenerate the README overview image from the configured code samples:
+
+```sh
+python scripts/generate-overview-svg.py --build
+```
+
+The samples are intentionally plain ASCII in `documentation/overview-samples.txt`; `##` headings become grouped sections in the generated SVG. The overview is representative rather than exhaustive; the supported rule source of truth is `scripts/update-ligature-glyphs.py`.
+
+To regenerate the generated ligature glyphs and rewrite the ordered `dlig` / `liga` rules:
+
+```sh
+python scripts/update-ligature-glyphs.py
+```
+
+To build the editable browser comparison demo:
+
+```sh
+python scripts/build-demo-assets.py
+```
+
+Then open `documentation/demo/index.html`. The generated demo font files live under `documentation/demo/fonts/` and are intentionally ignored by git.
+
+## Adding More Ligatures
+
+For a safe design workflow:
+
+1. Prefer adding repeatable recipes to `scripts/update-ligature-glyphs.py`.
+2. Add the generated glyph as a `.dlig` glyph in `sources/Inconsolata.glyphs`.
+3. Reuse or adapt existing Inconsolata outlines where possible.
+4. Add the substitution to both `dlig` and `liga`, keeping longer sequences before shorter ones.
+5. Build, then inspect the GSUB table and a visual specimen.
+6. Only then add the ligature to the README hero/sample list.
+
+Avoid importing Fira Code glyph outlines. Fira Code is a useful reference for what programmers expect, but Ligconsolata Next should stay visually rooted in Inconsolata.
+
+## Acknowledgements
+
+Special thanks to the [Fira Code](https://github.com/tonsky/FiraCode) project for showing how thoughtful programming ligatures can make code easier to scan while still preserving plain ASCII source text. Ligconsolata Next borrows inspiration from that work with gratitude, while keeping its own design rooted in Inconsolata.
+
+## Upstream Inconsolata Notes
+
+Inconsolata is an open-source monospace font for code listings, originally by [Raph Levien](https://github.com/raphlinus/).
+
+### Changelog v3.000
 
 Upgrade to 2-axis variable font family, with widths from 50 to 200, and weights from 200 to 900.
 
-## Changelog v.2.013
+### Changelog v2.013
 
 - Removed ligatures for `fi` and `fl`.
 - Operator ligatures moved to `dlig`.
 - New variant "Ligconsolata" introduced, which exposes operator ligatures as `liga`.
 
-## Changelog v.2.011
+### Changelog v2.011
 
-March 2018 glyph set expansion was completed by [**@appsforartists**](https://github.com/appsforartists/), which included:
+March 2018 glyph set expansion was completed by [Brenton Simpson](https://github.com/appsforartists/), which included:
 
-- [x] Glyph Set expanded to include ligatures for ===, !==, =>, <=, >=, ->, <-
+- Glyph set expanded to include ligatures for `===`, `!==`, `=>`, `<=`, `>=`, `->`, `<-`.
 
-## Changelog v.2.001
+### Changelog v2.001
 
-August 2016 glyph set expansion was completed by Alexei Vanyashin ( [Cyreal][5] ), which included:
+August 2016 glyph set expansion was completed by Alexei Vanyashin, which included:
 
-- [x] Glyph Set expanded to GF Latin Pro
-- [x] Additional glyphs ⊕↑↗→↘↓↙←↖↔↕⇧⇨⇩⇦⬆⮕⬇⬅●○◆◇☹☺☻♠♣♥♦✓✔✕✗✘␣⎋⌂⇪⌧⌫⌦⌥⌘⏎�
-- [x] Minor design improvements (trademark corner spurs)
-
-Further reading: Inconsolata expansion project thread on [Google Fonts Discussions][6]
-
-#### Supported glyphs sets:
-
-* GF Latin Pro
-
-![Inconsolata Preview](documentation/img/inco-preview.png)
+- Glyph set expanded to GF Latin Pro.
+- Additional symbols and minor design improvements.
 
 ## License
 
-This Font Software is licensed under the SIL Open Font License, Version 1.1.
-This license is copied below, and is also available with a FAQ at:
-[http://scripts.sil.org/OFL][4]
-
-----
-
-## Inconsolata Build Instructions
-
-Inconsolata fonts can be built using either export from Glyphs or using [fontmake]. The font files committed to this repo are done using fontmake.
-
-### Source Files
-
-Inconsolata source files are available in `.glyphs` format located in the `/sources` directory.
-
-### Adding ligatures
-
-1. Follow the ["Creating the ligature"](https://glyphsapp.com/tutorials/ligatures) section of the Glyphs ligatures tutorial.
-2. Name your new glyph with the suffix `.dlig`, for instance `bar_greater.dlig`.
-3. Open the _Font Info_ panel.
-   1. Switch to the _Features_ tab.
-   2. Click _dlig_ in the sidebar.
-   3. Click the _Update_ button at the bottom of the panel.
-   4. Switch to the _Instances_ tab.
-   5. Update the _Rename Glyphs_ value for "Ligconsolata Regular" to include a new line for your new glyph, for instance:
-      ```
-      bar_greater.dlig=bar_greater.liga
-      ```
-   6. Update the _Rename Glyphs_ value for "Ligconsolata Bold".
-4. Export the font, as explained below.
-
-### Exporting a variable font using fontmake
-
-It's possible to export the project as a single variable font. It's just a bit tricky, because the font uses components with varying 2x2 components, triggering a [bug](https://github.com/googlefonts/fontmake/issues/595) which is present in both [fontmake] and Glyphs export. Thus, there's an inco_fix.py script in the sources directory that detects this case and decomposes just those components. Run that script before exporting. The script also decomposes corner components, which makes the resulting `glyphs` file suitable for fontmake export as well (fontmake currently has no support for corner components).
-
-You can copy the script into the Scripts folder for Glyphs, which will make it available in the Script menu, or you can just copy it into the Macro Panel.
-
-After running the script, the following fontmake invocation will generate a variable font:
-
-```
-fontmake -g sources/Inconsolata-vf.glyphs -o variable
-```
-
-This is the version in the fonts/ directory, as it is slightly smaller than the version generated by Glyphs.
-
-We do not check the *result* of the inco_fix script into version control, as we want to preserve editability. It's entirely possible that a future version of fontmake (or Glyphs itself) will be able to handle the source file without running a script.
-
-### Exporting instances using fontmake
-
-The source file contains 15 instances, including all weights of the normal (100) width, and also all masters. This is a reasonable complement for working on the font. Run the gen_instances.py script to generate a total of 72 instances; all combinations of the weights from 200 to 900, and widths 50, 70, 80, 90, 110, 120, 150, and 200.
-
-There are two other instances for Ligconsolata, and fontmake will attempt to generate those, but the "Rename Glyphs" custom parameter doesn't seem to be respected by fontmake, so these won't have ligatures enabled. Use the Glyphs export instead (detailed below).
-
-Then run this command to generate OTF:
-
-```
-fontmake -g sources/Inconsolata-vf.glyphs -i -o otf
-```
-
-And this command to generate autohinted TTF:
-
-```
-fontmake -g sources/Inconsolata-vf.glyphs -i -o ttf -a
-```
-
-These are the versions in the fonts/ directory.
-
-### Font Export options (from Glyphs)
-
-This is the preferred way to generate the Ligconsolata instances, but
-
-* TTF and OTF files should be exported into `/fonts/ttf` and `/fonts/otf` folders.
-
-* `TTFs` should be generated from Glyphs App with `Autohint` option checked. At the moment there is no custom build script required to produce font files, since default TTFautohinting options suffice.
-
-![Font Export Options](documentation/font-export.png)
-
-* `OTFs` should be generated with these options:
-  * [X] Remove Overlap
-  * [X] Autohint
-  * [ ] Save as TTF
-  * [X] Export destination: $REPO_PATH/fonts/otf
-
-### Future work
-
-In addition, we want to export a subset not including Vietnamese script coverage, to avoid over-large line spacing on older applications (such as terminals and text editors) that don't understand the "use typo metrics" flag (see https://github.com/googlefonts/Inconsolata/issues/35).
-
-## Glyphstool
-
-The repository also contains some Rust code to manipulate Glyphs format masters, in the `glyphstool` subdirectory. This was used to apply global transforms (mostly as a starting point for the width work). Perhaps the most valuable aspect is that it contains a fairly complete set of line and box drawing primitives, inspired by [Source Code Pro] but with actually variable weight and width. It's not particularly polished or well documented, but is provided for completeness, and it's possible that it could be adapted to future tools that work with font data in the Glyphs format. The code is licensed under Apache 2.0 or MIT, in keeping with the Rust tradition.
-
-----
+This Font Software is licensed under the SIL Open Font License, Version 1.1. See [OFL.txt](OFL.txt).
 
 ## Copyright
+
+Copyright 2026 The Ligconsolata Next Project Authors
 
 Copyright 2006 The Inconsolata Project Authors
 
 ## Links
 
-* [Inconsolata on Google Fonts][1]
-* [Inconsolata on Levien.com][2]
-* [Official Upstream on git][3]
-
-[1]: https://fonts.google.com/specimen/Inconsolata
-[2]: http://levien.com/type/myfonts/inconsolata.html
-[3]: https://github.com/google/fonts/tree/master/ofl/inconsolata
-[4]: http://scripts.sil.org/OFL
-[5]: http://cyreal.org
-[6]: https://groups.google.com/forum/#!searchin/googlefonts-discuss/inconsolata%7Csort:relevance/googlefonts-discuss/wgVuOx9yo5k/2QSUQ78CCQAJ
-[fontmake]: https://github.com/googlefonts/fontmake
+- [Original Inconsolata repo](https://github.com/googlefonts/inconsolata)
+- [Inconsolata on Google Fonts](https://fonts.google.com/specimen/Inconsolata)
+- [Inconsolata on Levien.com](http://levien.com/type/myfonts/inconsolata.html)
+- [fontmake](https://github.com/googlefonts/fontmake)

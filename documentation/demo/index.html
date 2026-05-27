@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ligconsolata Next live comparison</title>
+    <style>
+      @font-face {
+        font-family: "Inconsolata Demo";
+        src: url("./fonts/Inconsolata%5Bwdth,wght%5D.ttf") format("truetype");
+        font-stretch: 50% 200%;
+        font-weight: 100 900;
+      }
+
+      @font-face {
+        font-family: "Ligconsolata Next Demo";
+        src: url("./fonts/LigconsolataNext%5Bwdth,wght%5D.ttf") format("truetype");
+        font-stretch: 50% 200%;
+        font-weight: 100 900;
+      }
+
+      :root {
+        color-scheme: dark;
+        --bg: #10141a;
+        --panel: #171c23;
+        --panel-2: #1e2530;
+        --line: #303948;
+        --text: #edf3fa;
+        --muted: #8d9aaa;
+        --accent: #66d8b7;
+        --accent-2: #8fb8ff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at 18% 8%, rgba(102, 216, 183, 0.12), transparent 32rem),
+          radial-gradient(circle at 78% 0%, rgba(143, 184, 255, 0.14), transparent 34rem),
+          var(--bg);
+        color: var(--text);
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      main {
+        width: min(1180px, calc(100vw - 40px));
+        margin: 0 auto;
+        padding: 42px 0 56px;
+      }
+
+      header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 26px;
+      }
+
+      h1 {
+        margin: 0 0 10px;
+        font-size: clamp(32px, 4vw, 54px);
+        line-height: 1;
+        letter-spacing: 0;
+      }
+
+      p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.55;
+      }
+
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: flex-end;
+      }
+
+      label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 34px;
+        padding: 0 13px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(30, 37, 48, 0.82);
+        color: #cad3de;
+        font-size: 13px;
+        user-select: none;
+      }
+
+      input[type="checkbox"] {
+        accent-color: var(--accent);
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 186px;
+        resize: vertical;
+        margin-bottom: 18px;
+        padding: 18px 20px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        outline: none;
+        background: rgba(17, 22, 29, 0.9);
+        color: var(--text);
+        font: 20px/1.55 "Inconsolata Demo", monospace;
+        font-feature-settings: "liga" 0, "calt" 0, "dlig" 0;
+      }
+
+      textarea:focus {
+        border-color: color-mix(in srgb, var(--accent) 70%, white 10%);
+        box-shadow: 0 0 0 3px rgba(102, 216, 183, 0.12);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .panel {
+        min-width: 0;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: rgba(23, 28, 35, 0.92);
+        overflow: hidden;
+      }
+
+      .panel h2 {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin: 0;
+        padding: 14px 18px;
+        border-bottom: 1px solid var(--line);
+        font-size: 14px;
+        letter-spacing: 0;
+      }
+
+      .panel h2 span {
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      pre {
+        min-height: 438px;
+        margin: 0;
+        padding: 18px 20px 22px;
+        overflow: auto;
+        white-space: pre;
+        color: var(--text);
+        font-size: 25px;
+        line-height: 1.55;
+        letter-spacing: 0;
+        tab-size: 2;
+      }
+
+      .original pre {
+        color: #aeb8c5;
+        font-family: "Inconsolata Demo", monospace;
+      }
+
+      .next pre {
+        color: #f7fbff;
+        font-family: "Ligconsolata Next Demo", monospace;
+      }
+
+      .next h2 strong {
+        color: var(--accent);
+      }
+
+      @media (max-width: 860px) {
+        header {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .controls {
+          justify-content: flex-start;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        pre {
+          font-size: 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div>
+          <h1>Ligconsolata Next</h1>
+          <p>Editable live comparison using real local font files and CSS font features.</p>
+        </div>
+        <div class="controls" aria-label="OpenType feature controls">
+          <label><input id="liga" type="checkbox" checked /> liga</label>
+          <label><input id="calt" type="checkbox" checked /> calt</label>
+          <label><input id="dlig" type="checkbox" /> dlig</label>
+        </div>
+      </header>
+
+      <textarea id="source" spellcheck="false">a != b
+a !== b
+a == b
+a === b
+x -> y
+x => y
+x ----> y
+x <---- y
+x ====> y
+x <==== y
+i++
+i--
+value |> fn
+fn <| value
+type <|> type
+view <$> model
+list <+> item
+html </> body
+range ..< n
+match =/= skip
+match =!= skip
+match =~ pattern
+match !~ pattern
+obj .= value
+list []
+route ->> next
+route =>> next
+route >-- next
+route ==< next
+pipe |-> fn
+pipe <-| fn
+md ### title
+md ####### title
+__init__
+______
+_______
+// =====
+// -----</textarea>
+
+      <section class="grid" aria-label="Font comparison">
+        <article class="panel original">
+          <h2><strong>Inconsolata</strong><span>upstream variable font</span></h2>
+          <pre id="original"></pre>
+        </article>
+        <article class="panel next">
+          <h2><strong>Ligconsolata Next</strong><span>same ASCII source</span></h2>
+          <pre id="next"></pre>
+        </article>
+      </section>
+    </main>
+
+    <script>
+      const source = document.querySelector("#source");
+      const original = document.querySelector("#original");
+      const next = document.querySelector("#next");
+      const controls = ["liga", "calt", "dlig"].map((id) => document.querySelector(`#${id}`));
+
+      function featureSettings() {
+        return controls.map((control) => `"${control.id}" ${control.checked ? 1 : 0}`).join(", ");
+      }
+
+      function render() {
+        const value = source.value;
+        const settings = featureSettings();
+        original.textContent = value;
+        next.textContent = value;
+        original.style.fontFeatureSettings = settings;
+        next.style.fontFeatureSettings = settings;
+      }
+
+      source.addEventListener("input", render);
+      for (const control of controls) {
+        control.addEventListener("change", render);
+      }
+      render();
+    </script>
+  </body>
+</html>

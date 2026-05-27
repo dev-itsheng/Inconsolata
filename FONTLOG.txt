@@ -1,14 +1,14 @@
-FONTLOG for the Inconsolata font
+FONTLOG for the Ligconsolata Next font
 
-This file provides detailed information on the Inconsolata
-font Software.
+This file provides detailed information on the Ligconsolata Next
+font Software, a derivative of Inconsolata.
 
 This information should be distributed along with the 
-Inconsolata fonts and any derivative works.
+Ligconsolata Next fonts and any derivative works.
 
 Basic Font Information
 
-Inconsolata is a Unicode typeface family that supports
+Ligconsolata Next is a Unicode typeface family that supports
 languages that use the Latin script and its variants, and 
 could be expanded to support other scripts.
 
@@ -19,9 +19,14 @@ More specifically, this release supports the following Unicode
 ranges: Latin-1
 
 There is one source file:
-1. sources/Inconsolata-vf.glyphs (latest Glyphs file with 9 masters)
+1. sources/Inconsolata.glyphs (latest Glyphs file with 9 masters)
 
 ChangeLog
+
+27 May 2026 The Ligconsolata Next Project Authors
+- Forked from googlefonts/Inconsolata under the derivative family name Ligconsolata Next.
+- Exposed the existing programming ligatures through the standard liga feature while keeping dlig.
+- Updated README and project artwork for the fork.
 
 11 December 2019 (Raph Levien) Inconsolata v 3.000
 - Expand width and weight range, create variable font
