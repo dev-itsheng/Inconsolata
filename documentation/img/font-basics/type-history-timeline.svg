@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="940" viewBox="0 0 1600 940" role="img" aria-labelledby="title desc">
+  <title id="title">A long parallel timeline of writing, printing, and font engineering</title>
+  <desc id="desc">A table-like timeline comparing Chinese and global milestones from early writing to modern digital fonts.</desc>
+  <defs>
+    <style>
+      .latin { font-family: Arial, Helvetica, sans-serif; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+      .title { fill: #f6f8fb; font-size: 34px; font-weight: 760; }
+      .subtitle { fill: #9fb0bf; font-size: 18px; }
+      .head { fill: #e9f0f7; font-size: 17px; font-weight: 760; }
+      .time { fill: #aebdca; font-size: 15px; font-weight: 700; }
+      .cell { fill: #e8edf3; font-size: 15px; }
+      .muted { fill: #95a6b7; font-size: 13px; }
+      .accent-cn { fill: #69d3b0; }
+      .accent-global { fill: #80b7ff; }
+      .accent-why { fill: #f2c16b; }
+      .grid { stroke: #334558; stroke-width: 1; shape-rendering: crispEdges; }
+      .grid-strong { stroke: #4a5d72; stroke-width: 2; shape-rendering: crispEdges; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="940" rx="28" fill="#101820"/>
+  <rect x="28" y="28" width="1544" height="884" rx="24" fill="#121c26" stroke="#243241" stroke-width="1.5"/>
+
+  <text x="72" y="78" class="latin title">A Long Arc Of Type / 字的漫长道路</text>
+  <text x="72" y="112" class="latin subtitle">Writing, printing, and font engineering are all attempts to make form reusable, legible, and trustworthy.</text>
+  <text x="72" y="138" class="latin muted">书写、印刷和字体工程不断换工具，但始终在回答同一件事：字形怎样稳定复用，怎样被更多人读到。</text>
+
+  <g class="latin">
+    <rect x="64" y="168" width="1472" height="696" rx="16" fill="#0f1721" stroke="#2e4053" stroke-width="1.5"/>
+    <g shape-rendering="crispEdges">
+      <line x1="64" y1="226" x2="1536" y2="226" class="grid-strong"/>
+      <line x1="214" y1="168" x2="214" y2="864" class="grid-strong"/>
+      <line x1="650" y1="168" x2="650" y2="864" class="grid-strong"/>
+      <line x1="1086" y1="168" x2="1086" y2="864" class="grid-strong"/>
+      <line x1="64" y1="306" x2="1536" y2="306" class="grid"/>
+      <line x1="64" y1="386" x2="1536" y2="386" class="grid"/>
+      <line x1="64" y1="466" x2="1536" y2="466" class="grid"/>
+      <line x1="64" y1="546" x2="1536" y2="546" class="grid"/>
+      <line x1="64" y1="626" x2="1536" y2="626" class="grid"/>
+      <line x1="64" y1="706" x2="1536" y2="706" class="grid"/>
+      <line x1="64" y1="786" x2="1536" y2="786" class="grid"/>
+    </g>
+
+    <text x="96" y="204" class="head">Time / 时间</text>
+    <text x="244" y="204" class="head accent-cn">China and East Asia / 中国与东亚</text>
+    <text x="680" y="204" class="head accent-global">Europe and Global / 欧洲及其他地区</text>
+    <text x="1116" y="204" class="head accent-why">Why it matters / 对字体的意义</text>
+
+    <g>
+      <text x="92" y="256" class="time">Ancient</text>
+      <text x="92" y="278" class="muted">先秦至汉</text>
+      <text x="244" y="250" class="cell">Oracle bones, bronzes, bamboo slips, stone inscriptions</text>
+      <text x="244" y="272" class="cell">甲骨、金文、竹帛、碑刻让文字进入祭祀、政令和经典</text>
+      <text x="244" y="294" class="cell">Seal and clerical scripts push writing toward standard forms</text>
+      <text x="680" y="250" class="cell">Inscriptions, manuscripts, religious and legal records</text>
+      <text x="680" y="272" class="cell">铭刻、手抄本、宗教和法律文书塑造不同书写传统</text>
+      <text x="1116" y="250" class="cell">Form first becomes a social memory system</text>
+      <text x="1116" y="272" class="cell">字形先服务记忆、权力、学习和信任</text>
+    </g>
+
+    <g>
+      <text x="92" y="336" class="time">Classical</text>
+      <text x="92" y="358" class="muted">魏晋至唐宋</text>
+      <text x="244" y="330" class="cell">Regular, running, and cursive scripts mature</text>
+      <text x="244" y="352" class="cell">楷、行、草成熟，王羲之、欧阳询、颜真卿等成为范本</text>
+      <text x="244" y="374" class="cell">Calligraphic taste gives later type design a deep source</text>
+      <text x="680" y="330" class="cell">Manuscript culture and decorated books continue to evolve</text>
+      <text x="680" y="352" class="cell">手抄传统、装饰书籍和教育制度延续字形训练</text>
+      <text x="1116" y="330" class="cell">Aesthetic judgment comes before font files</text>
+      <text x="1116" y="352" class="cell">现代字体会从书写传统里抽取可复用规律</text>
+    </g>
+
+    <g>
+      <text x="92" y="416" class="time">Tang-Song</text>
+      <text x="92" y="438" class="muted">唐宋</text>
+      <text x="244" y="410" class="cell">Woodblock printing stabilizes whole-page reproduction</text>
+      <text x="244" y="432" class="cell">雕版印刷让经典、经书和图文页面可以长期重印</text>
+      <text x="680" y="410" class="cell">Many European books still rely on manuscript copying</text>
+      <text x="680" y="432" class="cell">欧洲手抄本仍占重要位置，复制粒度和速度不同</text>
+      <text x="1116" y="410" class="cell">The page becomes reproducible, but not yet modular</text>
+      <text x="1116" y="432" class="cell">整页稳定了，单字复用还没有完全打开</text>
+    </g>
+
+    <g>
+      <text x="92" y="496" class="time">1041-1048</text>
+      <text x="92" y="518" class="muted">北宋</text>
+      <text x="244" y="490" class="cell">Bi Sheng's baked-clay movable type is recorded</text>
+      <text x="244" y="512" class="cell">毕昇胶泥活字提出可移动字模模型</text>
+      <text x="680" y="490" class="cell">Gutenberg-style metal type has not yet appeared</text>
+      <text x="680" y="512" class="cell">欧洲尚未形成 Gutenberg 式金属活字出版系统</text>
+      <text x="1116" y="490" class="cell">A character can become a reusable unit</text>
+      <text x="1116" y="512" class="cell">字从整页图像里分离出来，开始像可调用单元</text>
+    </g>
+
+    <g>
+      <text x="92" y="576" class="time">13th-15th c.</text>
+      <text x="92" y="598" class="muted">13 至 15 世纪</text>
+      <text x="244" y="570" class="cell">Wood and metal movable type continue in East Asia</text>
+      <text x="244" y="592" class="cell">木活字、金属活字继续发展，材料和检字成本变清楚</text>
+      <text x="680" y="570" class="cell">Gutenberg combines metal type, ink, press, and market</text>
+      <text x="680" y="592" class="cell">金属活字、油墨、印刷机和出版市场结合起来</text>
+      <text x="1116" y="570" class="cell">Industrial reuse needs tools, material, and distribution</text>
+      <text x="1116" y="592" class="cell">字体不只是一套形状，也是一整条生产链</text>
+    </g>
+
+    <g>
+      <text x="92" y="656" class="time">19th c.</text>
+      <text x="92" y="678" class="muted">19 世纪</text>
+      <text x="244" y="650" class="cell">Newspapers, lithography, textbooks</text>
+      <text x="244" y="672" class="cell">Advertising and telegraph news accelerate printing</text>
+      <text x="244" y="694" class="cell">报纸、石印、教材、广告和电报新闻推动中文近代印刷</text>
+      <text x="680" y="650" class="cell">Industrial composition serves newspapers</text>
+      <text x="680" y="672" class="cell">and commercial printing</text>
+      <text x="680" y="694" class="cell">机械排版、报业、杂志和商业印刷彼此推动</text>
+      <text x="1116" y="650" class="cell">Type responds to speed, hierarchy, and paper</text>
+      <text x="1116" y="672" class="cell">It also responds to readers and market pressure</text>
+      <text x="1116" y="694" class="cell">字体开始强烈服务速度、栏目、纸张和市场</text>
+    </g>
+
+    <g>
+      <text x="92" y="736" class="time">20th c.</text>
+      <text x="92" y="758" class="muted">20 世纪</text>
+      <text x="244" y="730" class="cell">Shanghai type work, Songyi, Heiyi</text>
+      <text x="244" y="752" class="cell">Wang Xuan's Huaguang laser phototypesetting</text>
+      <text x="244" y="774" class="cell">上海印刷字体、宋一黑一和王选汉字激光照排接续登场</text>
+      <text x="680" y="730" class="cell">Phototypesetting, PostScript, TrueType, desktop publishing</text>
+      <text x="680" y="752" class="cell">照排、PostScript、TrueType 和桌面出版重塑字体文件</text>
+      <text x="1116" y="730" class="cell">Fonts move from physical type to data and output systems</text>
+      <text x="1116" y="752" class="cell">字体离开物理字粒，进入字库、排版软件和输出设备</text>
+    </g>
+
+    <g>
+      <text x="92" y="816" class="time">21st c.</text>
+      <text x="92" y="838" class="muted">21 世纪</text>
+      <text x="244" y="810" class="cell">Source Han, system fonts, CJK engineering, AI generation</text>
+      <text x="244" y="832" class="cell">思源、系统字体、CJK 工程和 AI 字体生成继续扩展边界</text>
+      <text x="680" y="810" class="cell">Web fonts, variable fonts, programming fonts, open tooling</text>
+      <text x="680" y="832" class="cell">Web 字体、可变字体、代码字体和开源工具链并行发展</text>
+      <text x="1116" y="810" class="cell">A font becomes source, build, QA, license, and community</text>
+      <text x="1116" y="832" class="cell">字体成为源码、构建、验证、授权和协作共同组成的系统</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="660" viewBox="0 0 1440 660" role="img" aria-labelledby="title desc">
+  <title id="title">Font source verification matrix</title>
+  <desc id="desc">A table image describing checks for name table, GSUB, advance width, hb-shape, SVG specimen, and HTML demo.</desc>
+  <defs>
+    <style>
+      .latin { font-family: Arial, Helvetica, sans-serif; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+      .title { fill: #f6f8fb; font-size: 30px; font-weight: 760; }
+      .subtitle { fill: #9fb0bf; font-size: 17px; }
+      .head { fill: #e9f0f7; font-size: 17px; font-weight: 760; }
+      .cell { fill: #e8edf3; font-size: 16px; }
+      .muted { fill: #9fb0bf; font-size: 14px; }
+      .grid { stroke: #334558; stroke-width: 1; shape-rendering: crispEdges; }
+      .grid-strong { stroke: #4a5d72; stroke-width: 2; shape-rendering: crispEdges; }
+      .accent { fill: #80b7ff; }
+      .warning { fill: #f2c16b; }
+    </style>
+  </defs>
+
+  <rect width="1440" height="660" rx="28" fill="#101820"/>
+  <rect x="28" y="28" width="1384" height="604" rx="24" fill="#121c26" stroke="#243241" stroke-width="1.5"/>
+  <text x="64" y="78" class="latin title">Font Source Verification / 字体源码验证矩阵</text>
+  <text x="64" y="110" class="latin subtitle">A font change needs structural checks and visual checks; either side alone can miss real bugs.</text>
+  <text x="64" y="134" class="latin muted">字体改动不能只看命令是否通过，也不能只看截图是否顺眼，两边要互相兜住。</text>
+
+  <g class="latin">
+    <rect x="64" y="164" width="1312" height="420" rx="14" fill="#0f1721" stroke="#2e4053" stroke-width="1.5"/>
+    <g shape-rendering="crispEdges">
+      <line x1="64" y1="222" x2="1376" y2="222" class="grid-strong"/>
+      <line x1="304" y1="164" x2="304" y2="584" class="grid-strong"/>
+      <line x1="832" y1="164" x2="832" y2="584" class="grid-strong"/>
+      <line x1="64" y1="282" x2="1376" y2="282" class="grid"/>
+      <line x1="64" y1="342" x2="1376" y2="342" class="grid"/>
+      <line x1="64" y1="402" x2="1376" y2="402" class="grid"/>
+      <line x1="64" y1="462" x2="1376" y2="462" class="grid"/>
+      <line x1="64" y1="522" x2="1376" y2="522" class="grid"/>
+    </g>
+
+    <text x="92" y="200" class="head accent">Step / 环节</text>
+    <text x="332" y="200" class="head">What to check / 主要检查什么</text>
+    <text x="860" y="200" class="head warning">Bug it catches / 能抓住的问题</text>
+
+    <text x="92" y="258" class="mono cell">name table</text>
+    <text x="332" y="248" class="cell">Installed family name is Ligconsolata Next</text>
+    <text x="332" y="270" class="cell">安装后是否叫 Ligconsolata Next，是否和上游混名</text>
+    <text x="860" y="248" class="cell">Wrong rename, Reserved Font Name risk, confusing installs</text>
+    <text x="860" y="270" class="cell">派生命名、安装冲突和用户误认问题</text>
+
+    <text x="92" y="318" class="mono cell">GSUB</text>
+    <text x="332" y="308" class="cell">liga / dlig / calt rules exist and order is correct</text>
+    <text x="332" y="330" class="cell">规则是否生成，长序列是否排在短序列前面</text>
+    <text x="860" y="308" class="cell">Missing substitutions or short rules swallowing long rules</text>
+    <text x="860" y="330" class="cell">替换缺失，或短组合抢掉长组合</text>
+
+    <text x="92" y="378" class="mono cell">advance width</text>
+    <text x="332" y="368" class="cell">Ligature glyph keeps original sequence width</text>
+    <text x="332" y="390" class="cell">连字 glyph 是否保持原始字符序列总宽度</text>
+    <text x="860" y="368" class="cell">Code columns drifting after shaping</text>
+    <text x="860" y="390" class="cell">代码列宽被连字挤歪或拉开</text>
+
+    <text x="92" y="438" class="mono cell">hb-shape</text>
+    <text x="332" y="428" class="cell">Actual shaping output matches expected glyph names</text>
+    <text x="332" y="450" class="cell">真实 shaping 输出是不是预期 glyph</text>
+    <text x="860" y="428" class="cell">Feature code looks right but engine behavior is wrong</text>
+    <text x="860" y="450" class="cell">源码看似正确，但排版引擎没有按预期替换</text>
+
+    <text x="92" y="498" class="mono cell">SVG specimen</text>
+    <text x="332" y="488" class="cell">Shape, center, line count, spacing, and comparison clarity</text>
+    <text x="332" y="510" class="cell">形态、重心、横线数量、间距和对比是否误导</text>
+    <text x="860" y="488" class="cell">Visual defects that structural tools cannot judge</text>
+    <text x="860" y="510" class="cell">命令检查看不出的视觉问题</text>
+
+    <text x="92" y="558" class="mono cell">HTML demo</text>
+    <text x="332" y="548" class="cell">Browser feature switches and editable text behave as expected</text>
+    <text x="332" y="570" class="cell">浏览器 feature 开关和用户输入是否符合预期</text>
+    <text x="860" y="548" class="cell">Specimen passes but real CSS/browser use is misleading</text>
+    <text x="860" y="570" class="cell">静态图没问题，但真实浏览器体验不对</text>
+  </g>
+</svg>

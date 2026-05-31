@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="390" viewBox="0 0 1320 390" role="img" aria-labelledby="title desc">
+  <title id="title">Font basics reading map</title>
+  <desc id="desc">A reading map from writing traditions and reusable type to font source code and Ligconsolata Next.</desc>
+  <rect width="1320" height="390" rx="24" fill="#101820"/>
+  <text x="56" y="58" fill="#f6f8fb" font-family="Arial, sans-serif" font-size="30" font-weight="700">From Writing To Source / 从书写传统到字体源码</text>
+  <text x="56" y="92" fill="#9fb0bf" font-family="Arial, sans-serif" font-size="18">The basic path before changing a programming font / 改编程字体前，先看懂这条链路</text>
+  <g fill="none" stroke="#5d7488" stroke-width="3">
+    <path d="M106 202 H1208"/>
+    <path d="M1172 186 L1208 202 L1172 218"/>
+  </g>
+  <g font-family="Arial, sans-serif" text-anchor="middle">
+    <g transform="translate(106 202)">
+      <circle r="40" fill="#213342" stroke="#69d3b0" stroke-width="3"/>
+      <text y="-7" fill="#f6f8fb" font-size="16" font-weight="700">Writing</text>
+      <text y="18" fill="#9fb0bf" font-size="14">书写传统</text>
+    </g>
+    <g transform="translate(264 202)">
+      <circle r="40" fill="#213342" stroke="#69d3b0" stroke-width="3"/>
+      <text y="-7" fill="#f6f8fb" font-size="16" font-weight="700">Type</text>
+      <text y="18" fill="#9fb0bf" font-size="14">字模复用</text>
+    </g>
+    <g transform="translate(422 202)">
+      <circle r="40" fill="#213342" stroke="#80b7ff" stroke-width="3"/>
+      <text y="-7" fill="#f6f8fb" font-size="16" font-weight="700">Print</text>
+      <text y="18" fill="#9fb0bf" font-size="14">印刷规范</text>
+    </g>
+    <g transform="translate(580 202)">
+      <circle r="40" fill="#213342" stroke="#d4c16a" stroke-width="3"/>
+      <text y="-7" fill="#f6f8fb" font-size="16" font-weight="700">Bitmap</text>
+      <text y="18" fill="#9fb0bf" font-size="14">点阵字模</text>
+    </g>
+    <g transform="translate(738 202)">
+      <circle r="40" fill="#213342" stroke="#cb93ff" stroke-width="3"/>
+      <text y="-7" fill="#f6f8fb" font-size="16" font-weight="700">Outline</text>
+      <text y="18" fill="#9fb0bf" font-size="14">轮廓曲线</text>
+    </g>
+    <g transform="translate(896 202)">
+      <circle r="40" fill="#213342" stroke="#ffbf75" stroke-width="3"/>
+      <text y="-7" fill="#f6f8fb" font-size="15" font-weight="700">Variable</text>
+      <text y="18" fill="#9fb0bf" font-size="14">连续变化</text>
+    </g>
+    <g transform="translate(1054 202)">
+      <circle r="40" fill="#213342" stroke="#ff9b8a" stroke-width="3"/>
+      <text y="-7" fill="#f6f8fb" font-size="15" font-weight="700">Shaping</text>
+      <text y="18" fill="#9fb0bf" font-size="14">显示替换</text>
+    </g>
+    <g transform="translate(1208 202)">
+      <circle r="40" fill="#213342" stroke="#69d3b0" stroke-width="3"/>
+      <text y="-7" fill="#f6f8fb" font-size="16" font-weight="700">Source</text>
+      <text y="18" fill="#9fb0bf" font-size="14">源码构建</text>
+    </g>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="15" fill="#cfd8e3">
+    <text x="56" y="315">Ligconsolata Next sits at the end of this chain: source changes, generated glyphs, OpenType shaping, real specimen review.</text>
+    <text x="56" y="340">Ligconsolata Next 位于这条链路末端：改源码、生成 glyph、验证 OpenType shaping，再看真实 specimen。</text>
+  </g>
+</svg>

@@ -212,7 +212,7 @@ LIGATURES = [
     *FIRA_CODE_CALT_FIXED_LIGATURES,
     Ligature("...", "period_period_period.dlig", "compact_components"),
     Ligature("!=", "exclam_equal.dlig", "scale_exclam_equal_equal"),
-    Ligature("==", "equal_equal.dlig", "scale_equal_equal_equal"),
+    Ligature("==", "equal_equal.dlig", "equal_pair"),
     Ligature("->", "hyphen_greater.dlig"),
     Ligature("=>", "equal_greater.dlig"),
     Ligature(">=", "greater_equal.dlig"),
@@ -252,7 +252,22 @@ SEQ_GLYPHS = [
     "underscore_start.seq",
     "underscore_middle.seq",
     "underscore_end.seq",
+    "bar_hyphen_start.seq",
+    "bar_hyphen_end.seq",
+    "bar_equal_start.seq",
+    "bar_equal_end.seq",
+    "slash_equal_start.seq",
+    "slash_equal_middle.seq",
+    "slash_equal_end.seq",
+    "colon_equal_middle.seq",
+    "exclam_equal_middle.seq",
 ]
+
+CENTER_GLYPHS = {
+    "colon.center": "colon",
+    "less.center": "less",
+    "greater.center": "greater",
+}
 
 
 def layer_map(glyph) -> dict[str, object]:
@@ -324,6 +339,15 @@ def path_center(path: GSPath) -> tuple[float, float]:
     return (x_min + x_max) / 2, (y_min + y_max) / 2
 
 
+def layer_center_y(layer) -> float:
+    bounds = [path_bounds(path) for path in layer.paths]
+    if not bounds:
+        return 0
+    y_min = min(bound[1] for bound in bounds)
+    y_max = max(bound[3] for bound in bounds)
+    return (y_min + y_max) / 2
+
+
 def component_glyph(font, source: str, target: str, compact: bool = False, compact_step: float = 0.7):
     glyph = empty_glyph(font, target)
     base_layers = {name: layer_map(font.glyphs[name]) for name in set(CHAR_GLYPHS[ch] for ch in source)}
@@ -353,6 +377,26 @@ def component_glyph(font, source: str, target: str, compact: bool = False, compa
             if not compact:
                 cursor += base_layers[base_name][layer.layerId].width
         layer.width = raw_width
+    return glyph
+
+
+def center_glyph(font, target: str, source: str):
+    glyph = copy.deepcopy(font.glyphs[source])
+    glyph.name = target
+    glyph.unicode = None
+    glyph.unicodes = []
+    source_layers = layer_map(font.glyphs[source])
+    equal_layers = layer_map(font.glyphs["equal"])
+    for layer in glyph.layers:
+        source_layer = source_layers[layer.layerId]
+        equal_layer = equal_layers[layer.layerId]
+        dy = layer_center_y(equal_layer) - layer_center_y(source_layer)
+        for path in layer.paths:
+            for node in path.nodes:
+                node.position.y += dy
+        for component in layer.components:
+            xx, xy, yx, yy, dx, current_dy = component.transform
+            component.transform = (xx, xy, yx, yy, dx, current_dy + dy)
     return glyph
 
 
@@ -482,6 +526,73 @@ def seq_arrow_end(font, target: str, base_name: str, direction: str):
     return glyph
 
 
+def seq_bar_endpoint(font, target: str, base_name: str, mode: str):
+    glyph = empty_glyph(font, target)
+    base_layers = layer_map(font.glyphs[base_name])
+    for layer in glyph.layers:
+        base_layer = base_layers[layer.layerId]
+        cell = base_layer.width
+        layer.width = cell
+        overlap = cell * 0.04
+        if mode == "start":
+            line_start, line_end = cell * 0.5, cell + overlap
+        elif mode == "end":
+            line_start, line_end = -overlap, cell * 0.5
+        else:
+            raise ValueError(mode)
+        for source_path in base_layer.paths:
+            _, y_min, _, y_max = path_bounds(source_path)
+            layer.paths.append(rect_path(line_start, y_min, line_end, y_max))
+        layer.components.append(GSComponent("bar", offset=(0, 0)))
+    return glyph
+
+
+def seq_slash_equal_endpoint(font, target: str, mode: str):
+    glyph = empty_glyph(font, target)
+    equal_layers = layer_map(font.glyphs["equal"])
+    for layer in glyph.layers:
+        equal_layer = equal_layers[layer.layerId]
+        cell = equal_layer.width
+        layer.width = cell
+        overlap = cell * 0.04
+        if mode == "start":
+            line_start, line_end = cell * 0.5, cell + overlap
+        elif mode == "end":
+            line_start, line_end = -overlap, cell * 0.5
+        else:
+            raise ValueError(mode)
+        for source_path in equal_layer.paths:
+            _, y_min, _, y_max = path_bounds(source_path)
+            layer.paths.append(rect_path(line_start, y_min, line_end, y_max))
+        layer.components.append(GSComponent("slash", offset=(0, 0)))
+    return glyph
+
+
+def seq_equal_marker_middle(font, target: str, marker_name: str):
+    glyph = empty_glyph(font, target)
+    equal_layers = layer_map(font.glyphs["equal"])
+    marker_layers = layer_map(font.glyphs[marker_name])
+    for layer in glyph.layers:
+        equal_layer = equal_layers[layer.layerId]
+        marker_layer = marker_layers[layer.layerId]
+        cell = equal_layer.width
+        layer.width = cell
+        overlap = cell * 0.04
+        equal_paths = sorted(equal_layer.paths, key=lambda path: path_center(path)[1], reverse=True)
+        for equal_path in equal_paths:
+            _, y_min, _, y_max = path_bounds(equal_path)
+            layer.paths.append(rect_path(-overlap, y_min, cell + overlap, y_max))
+        if marker_name == "colon":
+            marker_paths = sorted(marker_layer.paths, key=lambda path: path_center(path)[1], reverse=True)
+            for marker_path, equal_path in zip(marker_paths, equal_paths):
+                marker_x, marker_y = path_center(marker_path)
+                _, equal_y = path_center(equal_path)
+                layer.paths.append(clone_path_shifted(marker_path, cell * 0.5 - marker_x, equal_y - marker_y))
+        else:
+            layer.components.append(GSComponent(marker_name, offset=(0, 0)))
+    return glyph
+
+
 def seq_glyph(font, target: str):
     if target.startswith("hyphen_"):
         return seq_line(font, target, "hyphen", target.removeprefix("hyphen_").removesuffix(".seq"))
@@ -497,6 +608,24 @@ def seq_glyph(font, target: str):
         return seq_arrow_end(font, target, "equal", "left")
     if target == "greater_equal_end.seq":
         return seq_arrow_end(font, target, "equal", "right")
+    if target == "bar_hyphen_start.seq":
+        return seq_bar_endpoint(font, target, "hyphen", "start")
+    if target == "bar_hyphen_end.seq":
+        return seq_bar_endpoint(font, target, "hyphen", "end")
+    if target == "bar_equal_start.seq":
+        return seq_bar_endpoint(font, target, "equal", "start")
+    if target == "bar_equal_end.seq":
+        return seq_bar_endpoint(font, target, "equal", "end")
+    if target == "slash_equal_start.seq":
+        return seq_slash_equal_endpoint(font, target, "start")
+    if target == "slash_equal_middle.seq":
+        return seq_equal_marker_middle(font, target, "slash")
+    if target == "slash_equal_end.seq":
+        return seq_slash_equal_endpoint(font, target, "end")
+    if target == "colon_equal_middle.seq":
+        return seq_equal_marker_middle(font, target, "colon")
+    if target == "exclam_equal_middle.seq":
+        return seq_equal_marker_middle(font, target, "exclam")
     raise ValueError(target)
 
 
@@ -656,16 +785,24 @@ def calt_code() -> str:
     for index in range(8):
         hyphen_extenders.append(
             f"""lookup ligconsolata_hyphen_arrow_extend_{index + 1} {{
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq] hyphen' [hyphen greater] by hyphen_middle.seq;
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq] hyphen' by hyphen_end.seq;
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq] greater' by greater_hyphen_end.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] hyphen' [hyphen greater bar] by hyphen_middle.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] hyphen' by hyphen_end.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] greater' by greater_hyphen_end.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] bar' by bar_hyphen_end.seq;
 }} ligconsolata_hyphen_arrow_extend_{index + 1};"""
         )
         equal_extenders.append(
             f"""lookup ligconsolata_equal_arrow_extend_{index + 1} {{
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq] equal' [equal greater] by equal_middle.seq;
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq] equal' by equal_end.seq;
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq] greater' by greater_equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' [equal greater bar slash] by equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' colon equal by equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' exclam equal by equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' by equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] greater' by greater_equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] bar' by bar_equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] slash' equal by slash_equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] slash' by slash_equal_end.seq;
+  sub [equal_start.seq equal_middle.seq] colon' equal by colon_equal_middle.seq;
+  sub [equal_start.seq equal_middle.seq] exclam' equal by exclam_equal_middle.seq;
 }} ligconsolata_equal_arrow_extend_{index + 1};"""
         )
     underscore_extenders = []
@@ -684,8 +821,10 @@ def calt_code() -> str:
   ignore sub hyphen hyphen' [hyphen greater];
   ignore sub hyphen_start.seq hyphen' [hyphen greater];
   ignore sub less_hyphen_start.seq hyphen' [hyphen greater];
+  ignore sub bar_hyphen_start.seq hyphen' [hyphen greater bar];
   ignore sub hyphen' greater greater;
   ignore sub less' hyphen bar;
+  sub bar' hyphen hyphen hyphen by bar_hyphen_start.seq;
   sub less' hyphen by less_hyphen_start.seq;
   sub hyphen' hyphen hyphen by hyphen_start.seq;
   sub hyphen' greater by hyphen_start.seq;
@@ -706,14 +845,31 @@ lookup ligconsolata_equal_arrow_start {{
   ignore sub equal equal' [equal greater];
   ignore sub equal_start.seq equal' [equal greater];
   ignore sub less_equal_start.seq equal' [equal greater];
+  ignore sub bar_equal_start.seq equal' [equal greater bar];
+  ignore sub slash_equal_start.seq equal' [equal greater slash colon exclam];
   ignore sub equal' greater greater;
   ignore sub equal' equal [less bar slash];
   ignore sub less' equal bar;
+  sub bar' equal equal equal by bar_equal_start.seq;
+  ignore sub slash slash' equal equal equal;
+  ignore sub equal equal equal slash' equal;
+  ignore sub equal_start.seq equal equal slash' equal;
+  sub slash' equal equal equal by slash_equal_start.seq;
   sub less' equal by less_equal_start.seq;
   sub equal' [equal greater] by equal_start.seq;
 }} ligconsolata_equal_arrow_start;
 
 {chr(10).join(equal_extenders)}
+
+lookup ligconsolata_center {{
+  ignore sub colon' [less greater] [equal hyphen];
+  ignore sub colon colon' [less greater];
+  ignore sub [less greater]' colon colon;
+  sub [less.center greater.center colon.center] colon' by colon.center;
+  sub colon.center [less greater]' by [less.center greater.center];
+  sub [less greater]' colon by [less.center greater.center];
+  sub colon' [less greater] by colon.center;
+}} ligconsolata_center;
 
 lookup ligconsolata_underscore_run_start {{
   ignore sub [underscore underscore_start.seq underscore_middle.seq] underscore' underscore underscore underscore underscore underscore underscore;
@@ -756,6 +912,11 @@ def main() -> None:
     generated_count = 0
     for glyph_name in OBSOLETE_GENERATED_GLYPHS:
         text = delete_glyph_block(text, glyph_name)
+    for glyph_name, source_name in CENTER_GLYPHS.items():
+        glyph = center_glyph(font, glyph_name, source_name)
+        text = upsert_glyph_block(text, glyph_name, write_glyph(glyph))
+        generated_count += 1
+        print(f"  generated center glyph {glyph_name}", flush=True)
     for glyph_name in SEQ_GLYPHS:
         glyph = seq_glyph(font, glyph_name)
         text = upsert_glyph_block(text, glyph_name, write_glyph(glyph))

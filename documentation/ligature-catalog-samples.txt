@@ -1,0 +1,190 @@
+# Detailed Ligconsolata Next catalog.
+# Each non-comment line is plain ASCII source. The generated catalog renders
+# the same source twice: Ligconsolata Next shaping on the left, raw ASCII on the right.
+
+## Inherited operators
+a != b
+a !== b
+a == b
+a === b
+a -> b
+a => b
+a >= b
+a <- b
+a <= b
+
+## Common operators
+a <=> b
+a <-> b
+a --> b
+a <-- b
+a ==> b
+a <== b
+items ...
+a <> b
+ns :: value
+key := value
+a && b
+a || b
+i ++
+i --
+a ** b
+path // name
+/* block
+block */
+a ?? b
+a ?. b
+
+## Fira-style triples
+a |||> b
+a <||| b
+html <!--
+a ~~> b
+a *** b
+a ||| b
+a ||> b
+scope :::
+scope ::=
+bang !!.
+a >>> b
+a <~~ b
+a <~> b
+a <*> b
+a <|| b
+a <|> b
+a <$> b
+a <<< b
+a <+> b
+tag </>
+hash #_(x)
+range ..=
+range ..<
+a +++ b
+path /// name
+url www
+
+## Fira-style pairs
+a ^= b
+a ~~ b
+a ~@ b
+a ~> b
+a ~- b
+a *> b
+path \/ item
+a |} b
+a |] b
+a |> b
+a {| b
+a [| b
+a ]# b
+a $> b
+a !! b
+a >> b
+a -~ b
+a <~ b
+a <* b
+a <| b
+a <$ b
+a << b
+a <+ b
+tag </
+hash #{
+hash #[
+hash #:
+hash #=
+hash #!
+hash #(
+hash #?
+hash #_
+a %% b
+range ..
+maybe .?
+a +> b
+a ?= b
+a ;; b
+path \\ name
+path /\ name
+tag />
+
+## Hash and underscore runs
+md ## title
+md ### title
+md #### title
+md ##### title
+md ###### title
+md ####### title
+md ######## title
+snake __ name
+snake ___ name
+snake ____ name
+snake _____ name
+snake ______ name
+snake _______ name
+
+## Contextual arrows
+a ----> b
+a <---- b
+a ====> b
+a <==== b
+a <---> b
+a <===> b
+a ------> b
+a <------ b
+a ======> b
+a <====== b
+
+## Endpoint markers
+a ->> b
+a <<- b
+a =>> b
+a =<< b
+a >-- b
+a --< b
+a |-- b
+a --| b
+a >== b
+a ==< b
+a |== b
+a ==| b
+a ==/ b
+a >>- b
+a >- b
+a -< b
+a ||- b
+a -|| b
+a |-> b
+a <-| b
+a |=> b
+a <=| b
+a -| b
+a |- b
+a |---> b
+a <---| b
+a |===> b
+a <===| b
+a /===> b
+a <===/ b
+a ===/=== b
+a ==:= b
+a ==!= b
+a =/= b
+a =!= b
+a =:= b
+a =~ b
+a !~ b
+a /== b
+a /= b
+
+## Alignment and separators
+a .= b
+a .- b
+a :- b
+list []
+a <: b
+a :> b
+a <:> b
+a >:< b
+// ====
+// =====
+// ----
+// -----

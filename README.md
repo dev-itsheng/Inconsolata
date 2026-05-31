@@ -45,12 +45,31 @@ The current supported set is:
 - Added Fira Code-inspired fixed coverage such as `<|>`, `<$>`, `<+>`, `</>`, `|>`, `<|`, `::=`, `:::`, `..=`, `..<`, `?=`, `!!`, `!!.`, `+++`, `***`, `///`, `#{`, `#[`, `#_(`, and related compact operator forms.
 - Added a cautious Fira Code `calt`-inspired fixed batch for forms that can be represented safely without importing Fira Code's full contextual machinery: `##` through `########`, `__` through `______`, `=/=`, `=!=`, `=:=`, `=~`, `!~`, `/=`, `/==`, `.=`, `.-`, `:-`, `[]`, `->>`, `<<-`, `=>>`, `=<<`, `>--`, `--<`, `|--`, `--|`, `>==`, `==<`, `|==`, `==|`, `==/`, `>>-`, `>-`, `-<`, `|->`, `<-|`, `|=>`, `<=|`, `||-`, `-||`, `|-`, `-|`.
 - Added Fira Code-style contextual arrow extension for longer `-` and `=` arrows, using `calt` start/middle/end segment glyphs rather than enumerating every length.
+- Added the first contextual pipe/bar endpoint arrow batch for longer single-pipe endpoints such as `|--->`, `<---|`, `|===>`, and `<===|`, while keeping short forms like `|--` and `==|` as fixed glyphs.
+- Added a small contextual slash / marker batch for longer `=` runs, including `/===>`, `<===/`, `===/===`, `==:=`, and `==!=`, while keeping short forms such as `/=`, `/==`, `==/`, `=:=`, and `=!=` as fixed glyphs.
+- Added contextual punctuation alignment for `:<`, `:>`, `<:`, `>:`, `<:>`, and `>:<`. This uses `.center` visual alternates in `calt`; it is not a new `.dlig` ligature.
 - Added contextual underscore-run extension for runs longer than `______`, while keeping the shorter `__` through `______` fixed glyphs stable.
 - Separator-run helpers: `====`, `=====`, `----`, `-----`.
 
 The ordered feature rules, contextual arrow rules, and generated glyph blocks are maintained by `scripts/update-ligature-glyphs.py`. Fira Code is useful as a coverage reference, but new outlines are drawn, assembled, or scaled from Inconsolata-family glyphs rather than copied.
 
 For implementation notes and migration pitfalls, see [Ligconsolata Next ligature porting notes](documentation/ligature-porting-notes.md).
+For a fuller visual catalog of the current changes, see [Ligconsolata Next optimization catalog](documentation/ligconsolata-next-optimizations.md).
+
+For developer-oriented background reading, start with the font basics series:
+
+- [从活字到字体源码](documentation/blog/00-from-movable-type-to-font-source.md)
+- [字形怎样学会复用](documentation/blog/font-basics-01-movable-type.md)
+- [中文字体走进现代出版](documentation/blog/font-basics-02-modern-chinese-printing.md)
+- [西文字体穿过机器时代](documentation/blog/font-basics-03-global-type-history.md)
+- [那些熟悉的字体从哪里来](documentation/blog/font-basics-04-typeface-case-studies.md)
+- [字体从像素格走向轮廓](documentation/blog/font-basics-05-bitmap-to-outline.md)
+- [可变字体把变化装进一个文件](documentation/blog/font-basics-06-variable-fonts.md)
+- [连字让源码换一种读法](documentation/blog/font-basics-07-opentype-shaping-and-ligatures.md)
+- [字体源码藏在哪些文件里](documentation/blog/font-basics-08-font-source.md)
+- [Ligconsolata Next 的连字改造](documentation/blog/font-basics-09-ligconsolata-next.md)
+- [AI 改字体时到底在做什么](documentation/blog/01-vibe-coding-a-programming-font.md)
+- [不会字体设计，也能看懂字体改动](documentation/blog/02-reviewing-ai-font-changes.md)
 
 ## Building The Family
 

@@ -55,12 +55,23 @@ a =~ b
 a !~ b
 obj .= x
 list []
+a <:> b
+a :> b
 x ->> y
 x <<- y
 x >-- y
 x ==< y
 f |-> g
 f |=> g
+x |---> y
+x <---| y
+x |===> y
+x <===| y
+x /===> y
+x <===/ y
+x ===/=== y
+x ==:= y
+x ==!= y
 md ### title
 md ####### title
 __init__

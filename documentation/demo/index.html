@@ -237,12 +237,23 @@ match =~ pattern
 match !~ pattern
 obj .= value
 list []
+align <:> token
+align :> token
 route ->> next
 route =>> next
 route >-- next
 route ==< next
 pipe |-> fn
 pipe <-| fn
+pipe |---> fn
+pipe <---| fn
+pipe |===> fn
+pipe <===| fn
+slash /===> fn
+slash <===/ fn
+slash ===/=== fn
+match ==:= step
+match ==!= step
 md ### title
 md ####### title
 __init__

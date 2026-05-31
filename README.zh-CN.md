@@ -35,6 +35,22 @@ Inconsolata 源码里本来就有一小组编程连字，例如 `!==`、`=>`、`
 需要注意：当前 SVG 对图里展示的样例是可信的字体 specimen，因为它来自实际构建产物；但它不是动态预览。后续只要修改 glyph 或 OpenType feature，就要重新构建字体并重新生成 SVG。
 
 更详细的适配问题、解决方式和可迁移经验，见 [Ligconsolata Next 连字迁移复盘](documentation/ligature-porting-notes.md)。
+更完整的视觉清单和分类说明，见 [Ligconsolata Next 优化目录](documentation/ligconsolata-next-optimizations.md)。
+
+如果想了解这轮改造背后的字体设计基础、历史脉络和 AI review 方法，可以继续看：
+
+- [从活字到字体源码](documentation/blog/00-from-movable-type-to-font-source.md)
+- [字形怎样学会复用](documentation/blog/font-basics-01-movable-type.md)
+- [中文字体走进现代出版](documentation/blog/font-basics-02-modern-chinese-printing.md)
+- [西文字体穿过机器时代](documentation/blog/font-basics-03-global-type-history.md)
+- [那些熟悉的字体从哪里来](documentation/blog/font-basics-04-typeface-case-studies.md)
+- [字体从像素格走向轮廓](documentation/blog/font-basics-05-bitmap-to-outline.md)
+- [可变字体把变化装进一个文件](documentation/blog/font-basics-06-variable-fonts.md)
+- [连字让源码换一种读法](documentation/blog/font-basics-07-opentype-shaping-and-ligatures.md)
+- [字体源码藏在哪些文件里](documentation/blog/font-basics-08-font-source.md)
+- [Ligconsolata Next 的连字改造](documentation/blog/font-basics-09-ligconsolata-next.md)
+- [AI 改字体时到底在做什么](documentation/blog/01-vibe-coding-a-programming-font.md)
+- [不会字体设计，也能看懂字体改动](documentation/blog/02-reviewing-ai-font-changes.md)
 
 ## 构建环境
 
@@ -108,6 +124,9 @@ python scripts/build-demo-assets.py
 - 参考 Fira Code 补充的固定操作符：例如 `<|>`、`<$>`、`<+>`、`</>`、`|>`、`<|`、`::=`、`:::`、`..=`、`..<`、`?=`、`!!`、`!!.`、`+++`、`***`、`///`、`#{`、`#[`、`#_(` 等，以及一批相关的紧凑操作符组合。
 - 参考 Fira Code `calt` 行为补充的低风险固定组合：`##` 到 `########`、`__` 到 `______`、`=/=`、`=!=`、`=:=`、`=~`、`!~`、`/=`、`/==`、`.=`、`.-`、`:-`、`[]`、`->>`、`<<-`、`=>>`、`=<<`、`>--`、`--<`、`|--`、`--|`、`>==`、`==<`、`|==`、`==|`、`==/`、`>>-`、`>-`、`-<`、`|->`、`<-|`、`|=>`、`<=|`、`||-`、`-||`、`|-`、`-|`。这些先按固定连字处理，不假装已经完整迁入 Fira Code 的所有上下文型 `calt` 机器。
 - 可变长度箭头：参考 Fira Code 的 `calt` 思路，用 start / middle / end 片段支持更长的 `-` / `=` 箭头，例如 `---->`、`<----`、`====>`、`<====`、`<--->`、`<===>`。
+- 第一批 pipe/bar 端点长箭头：支持单 `|` 端点的长 `-` / `=` 箭头，例如 `|--->`、`<---|`、`|===>`、`<===|`；短组合 `|--`、`--|`、`|==`、`==|` 仍由固定 glyph 负责。
+- 第一批 slash / marker 上下文组合：支持长 `=` 串里的 `/` 端点、单 `/` 中间标记和 `:` / `!` 中间标记，例如 `/===>`、`<===/`、`===/===`、`==:=`、`==!=`；短组合 `/=`、`/==`、`==/`、`=:=`、`=!=` 仍由固定 glyph 负责。
+- 第一批标点居中：`:<`、`:>`、`<:`、`>:`、`<:>`、`>:<` 会在 `calt` 中切换到 `.center` 视觉变体。这只是标点对齐，不是新增 `.dlig` 连字。
 - 可变长度下划线：`__` 到 `______` 继续使用固定 glyph，超过这个长度后用 `underscore_start.seq` / `underscore_middle.seq` / `underscore_end.seq` 片段延展。
 - 注释分割线辅助：`====`、`=====`、`----`、`-----`。
 

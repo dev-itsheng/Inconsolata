@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="600" viewBox="0 0 1440 600" role="img" aria-labelledby="title desc">
+  <title id="title">Common Chinese font categories and typical uses</title>
+  <desc id="desc">A table image listing common Chinese font directions, typical uses, and common misuse risks.</desc>
+  <defs>
+    <style>
+      .latin { font-family: Arial, Helvetica, sans-serif; }
+      .title { fill: #f6f8fb; font-size: 30px; font-weight: 760; }
+      .subtitle { fill: #9fb0bf; font-size: 17px; }
+      .head { fill: #e9f0f7; font-size: 17px; font-weight: 760; }
+      .cell { fill: #e8edf3; font-size: 16px; }
+      .muted { fill: #9fb0bf; font-size: 14px; }
+      .grid { stroke: #334558; stroke-width: 1; shape-rendering: crispEdges; }
+      .grid-strong { stroke: #4a5d72; stroke-width: 2; shape-rendering: crispEdges; }
+      .accent { fill: #69d3b0; }
+      .warning { fill: #f2c16b; }
+    </style>
+  </defs>
+
+  <rect width="1440" height="600" rx="28" fill="#101820"/>
+  <rect x="28" y="28" width="1384" height="544" rx="24" fill="#121c26" stroke="#243241" stroke-width="1.5"/>
+  <text x="64" y="78" class="latin title">Chinese Font Categories / 中文字体类别</text>
+  <text x="64" y="110" class="latin subtitle">A quick usage map for readers who know font names from books, posters, Word, or system menus.</text>
+  <text x="64" y="134" class="latin muted">这不是授权建议，而是先帮读者把“适合什么场景”和“容易怎么误用”分开。</text>
+
+  <g class="latin">
+    <rect x="64" y="164" width="1312" height="360" rx="14" fill="#0f1721" stroke="#2e4053" stroke-width="1.5"/>
+    <g shape-rendering="crispEdges">
+      <line x1="64" y1="222" x2="1376" y2="222" class="grid-strong"/>
+      <line x1="332" y1="164" x2="332" y2="524" class="grid-strong"/>
+      <line x1="824" y1="164" x2="824" y2="524" class="grid-strong"/>
+      <line x1="64" y1="298" x2="1376" y2="298" class="grid"/>
+      <line x1="64" y1="374" x2="1376" y2="374" class="grid"/>
+      <line x1="64" y1="450" x2="1376" y2="450" class="grid"/>
+    </g>
+
+    <text x="92" y="200" class="head accent">Category / 类别</text>
+    <text x="360" y="200" class="head">Typical uses / 常见用途</text>
+    <text x="852" y="200" class="head warning">Misuse risks / 容易误用的地方</text>
+
+    <text x="92" y="252" class="cell">Song / Ming</text>
+    <text x="92" y="274" class="cell">宋体 / 明体方向</text>
+    <text x="360" y="252" class="cell">Books, newspapers, long-form body text, dictionaries</text>
+    <text x="360" y="274" class="cell">书籍、报纸、长文正文、工具书和高密度阅读</text>
+    <text x="852" y="252" class="cell">Clear at small sizes, but can feel too print-like in UI controls</text>
+    <text x="852" y="274" class="cell">小字号清楚，但在按钮和现代界面里可能纸面感太强</text>
+
+    <text x="92" y="328" class="cell">Hei / Gothic</text>
+    <text x="92" y="350" class="cell">黑体方向</text>
+    <text x="360" y="328" class="cell">Headings, signage, interfaces, screen reading</text>
+    <text x="360" y="350" class="cell">标题、导视、界面、屏幕阅读和层级强调</text>
+    <text x="852" y="328" class="cell">Too heavy can press the page; too light can fade in poor output</text>
+    <text x="852" y="350" class="cell">太粗会压正文，太细又可能在低质量输出里发虚</text>
+
+    <text x="92" y="404" class="cell">Kai / Fangsong</text>
+    <text x="92" y="426" class="cell">楷体 / 仿宋方向</text>
+    <text x="360" y="404" class="cell">Textbooks, formal documents, written-tone passages</text>
+    <text x="360" y="426" class="cell">教材、公文、正式说明和带书写感的文本</text>
+    <text x="852" y="404" class="cell">Long paragraphs and tiny sizes can become more tiring to read</text>
+    <text x="852" y="426" class="cell">长文和小字号里可能比正文宋体更费眼</text>
+
+    <text x="92" y="480" class="cell">Decorative scripts</text>
+    <text x="92" y="502" class="cell">隶书、魏碑、行楷、美术字</text>
+    <text x="360" y="480" class="cell">Posters, covers, festivals, display titles, decoration</text>
+    <text x="360" y="502" class="cell">海报、封面、节庆、标题、展示和装饰场景</text>
+    <text x="852" y="480" class="cell">Not for dense body text; commercial use still needs license checks</text>
+    <text x="852" y="502" class="cell">不适合大段正文，商业使用也要单独确认授权</text>
+  </g>
+</svg>

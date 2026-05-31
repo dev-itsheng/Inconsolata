@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="420" viewBox="0 0 1180 420" role="img" aria-labelledby="title desc">
+  <title id="title">Bitmap to outline diagram</title>
+  <desc id="desc">A diagram showing bitmap glyphs, outline curves, and rasterization to screen pixels.</desc>
+  <rect width="1180" height="420" rx="24" fill="#101820"/>
+  <text x="56" y="58" fill="#f6f8fb" font-family="Arial, sans-serif" font-size="30" font-weight="700">Bitmap To Outline / 从点阵到轮廓</text>
+  <text x="56" y="88" fill="#9fb0bf" font-family="Arial, sans-serif" font-size="17">This stage explains how a glyph is drawn, before OpenType substitution rules enter the story.</text>
+  <g transform="translate(70 126)">
+    <rect width="300" height="226" rx="16" fill="#192532" stroke="#394a5c" stroke-width="2"/>
+    <text x="24" y="38" fill="#d4c16a" font-family="Arial, sans-serif" font-size="19" font-weight="700">Bitmap / 点阵</text>
+    <g transform="translate(48 66)" fill="#253747" stroke="#42566a">
+      <rect width="144" height="144" fill="#17212b"/>
+      <g fill="#e8edf3">
+        <rect x="48" y="24" width="24" height="24"/>
+        <rect x="72" y="24" width="24" height="24"/>
+        <rect x="24" y="48" width="24" height="24"/>
+        <rect x="96" y="48" width="24" height="24"/>
+        <rect x="24" y="72" width="96" height="24"/>
+        <rect x="24" y="96" width="24" height="24"/>
+        <rect x="96" y="96" width="24" height="24"/>
+      </g>
+      <g fill="none" stroke="#42566a">
+        <path d="M24 0 V144 M48 0 V144 M72 0 V144 M96 0 V144 M120 0 V144"/>
+        <path d="M0 24 H144 M0 48 H144 M0 72 H144 M0 96 H144 M0 120 H144"/>
+      </g>
+    </g>
+    <text x="48" y="198" fill="#9fb0bf" font-family="Arial, sans-serif" font-size="15">One size, one grid / 一个尺寸一套格子</text>
+  </g>
+  <g transform="translate(440 126)">
+    <rect width="300" height="226" rx="16" fill="#192532" stroke="#394a5c" stroke-width="2"/>
+    <text x="24" y="38" fill="#cb93ff" font-family="Arial, sans-serif" font-size="19" font-weight="700">Outline / 轮廓</text>
+    <path d="M82 182 C114 82 154 82 188 182 M105 124 H165" fill="none" stroke="#f6f8fb" stroke-width="12" stroke-linecap="round"/>
+    <g fill="#69d3b0">
+      <circle cx="82" cy="182" r="6"/>
+      <circle cx="114" cy="82" r="6"/>
+      <circle cx="154" cy="82" r="6"/>
+      <circle cx="188" cy="182" r="6"/>
+    </g>
+    <path d="M82 182 L114 82 L154 82 L188 182" fill="none" stroke="#69d3b0" stroke-width="1.5" stroke-dasharray="5 5"/>
+    <text x="48" y="198" fill="#9fb0bf" font-family="Arial, sans-serif" font-size="15">Points and curves / 控制点和曲线</text>
+  </g>
+  <g transform="translate(810 126)">
+    <rect width="300" height="226" rx="16" fill="#192532" stroke="#394a5c" stroke-width="2"/>
+    <text x="24" y="38" fill="#80b7ff" font-family="Arial, sans-serif" font-size="19" font-weight="700">Rasterize / 栅格化</text>
+    <path d="M66 170 C96 86 136 86 166 170 M88 124 H144" fill="none" stroke="#f6f8fb" stroke-width="10" stroke-linecap="round"/>
+    <path d="M190 116 H224" fill="none" stroke="#5d7488" stroke-width="4"/>
+    <path d="M212 102 L232 116 L212 130" fill="none" stroke="#5d7488" stroke-width="4"/>
+    <g transform="translate(244 70)">
+      <rect width="96" height="96" fill="#17212b" stroke="#42566a"/>
+      <g fill="#e8edf3">
+        <rect x="32" y="16" width="16" height="16"/>
+        <rect x="48" y="16" width="16" height="16"/>
+        <rect x="16" y="32" width="16" height="16"/>
+        <rect x="64" y="32" width="16" height="16"/>
+        <rect x="16" y="48" width="64" height="16"/>
+        <rect x="16" y="64" width="16" height="16"/>
+        <rect x="64" y="64" width="16" height="16"/>
+      </g>
+      <g fill="none" stroke="#42566a" stroke-width="0.9">
+        <path d="M16 0 V96 M32 0 V96 M48 0 V96 M64 0 V96 M80 0 V96"/>
+        <path d="M0 16 H96 M0 32 H96 M0 48 H96 M0 64 H96 M0 80 H96"/>
+      </g>
+    </g>
+    <text x="48" y="198" fill="#9fb0bf" font-family="Arial, sans-serif" font-size="15">Curves become pixels / 曲线最终落回像素</text>
+  </g>
+</svg>

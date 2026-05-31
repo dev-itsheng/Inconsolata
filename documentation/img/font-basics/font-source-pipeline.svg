@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="420" viewBox="0 0 1180 420" role="img" aria-labelledby="title desc">
+  <title id="title">Font source pipeline</title>
+  <desc id="desc">A diagram of source files, build tools, temporary fonts, shaping checks, SVG and HTML demo.</desc>
+  <rect width="1180" height="420" rx="24" fill="#101820"/>
+  <text x="56" y="58" fill="#f6f8fb" font-family="Arial, sans-serif" font-size="30" font-weight="700">Font Source Pipeline / 字体源码链路</text>
+  <g font-family="Arial, sans-serif" font-size="17">
+    <g transform="translate(64 118)">
+      <rect width="220" height="190" rx="16" fill="#192532" stroke="#69d3b0" stroke-width="2"/>
+      <text x="24" y="42" fill="#69d3b0" font-weight="700">Source / 源码</text>
+      <text x="24" y="82" fill="#f6f8fb">Inconsolata.glyphs</text>
+      <text x="24" y="112" fill="#f6f8fb">config.yaml</text>
+      <text x="24" y="142" fill="#f6f8fb">charset/*.nam</text>
+    </g>
+    <g transform="translate(356 118)">
+      <rect width="220" height="190" rx="16" fill="#192532" stroke="#80b7ff" stroke-width="2"/>
+      <text x="24" y="42" fill="#80b7ff" font-weight="700">Build / 构建</text>
+      <text x="24" y="82" fill="#f6f8fb">update script</text>
+      <text x="24" y="112" fill="#f6f8fb">fontmake</text>
+      <text x="24" y="142" fill="#f6f8fb">temporary TTF</text>
+    </g>
+    <g transform="translate(648 118)">
+      <rect width="220" height="190" rx="16" fill="#192532" stroke="#d4c16a" stroke-width="2"/>
+      <text x="24" y="42" fill="#d4c16a" font-weight="700">Verify / 验证</text>
+      <text x="24" y="82" fill="#f6f8fb">fontTools width</text>
+      <text x="24" y="112" fill="#f6f8fb">hb-shape GSUB</text>
+      <text x="24" y="142" fill="#f6f8fb">visual review</text>
+    </g>
+    <g transform="translate(940 118)">
+      <rect width="176" height="190" rx="16" fill="#192532" stroke="#ff9b8a" stroke-width="2"/>
+      <text x="24" y="42" fill="#ff9b8a" font-weight="700">Show / 展示</text>
+      <text x="24" y="82" fill="#f6f8fb">overview SVG</text>
+      <text x="24" y="112" fill="#f6f8fb">catalog SVG</text>
+      <text x="24" y="142" fill="#f6f8fb">HTML demo</text>
+    </g>
+  </g>
+  <g fill="none" stroke="#5d7488" stroke-width="4">
+    <path d="M300 213 H340"/>
+    <path d="M324 196 L346 213 L324 230"/>
+    <path d="M592 213 H632"/>
+    <path d="M616 196 L638 213 L616 230"/>
+    <path d="M884 213 H924"/>
+    <path d="M908 196 L930 213 L908 230"/>
+  </g>
+  <text x="64" y="360" fill="#9fb0bf" font-family="Arial, sans-serif" font-size="16">The checked-in font source stays authoritative; generated fonts and images prove the current behavior.</text>
+  <text x="64" y="386" fill="#9fb0bf" font-family="Arial, sans-serif" font-size="16">仓库源码保持权威；构建出的字体、SVG 和 demo 用来证明当前行为。</text>
+</svg>

@@ -300,52 +300,62 @@ code = "lookup ligconsolata_hyphen_arrow_start {
   ignore sub hyphen hyphen' [hyphen greater];
   ignore sub hyphen_start.seq hyphen' [hyphen greater];
   ignore sub less_hyphen_start.seq hyphen' [hyphen greater];
+  ignore sub bar_hyphen_start.seq hyphen' [hyphen greater bar];
   ignore sub hyphen' greater greater;
   ignore sub less' hyphen bar;
+  sub bar' hyphen hyphen hyphen by bar_hyphen_start.seq;
   sub less' hyphen by less_hyphen_start.seq;
   sub hyphen' hyphen hyphen by hyphen_start.seq;
   sub hyphen' greater by hyphen_start.seq;
 } ligconsolata_hyphen_arrow_start;
 
 lookup ligconsolata_hyphen_arrow_extend_1 {
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq] hyphen' [hyphen greater] by hyphen_middle.seq;
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq] hyphen' by hyphen_end.seq;
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq] greater' by greater_hyphen_end.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] hyphen' [hyphen greater bar] by hyphen_middle.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] hyphen' by hyphen_end.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] greater' by greater_hyphen_end.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] bar' by bar_hyphen_end.seq;
 } ligconsolata_hyphen_arrow_extend_1;
 lookup ligconsolata_hyphen_arrow_extend_2 {
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq] hyphen' [hyphen greater] by hyphen_middle.seq;
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq] hyphen' by hyphen_end.seq;
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq] greater' by greater_hyphen_end.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] hyphen' [hyphen greater bar] by hyphen_middle.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] hyphen' by hyphen_end.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] greater' by greater_hyphen_end.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] bar' by bar_hyphen_end.seq;
 } ligconsolata_hyphen_arrow_extend_2;
 lookup ligconsolata_hyphen_arrow_extend_3 {
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq] hyphen' [hyphen greater] by hyphen_middle.seq;
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq] hyphen' by hyphen_end.seq;
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq] greater' by greater_hyphen_end.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] hyphen' [hyphen greater bar] by hyphen_middle.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] hyphen' by hyphen_end.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] greater' by greater_hyphen_end.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] bar' by bar_hyphen_end.seq;
 } ligconsolata_hyphen_arrow_extend_3;
 lookup ligconsolata_hyphen_arrow_extend_4 {
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq] hyphen' [hyphen greater] by hyphen_middle.seq;
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq] hyphen' by hyphen_end.seq;
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq] greater' by greater_hyphen_end.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] hyphen' [hyphen greater bar] by hyphen_middle.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] hyphen' by hyphen_end.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] greater' by greater_hyphen_end.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] bar' by bar_hyphen_end.seq;
 } ligconsolata_hyphen_arrow_extend_4;
 lookup ligconsolata_hyphen_arrow_extend_5 {
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq] hyphen' [hyphen greater] by hyphen_middle.seq;
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq] hyphen' by hyphen_end.seq;
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq] greater' by greater_hyphen_end.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] hyphen' [hyphen greater bar] by hyphen_middle.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] hyphen' by hyphen_end.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] greater' by greater_hyphen_end.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] bar' by bar_hyphen_end.seq;
 } ligconsolata_hyphen_arrow_extend_5;
 lookup ligconsolata_hyphen_arrow_extend_6 {
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq] hyphen' [hyphen greater] by hyphen_middle.seq;
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq] hyphen' by hyphen_end.seq;
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq] greater' by greater_hyphen_end.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] hyphen' [hyphen greater bar] by hyphen_middle.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] hyphen' by hyphen_end.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] greater' by greater_hyphen_end.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] bar' by bar_hyphen_end.seq;
 } ligconsolata_hyphen_arrow_extend_6;
 lookup ligconsolata_hyphen_arrow_extend_7 {
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq] hyphen' [hyphen greater] by hyphen_middle.seq;
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq] hyphen' by hyphen_end.seq;
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq] greater' by greater_hyphen_end.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] hyphen' [hyphen greater bar] by hyphen_middle.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] hyphen' by hyphen_end.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] greater' by greater_hyphen_end.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] bar' by bar_hyphen_end.seq;
 } ligconsolata_hyphen_arrow_extend_7;
 lookup ligconsolata_hyphen_arrow_extend_8 {
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq] hyphen' [hyphen greater] by hyphen_middle.seq;
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq] hyphen' by hyphen_end.seq;
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq] greater' by greater_hyphen_end.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] hyphen' [hyphen greater bar] by hyphen_middle.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] hyphen' by hyphen_end.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] greater' by greater_hyphen_end.seq;
+  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] bar' by bar_hyphen_end.seq;
 } ligconsolata_hyphen_arrow_extend_8;
 
 lookup ligconsolata_equal_arrow_start {
@@ -361,53 +371,126 @@ lookup ligconsolata_equal_arrow_start {
   ignore sub equal equal' [equal greater];
   ignore sub equal_start.seq equal' [equal greater];
   ignore sub less_equal_start.seq equal' [equal greater];
+  ignore sub bar_equal_start.seq equal' [equal greater bar];
+  ignore sub slash_equal_start.seq equal' [equal greater slash colon exclam];
   ignore sub equal' greater greater;
   ignore sub equal' equal [less bar slash];
   ignore sub less' equal bar;
+  sub bar' equal equal equal by bar_equal_start.seq;
+  ignore sub slash slash' equal equal equal;
+  ignore sub equal equal equal slash' equal;
+  ignore sub equal_start.seq equal equal slash' equal;
+  sub slash' equal equal equal by slash_equal_start.seq;
   sub less' equal by less_equal_start.seq;
   sub equal' [equal greater] by equal_start.seq;
 } ligconsolata_equal_arrow_start;
 
 lookup ligconsolata_equal_arrow_extend_1 {
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq] equal' [equal greater] by equal_middle.seq;
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq] equal' by equal_end.seq;
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq] greater' by greater_equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' [equal greater bar slash] by equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' colon equal by equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' exclam equal by equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' by equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] greater' by greater_equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] bar' by bar_equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] slash' equal by slash_equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] slash' by slash_equal_end.seq;
+  sub [equal_start.seq equal_middle.seq] colon' equal by colon_equal_middle.seq;
+  sub [equal_start.seq equal_middle.seq] exclam' equal by exclam_equal_middle.seq;
 } ligconsolata_equal_arrow_extend_1;
 lookup ligconsolata_equal_arrow_extend_2 {
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq] equal' [equal greater] by equal_middle.seq;
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq] equal' by equal_end.seq;
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq] greater' by greater_equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' [equal greater bar slash] by equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' colon equal by equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' exclam equal by equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' by equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] greater' by greater_equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] bar' by bar_equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] slash' equal by slash_equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] slash' by slash_equal_end.seq;
+  sub [equal_start.seq equal_middle.seq] colon' equal by colon_equal_middle.seq;
+  sub [equal_start.seq equal_middle.seq] exclam' equal by exclam_equal_middle.seq;
 } ligconsolata_equal_arrow_extend_2;
 lookup ligconsolata_equal_arrow_extend_3 {
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq] equal' [equal greater] by equal_middle.seq;
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq] equal' by equal_end.seq;
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq] greater' by greater_equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' [equal greater bar slash] by equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' colon equal by equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' exclam equal by equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' by equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] greater' by greater_equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] bar' by bar_equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] slash' equal by slash_equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] slash' by slash_equal_end.seq;
+  sub [equal_start.seq equal_middle.seq] colon' equal by colon_equal_middle.seq;
+  sub [equal_start.seq equal_middle.seq] exclam' equal by exclam_equal_middle.seq;
 } ligconsolata_equal_arrow_extend_3;
 lookup ligconsolata_equal_arrow_extend_4 {
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq] equal' [equal greater] by equal_middle.seq;
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq] equal' by equal_end.seq;
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq] greater' by greater_equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' [equal greater bar slash] by equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' colon equal by equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' exclam equal by equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' by equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] greater' by greater_equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] bar' by bar_equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] slash' equal by slash_equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] slash' by slash_equal_end.seq;
+  sub [equal_start.seq equal_middle.seq] colon' equal by colon_equal_middle.seq;
+  sub [equal_start.seq equal_middle.seq] exclam' equal by exclam_equal_middle.seq;
 } ligconsolata_equal_arrow_extend_4;
 lookup ligconsolata_equal_arrow_extend_5 {
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq] equal' [equal greater] by equal_middle.seq;
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq] equal' by equal_end.seq;
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq] greater' by greater_equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' [equal greater bar slash] by equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' colon equal by equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' exclam equal by equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' by equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] greater' by greater_equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] bar' by bar_equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] slash' equal by slash_equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] slash' by slash_equal_end.seq;
+  sub [equal_start.seq equal_middle.seq] colon' equal by colon_equal_middle.seq;
+  sub [equal_start.seq equal_middle.seq] exclam' equal by exclam_equal_middle.seq;
 } ligconsolata_equal_arrow_extend_5;
 lookup ligconsolata_equal_arrow_extend_6 {
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq] equal' [equal greater] by equal_middle.seq;
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq] equal' by equal_end.seq;
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq] greater' by greater_equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' [equal greater bar slash] by equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' colon equal by equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' exclam equal by equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' by equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] greater' by greater_equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] bar' by bar_equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] slash' equal by slash_equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] slash' by slash_equal_end.seq;
+  sub [equal_start.seq equal_middle.seq] colon' equal by colon_equal_middle.seq;
+  sub [equal_start.seq equal_middle.seq] exclam' equal by exclam_equal_middle.seq;
 } ligconsolata_equal_arrow_extend_6;
 lookup ligconsolata_equal_arrow_extend_7 {
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq] equal' [equal greater] by equal_middle.seq;
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq] equal' by equal_end.seq;
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq] greater' by greater_equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' [equal greater bar slash] by equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' colon equal by equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' exclam equal by equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' by equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] greater' by greater_equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] bar' by bar_equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] slash' equal by slash_equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] slash' by slash_equal_end.seq;
+  sub [equal_start.seq equal_middle.seq] colon' equal by colon_equal_middle.seq;
+  sub [equal_start.seq equal_middle.seq] exclam' equal by exclam_equal_middle.seq;
 } ligconsolata_equal_arrow_extend_7;
 lookup ligconsolata_equal_arrow_extend_8 {
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq] equal' [equal greater] by equal_middle.seq;
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq] equal' by equal_end.seq;
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq] greater' by greater_equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' [equal greater bar slash] by equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' colon equal by equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' exclam equal by equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' by equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] greater' by greater_equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] bar' by bar_equal_end.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] slash' equal by slash_equal_middle.seq;
+  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] slash' by slash_equal_end.seq;
+  sub [equal_start.seq equal_middle.seq] colon' equal by colon_equal_middle.seq;
+  sub [equal_start.seq equal_middle.seq] exclam' equal by exclam_equal_middle.seq;
 } ligconsolata_equal_arrow_extend_8;
+
+lookup ligconsolata_center {
+  ignore sub colon' [less greater] [equal hyphen];
+  ignore sub colon colon' [less greater];
+  ignore sub [less greater]' colon colon;
+  sub [less.center greater.center colon.center] colon' by colon.center;
+  sub colon.center [less greater]' by [less.center greater.center];
+  sub [less greater]' colon by [less.center greater.center];
+  sub colon' [less greater] by colon.center;
+} ligconsolata_center;
 
 lookup ligconsolata_underscore_run_start {
   ignore sub [underscore underscore_start.seq underscore_middle.seq] underscore' underscore underscore underscore underscore underscore underscore;
@@ -244296,28 +244379,19 @@ paths = (
 {
 closed = 1;
 nodes = (
-"970 390 LINE",
-"970 451 LINE",
-"30 451 LINE",
-"30 390 LINE"
+"912 389 LINE",
+"912 450 LINE",
+"90 450 LINE",
+"90 389 LINE"
 );
 },
 {
 closed = 1;
 nodes = (
-"856.66667 199 LINE",
-"856.66667 260 LINE",
-"143.33333 260 LINE",
-"143.33333 199 LINE"
-);
-},
-{
-closed = 1;
-nodes = (
-"970 9 LINE",
-"970 70 LINE",
-"30 70 LINE",
-"30 9 LINE"
+"912 182 LINE",
+"912 243 LINE",
+"90 243 LINE",
+"90 182 LINE"
 );
 }
 );
@@ -244329,28 +244403,19 @@ paths = (
 {
 closed = 1;
 nodes = (
-"970 407 LINE",
-"970 432 LINE",
-"30 432 LINE",
-"30 407 LINE"
+"882 407 LINE",
+"882 432 LINE",
+"120 432 LINE",
+"120 407 LINE"
 );
 },
 {
 closed = 1;
 nodes = (
-"856.66667 210 LINE",
-"856.66667 235 LINE",
-"143.33333 235 LINE",
-"143.33333 210 LINE"
-);
-},
-{
-closed = 1;
-nodes = (
-"970 13 LINE",
-"970 38 LINE",
-"30 38 LINE",
-"30 13 LINE"
+"882 200 LINE",
+"882 225 LINE",
+"120 225 LINE",
+"120 200 LINE"
 );
 }
 );
@@ -244362,28 +244427,19 @@ paths = (
 {
 closed = 1;
 nodes = (
-"970 371 LINE",
-"970 472 LINE",
-"30 472 LINE",
-"30 371 LINE"
+"928 368 LINE",
+"928 473 LINE",
+"82 473 LINE",
+"82 368 LINE"
 );
 },
 {
 closed = 1;
 nodes = (
-"856.66667 180 LINE",
-"856.66667 281 LINE",
-"143.33333 281 LINE",
-"143.33333 180 LINE"
-);
-},
-{
-closed = 1;
-nodes = (
-"970 -11 LINE",
-"970 90 LINE",
-"30 90 LINE",
-"30 -11 LINE"
+"928 158 LINE",
+"928 263 LINE",
+"82 263 LINE",
+"82 158 LINE"
 );
 }
 );
@@ -244395,28 +244451,19 @@ paths = (
 {
 closed = 1;
 nodes = (
-"485 390 LINE",
-"485 451 LINE",
-"15 451 LINE",
-"15 390 LINE"
+"458 391 LINE",
+"458 449 LINE",
+"46 449 LINE",
+"46 391 LINE"
 );
 },
 {
 closed = 1;
 nodes = (
-"428.33333 199 LINE",
-"428.33333 260 LINE",
-"71.66667 260 LINE",
-"71.66667 199 LINE"
-);
-},
-{
-closed = 1;
-nodes = (
-"485 9 LINE",
-"485 70 LINE",
-"15 70 LINE",
-"15 9 LINE"
+"458 184 LINE",
+"458 242 LINE",
+"46 242 LINE",
+"46 184 LINE"
 );
 }
 );
@@ -244428,28 +244475,19 @@ paths = (
 {
 closed = 1;
 nodes = (
-"485.33333 409 LINE",
-"485.33333 431 LINE",
-"15.33333 431 LINE",
-"15.33333 409 LINE"
+"450 409 LINE",
+"450 431 LINE",
+"54 431 LINE",
+"54 409 LINE"
 );
 },
 {
 closed = 1;
 nodes = (
-"428.66667 212 LINE",
-"428.66667 234 LINE",
-"72 234 LINE",
-"72 212 LINE"
-);
-},
-{
-closed = 1;
-nodes = (
-"485.33333 15 LINE",
-"485.33333 37 LINE",
-"15.33333 37 LINE",
-"15.33333 15 LINE"
+"450 202 LINE",
+"450 224 LINE",
+"54 224 LINE",
+"54 202 LINE"
 );
 }
 );
@@ -244461,28 +244499,19 @@ paths = (
 {
 closed = 1;
 nodes = (
-"1940 406 LINE",
-"1940 434 LINE",
-"60 434 LINE",
-"60 406 LINE"
+"1824 405 LINE",
+"1824 434 LINE",
+"180 434 LINE",
+"180 405 LINE"
 );
 },
 {
 closed = 1;
 nodes = (
-"1713.33333 225 LINE",
-"1713.33333 253 LINE",
-"286.66667 253 LINE",
-"286.66667 225 LINE"
-);
-},
-{
-closed = 1;
-nodes = (
-"1940 42 LINE",
-"1940 70 LINE",
-"60 70 LINE",
-"60 42 LINE"
+"1824 198 LINE",
+"1824 227 LINE",
+"180 227 LINE",
+"180 198 LINE"
 );
 }
 );
@@ -244494,28 +244523,19 @@ paths = (
 {
 closed = 1;
 nodes = (
-"485.33333 373 LINE",
-"485.33333 467 LINE",
-"15.33333 467 LINE",
-"15.33333 373 LINE"
+"462 373 LINE",
+"462 467 LINE",
+"42 467 LINE",
+"42 373 LINE"
 );
 },
 {
 closed = 1;
 nodes = (
-"428.66667 176 LINE",
-"428.66667 280 LINE",
-"72 280 LINE",
-"72 176 LINE"
-);
-},
-{
-closed = 1;
-nodes = (
-"485.33333 -11 LINE",
-"485.33333 83 LINE",
-"15.33333 83 LINE",
-"15.33333 -11 LINE"
+"462 166 LINE",
+"462 260 LINE",
+"42 260 LINE",
+"42 166 LINE"
 );
 }
 );
@@ -244527,28 +244547,19 @@ paths = (
 {
 closed = 1;
 nodes = (
-"1940 380 LINE",
-"1940 451 LINE",
-"60 451 LINE",
-"60 380 LINE"
+"1824 381 LINE",
+"1824 458 LINE",
+"180 458 LINE",
+"180 381 LINE"
 );
 },
 {
 closed = 1;
 nodes = (
-"1713.33333 189 LINE",
-"1713.33333 260 LINE",
-"286.66667 260 LINE",
-"286.66667 189 LINE"
-);
-},
-{
-closed = 1;
-nodes = (
-"1940 -1 LINE",
-"1940 70 LINE",
-"60 70 LINE",
-"60 -1 LINE"
+"1824 174 LINE",
+"1824 251 LINE",
+"180 251 LINE",
+"180 174 LINE"
 );
 }
 );
@@ -244560,28 +244571,19 @@ paths = (
 {
 closed = 1;
 nodes = (
-"1940 376 LINE",
-"1940 503 LINE",
-"60 503 LINE",
-"60 376 LINE"
+"1844 356 LINE",
+"1844 483 LINE",
+"160 483 LINE",
+"160 356 LINE"
 );
 },
 {
 closed = 1;
 nodes = (
-"1713.33333 170 LINE",
-"1713.33333 297 LINE",
-"286.66667 297 LINE",
-"286.66667 170 LINE"
-);
-},
-{
-closed = 1;
-nodes = (
-"1940 -36 LINE",
-"1940 91 LINE",
-"60 91 LINE",
-"60 -36 LINE"
+"1844 149 LINE",
+"1844 276 LINE",
+"160 276 LINE",
+"160 149 LINE"
 );
 }
 );
@@ -269270,6 +269272,3274 @@ nodes = (
 "942 -4 LINE",
 "-40 -4 LINE",
 "-40 -128 LINE"
+);
+}
+);
+width = 1000;
+}
+);
+},
+{
+glyphname = bar_hyphen_start.seq;
+layers = (
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "051EFAE4-8BBE-4FBB-A016-4335C3E52F59";
+paths = (
+{
+closed = 1;
+nodes = (
+"520 281 LINE",
+"520 348 LINE",
+"250 348 LINE",
+"250 281 LINE"
+);
+}
+);
+width = 500;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "4196E4A4-01D0-4BE0-B812-9D3AF152A0E4";
+paths = (
+{
+closed = 1;
+nodes = (
+"520 301 LINE",
+"520 328 LINE",
+"250 328 LINE",
+"250 301 LINE"
+);
+}
+);
+width = 500;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "37FE174D-E85B-4C4C-A1AE-51D7E67A9FC9";
+paths = (
+{
+closed = 1;
+nodes = (
+"520 265 LINE",
+"520 376 LINE",
+"250 376 LINE",
+"250 265 LINE"
+);
+}
+);
+width = 500;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "7EB90DB1-9188-465D-93C7-E6C577A18003";
+paths = (
+{
+closed = 1;
+nodes = (
+"260 290 LINE",
+"260 348 LINE",
+"125 348 LINE",
+"125 290 LINE"
+);
+}
+);
+width = 250;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "0E826D2B-F2D1-4058-A5E0-936DF7ED7520";
+paths = (
+{
+closed = 1;
+nodes = (
+"260 308 LINE",
+"260 330 LINE",
+"125 330 LINE",
+"125 308 LINE"
+);
+}
+);
+width = 250;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "16CD5438-0A7A-495F-951A-DBB915DF0BEC";
+paths = (
+{
+closed = 1;
+nodes = (
+"1040 299 LINE",
+"1040 330 LINE",
+"500 330 LINE",
+"500 299 LINE"
+);
+}
+);
+width = 1000;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "E49A0581-9397-4BB7-ADB1-45D6EDC9C316";
+paths = (
+{
+closed = 1;
+nodes = (
+"260 272 LINE",
+"260 366 LINE",
+"125 366 LINE",
+"125 272 LINE"
+);
+}
+);
+width = 250;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "382F13D7-0CC9-4B85-A585-CBE12F4435D4";
+paths = (
+{
+closed = 1;
+nodes = (
+"1040 275 LINE",
+"1040 354 LINE",
+"500 354 LINE",
+"500 275 LINE"
+);
+}
+);
+width = 1000;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "CC486EF6-6464-4B93-9956-4F2B932959EA";
+paths = (
+{
+closed = 1;
+nodes = (
+"1040 250 LINE",
+"1040 379 LINE",
+"500 379 LINE",
+"500 250 LINE"
+);
+}
+);
+width = 1000;
+}
+);
+},
+{
+glyphname = bar_hyphen_end.seq;
+layers = (
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "051EFAE4-8BBE-4FBB-A016-4335C3E52F59";
+paths = (
+{
+closed = 1;
+nodes = (
+"250 281 LINE",
+"250 348 LINE",
+"-20 348 LINE",
+"-20 281 LINE"
+);
+}
+);
+width = 500;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "4196E4A4-01D0-4BE0-B812-9D3AF152A0E4";
+paths = (
+{
+closed = 1;
+nodes = (
+"250 301 LINE",
+"250 328 LINE",
+"-20 328 LINE",
+"-20 301 LINE"
+);
+}
+);
+width = 500;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "37FE174D-E85B-4C4C-A1AE-51D7E67A9FC9";
+paths = (
+{
+closed = 1;
+nodes = (
+"250 265 LINE",
+"250 376 LINE",
+"-20 376 LINE",
+"-20 265 LINE"
+);
+}
+);
+width = 500;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "7EB90DB1-9188-465D-93C7-E6C577A18003";
+paths = (
+{
+closed = 1;
+nodes = (
+"125 290 LINE",
+"125 348 LINE",
+"-10 348 LINE",
+"-10 290 LINE"
+);
+}
+);
+width = 250;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "0E826D2B-F2D1-4058-A5E0-936DF7ED7520";
+paths = (
+{
+closed = 1;
+nodes = (
+"125 308 LINE",
+"125 330 LINE",
+"-10 330 LINE",
+"-10 308 LINE"
+);
+}
+);
+width = 250;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "16CD5438-0A7A-495F-951A-DBB915DF0BEC";
+paths = (
+{
+closed = 1;
+nodes = (
+"500 299 LINE",
+"500 330 LINE",
+"-40 330 LINE",
+"-40 299 LINE"
+);
+}
+);
+width = 1000;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "E49A0581-9397-4BB7-ADB1-45D6EDC9C316";
+paths = (
+{
+closed = 1;
+nodes = (
+"125 272 LINE",
+"125 366 LINE",
+"-10 366 LINE",
+"-10 272 LINE"
+);
+}
+);
+width = 250;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "382F13D7-0CC9-4B85-A585-CBE12F4435D4";
+paths = (
+{
+closed = 1;
+nodes = (
+"500 275 LINE",
+"500 354 LINE",
+"-40 354 LINE",
+"-40 275 LINE"
+);
+}
+);
+width = 1000;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "CC486EF6-6464-4B93-9956-4F2B932959EA";
+paths = (
+{
+closed = 1;
+nodes = (
+"500 250 LINE",
+"500 379 LINE",
+"-40 379 LINE",
+"-40 250 LINE"
+);
+}
+);
+width = 1000;
+}
+);
+},
+{
+glyphname = bar_equal_start.seq;
+layers = (
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "051EFAE4-8BBE-4FBB-A016-4335C3E52F59";
+paths = (
+{
+closed = 1;
+nodes = (
+"520 389 LINE",
+"520 450 LINE",
+"250 450 LINE",
+"250 389 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"520 182 LINE",
+"520 243 LINE",
+"250 243 LINE",
+"250 182 LINE"
+);
+}
+);
+width = 500;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "4196E4A4-01D0-4BE0-B812-9D3AF152A0E4";
+paths = (
+{
+closed = 1;
+nodes = (
+"520 407 LINE",
+"520 432 LINE",
+"250 432 LINE",
+"250 407 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"520 200 LINE",
+"520 225 LINE",
+"250 225 LINE",
+"250 200 LINE"
+);
+}
+);
+width = 500;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "37FE174D-E85B-4C4C-A1AE-51D7E67A9FC9";
+paths = (
+{
+closed = 1;
+nodes = (
+"520 368 LINE",
+"520 473 LINE",
+"250 473 LINE",
+"250 368 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"520 158 LINE",
+"520 263 LINE",
+"250 263 LINE",
+"250 158 LINE"
+);
+}
+);
+width = 500;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "7EB90DB1-9188-465D-93C7-E6C577A18003";
+paths = (
+{
+closed = 1;
+nodes = (
+"260 391 LINE",
+"260 449 LINE",
+"125 449 LINE",
+"125 391 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"260 184 LINE",
+"260 242 LINE",
+"125 242 LINE",
+"125 184 LINE"
+);
+}
+);
+width = 250;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "0E826D2B-F2D1-4058-A5E0-936DF7ED7520";
+paths = (
+{
+closed = 1;
+nodes = (
+"260 409 LINE",
+"260 431 LINE",
+"125 431 LINE",
+"125 409 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"260 202 LINE",
+"260 224 LINE",
+"125 224 LINE",
+"125 202 LINE"
+);
+}
+);
+width = 250;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "16CD5438-0A7A-495F-951A-DBB915DF0BEC";
+paths = (
+{
+closed = 1;
+nodes = (
+"1040 405 LINE",
+"1040 434 LINE",
+"500 434 LINE",
+"500 405 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"1040 198 LINE",
+"1040 227 LINE",
+"500 227 LINE",
+"500 198 LINE"
+);
+}
+);
+width = 1000;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "E49A0581-9397-4BB7-ADB1-45D6EDC9C316";
+paths = (
+{
+closed = 1;
+nodes = (
+"260 373 LINE",
+"260 467 LINE",
+"125 467 LINE",
+"125 373 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"260 166 LINE",
+"260 260 LINE",
+"125 260 LINE",
+"125 166 LINE"
+);
+}
+);
+width = 250;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "382F13D7-0CC9-4B85-A585-CBE12F4435D4";
+paths = (
+{
+closed = 1;
+nodes = (
+"1040 381 LINE",
+"1040 458 LINE",
+"500 458 LINE",
+"500 381 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"1040 174 LINE",
+"1040 251 LINE",
+"500 251 LINE",
+"500 174 LINE"
+);
+}
+);
+width = 1000;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "CC486EF6-6464-4B93-9956-4F2B932959EA";
+paths = (
+{
+closed = 1;
+nodes = (
+"1040 356 LINE",
+"1040 483 LINE",
+"500 483 LINE",
+"500 356 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"1040 149 LINE",
+"1040 276 LINE",
+"500 276 LINE",
+"500 149 LINE"
+);
+}
+);
+width = 1000;
+}
+);
+},
+{
+glyphname = bar_equal_end.seq;
+layers = (
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "051EFAE4-8BBE-4FBB-A016-4335C3E52F59";
+paths = (
+{
+closed = 1;
+nodes = (
+"250 389 LINE",
+"250 450 LINE",
+"-20 450 LINE",
+"-20 389 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"250 182 LINE",
+"250 243 LINE",
+"-20 243 LINE",
+"-20 182 LINE"
+);
+}
+);
+width = 500;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "4196E4A4-01D0-4BE0-B812-9D3AF152A0E4";
+paths = (
+{
+closed = 1;
+nodes = (
+"250 407 LINE",
+"250 432 LINE",
+"-20 432 LINE",
+"-20 407 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"250 200 LINE",
+"250 225 LINE",
+"-20 225 LINE",
+"-20 200 LINE"
+);
+}
+);
+width = 500;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "37FE174D-E85B-4C4C-A1AE-51D7E67A9FC9";
+paths = (
+{
+closed = 1;
+nodes = (
+"250 368 LINE",
+"250 473 LINE",
+"-20 473 LINE",
+"-20 368 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"250 158 LINE",
+"250 263 LINE",
+"-20 263 LINE",
+"-20 158 LINE"
+);
+}
+);
+width = 500;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "7EB90DB1-9188-465D-93C7-E6C577A18003";
+paths = (
+{
+closed = 1;
+nodes = (
+"125 391 LINE",
+"125 449 LINE",
+"-10 449 LINE",
+"-10 391 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"125 184 LINE",
+"125 242 LINE",
+"-10 242 LINE",
+"-10 184 LINE"
+);
+}
+);
+width = 250;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "0E826D2B-F2D1-4058-A5E0-936DF7ED7520";
+paths = (
+{
+closed = 1;
+nodes = (
+"125 409 LINE",
+"125 431 LINE",
+"-10 431 LINE",
+"-10 409 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"125 202 LINE",
+"125 224 LINE",
+"-10 224 LINE",
+"-10 202 LINE"
+);
+}
+);
+width = 250;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "16CD5438-0A7A-495F-951A-DBB915DF0BEC";
+paths = (
+{
+closed = 1;
+nodes = (
+"500 405 LINE",
+"500 434 LINE",
+"-40 434 LINE",
+"-40 405 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"500 198 LINE",
+"500 227 LINE",
+"-40 227 LINE",
+"-40 198 LINE"
+);
+}
+);
+width = 1000;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "E49A0581-9397-4BB7-ADB1-45D6EDC9C316";
+paths = (
+{
+closed = 1;
+nodes = (
+"125 373 LINE",
+"125 467 LINE",
+"-10 467 LINE",
+"-10 373 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"125 166 LINE",
+"125 260 LINE",
+"-10 260 LINE",
+"-10 166 LINE"
+);
+}
+);
+width = 250;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "382F13D7-0CC9-4B85-A585-CBE12F4435D4";
+paths = (
+{
+closed = 1;
+nodes = (
+"500 381 LINE",
+"500 458 LINE",
+"-40 458 LINE",
+"-40 381 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"500 174 LINE",
+"500 251 LINE",
+"-40 251 LINE",
+"-40 174 LINE"
+);
+}
+);
+width = 1000;
+},
+{
+components = (
+{
+name = bar;
+}
+);
+layerId = "CC486EF6-6464-4B93-9956-4F2B932959EA";
+paths = (
+{
+closed = 1;
+nodes = (
+"500 356 LINE",
+"500 483 LINE",
+"-40 483 LINE",
+"-40 356 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"500 149 LINE",
+"500 276 LINE",
+"-40 276 LINE",
+"-40 149 LINE"
+);
+}
+);
+width = 1000;
+}
+);
+},
+{
+glyphname = slash_equal_start.seq;
+layers = (
+{
+components = (
+{
+name = slash;
+}
+);
+layerId = "051EFAE4-8BBE-4FBB-A016-4335C3E52F59";
+paths = (
+{
+closed = 1;
+nodes = (
+"520 389 LINE",
+"520 450 LINE",
+"250 450 LINE",
+"250 389 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"520 182 LINE",
+"520 243 LINE",
+"250 243 LINE",
+"250 182 LINE"
+);
+}
+);
+width = 500;
+},
+{
+components = (
+{
+name = slash;
+}
+);
+layerId = "4196E4A4-01D0-4BE0-B812-9D3AF152A0E4";
+paths = (
+{
+closed = 1;
+nodes = (
+"520 407 LINE",
+"520 432 LINE",
+"250 432 LINE",
+"250 407 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"520 200 LINE",
+"520 225 LINE",
+"250 225 LINE",
+"250 200 LINE"
+);
+}
+);
+width = 500;
+},
+{
+components = (
+{
+name = slash;
+}
+);
+layerId = "37FE174D-E85B-4C4C-A1AE-51D7E67A9FC9";
+paths = (
+{
+closed = 1;
+nodes = (
+"520 368 LINE",
+"520 473 LINE",
+"250 473 LINE",
+"250 368 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"520 158 LINE",
+"520 263 LINE",
+"250 263 LINE",
+"250 158 LINE"
+);
+}
+);
+width = 500;
+},
+{
+components = (
+{
+name = slash;
+}
+);
+layerId = "7EB90DB1-9188-465D-93C7-E6C577A18003";
+paths = (
+{
+closed = 1;
+nodes = (
+"260 391 LINE",
+"260 449 LINE",
+"125 449 LINE",
+"125 391 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"260 184 LINE",
+"260 242 LINE",
+"125 242 LINE",
+"125 184 LINE"
+);
+}
+);
+width = 250;
+},
+{
+components = (
+{
+name = slash;
+}
+);
+layerId = "0E826D2B-F2D1-4058-A5E0-936DF7ED7520";
+paths = (
+{
+closed = 1;
+nodes = (
+"260 409 LINE",
+"260 431 LINE",
+"125 431 LINE",
+"125 409 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"260 202 LINE",
+"260 224 LINE",
+"125 224 LINE",
+"125 202 LINE"
+);
+}
+);
+width = 250;
+},
+{
+components = (
+{
+name = slash;
+}
+);
+layerId = "16CD5438-0A7A-495F-951A-DBB915DF0BEC";
+paths = (
+{
+closed = 1;
+nodes = (
+"1040 405 LINE",
+"1040 434 LINE",
+"500 434 LINE",
+"500 405 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"1040 198 LINE",
+"1040 227 LINE",
+"500 227 LINE",
+"500 198 LINE"
+);
+}
+);
+width = 1000;
+},
+{
+components = (
+{
+name = slash;
+}
+);
+layerId = "E49A0581-9397-4BB7-ADB1-45D6EDC9C316";
+paths = (
+{
+closed = 1;
+nodes = (
+"260 373 LINE",
+"260 467 LINE",
+"125 467 LINE",
+"125 373 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"260 166 LINE",
+"260 260 LINE",
+"125 260 LINE",
+"125 166 LINE"
+);
+}
+);
+width = 250;
+},
+{
+components = (
+{
+name = slash;
+}
+);
+layerId = "382F13D7-0CC9-4B85-A585-CBE12F4435D4";
+paths = (
+{
+closed = 1;
+nodes = (
+"1040 381 LINE",
+"1040 458 LINE",
+"500 458 LINE",
+"500 381 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"1040 174 LINE",
+"1040 251 LINE",
+"500 251 LINE",
+"500 174 LINE"
+);
+}
+);
+width = 1000;
+},
+{
+components = (
+{
+name = slash;
+}
+);
+layerId = "CC486EF6-6464-4B93-9956-4F2B932959EA";
+paths = (
+{
+closed = 1;
+nodes = (
+"1040 356 LINE",
+"1040 483 LINE",
+"500 483 LINE",
+"500 356 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"1040 149 LINE",
+"1040 276 LINE",
+"500 276 LINE",
+"500 149 LINE"
+);
+}
+);
+width = 1000;
+}
+);
+},
+{
+glyphname = slash_equal_end.seq;
+layers = (
+{
+components = (
+{
+name = slash;
+}
+);
+layerId = "051EFAE4-8BBE-4FBB-A016-4335C3E52F59";
+paths = (
+{
+closed = 1;
+nodes = (
+"250 389 LINE",
+"250 450 LINE",
+"-20 450 LINE",
+"-20 389 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"250 182 LINE",
+"250 243 LINE",
+"-20 243 LINE",
+"-20 182 LINE"
+);
+}
+);
+width = 500;
+},
+{
+components = (
+{
+name = slash;
+}
+);
+layerId = "4196E4A4-01D0-4BE0-B812-9D3AF152A0E4";
+paths = (
+{
+closed = 1;
+nodes = (
+"250 407 LINE",
+"250 432 LINE",
+"-20 432 LINE",
+"-20 407 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"250 200 LINE",
+"250 225 LINE",
+"-20 225 LINE",
+"-20 200 LINE"
+);
+}
+);
+width = 500;
+},
+{
+components = (
+{
+name = slash;
+}
+);
+layerId = "37FE174D-E85B-4C4C-A1AE-51D7E67A9FC9";
+paths = (
+{
+closed = 1;
+nodes = (
+"250 368 LINE",
+"250 473 LINE",
+"-20 473 LINE",
+"-20 368 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"250 158 LINE",
+"250 263 LINE",
+"-20 263 LINE",
+"-20 158 LINE"
+);
+}
+);
+width = 500;
+},
+{
+components = (
+{
+name = slash;
+}
+);
+layerId = "7EB90DB1-9188-465D-93C7-E6C577A18003";
+paths = (
+{
+closed = 1;
+nodes = (
+"125 391 LINE",
+"125 449 LINE",
+"-10 449 LINE",
+"-10 391 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"125 184 LINE",
+"125 242 LINE",
+"-10 242 LINE",
+"-10 184 LINE"
+);
+}
+);
+width = 250;
+},
+{
+components = (
+{
+name = slash;
+}
+);
+layerId = "0E826D2B-F2D1-4058-A5E0-936DF7ED7520";
+paths = (
+{
+closed = 1;
+nodes = (
+"125 409 LINE",
+"125 431 LINE",
+"-10 431 LINE",
+"-10 409 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"125 202 LINE",
+"125 224 LINE",
+"-10 224 LINE",
+"-10 202 LINE"
+);
+}
+);
+width = 250;
+},
+{
+components = (
+{
+name = slash;
+}
+);
+layerId = "16CD5438-0A7A-495F-951A-DBB915DF0BEC";
+paths = (
+{
+closed = 1;
+nodes = (
+"500 405 LINE",
+"500 434 LINE",
+"-40 434 LINE",
+"-40 405 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"500 198 LINE",
+"500 227 LINE",
+"-40 227 LINE",
+"-40 198 LINE"
+);
+}
+);
+width = 1000;
+},
+{
+components = (
+{
+name = slash;
+}
+);
+layerId = "E49A0581-9397-4BB7-ADB1-45D6EDC9C316";
+paths = (
+{
+closed = 1;
+nodes = (
+"125 373 LINE",
+"125 467 LINE",
+"-10 467 LINE",
+"-10 373 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"125 166 LINE",
+"125 260 LINE",
+"-10 260 LINE",
+"-10 166 LINE"
+);
+}
+);
+width = 250;
+},
+{
+components = (
+{
+name = slash;
+}
+);
+layerId = "382F13D7-0CC9-4B85-A585-CBE12F4435D4";
+paths = (
+{
+closed = 1;
+nodes = (
+"500 381 LINE",
+"500 458 LINE",
+"-40 458 LINE",
+"-40 381 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"500 174 LINE",
+"500 251 LINE",
+"-40 251 LINE",
+"-40 174 LINE"
+);
+}
+);
+width = 1000;
+},
+{
+components = (
+{
+name = slash;
+}
+);
+layerId = "CC486EF6-6464-4B93-9956-4F2B932959EA";
+paths = (
+{
+closed = 1;
+nodes = (
+"500 356 LINE",
+"500 483 LINE",
+"-40 483 LINE",
+"-40 356 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"500 149 LINE",
+"500 276 LINE",
+"-40 276 LINE",
+"-40 149 LINE"
+);
+}
+);
+width = 1000;
+}
+);
+},
+{
+glyphname = colon_equal_middle.seq;
+layers = (
+{
+layerId = "051EFAE4-8BBE-4FBB-A016-4335C3E52F59";
+paths = (
+{
+closed = 1;
+nodes = (
+"520 389 LINE",
+"520 450 LINE",
+"-20 450 LINE",
+"-20 389 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"520 182 LINE",
+"520 243 LINE",
+"-20 243 LINE",
+"-20 182 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"281.5 362 OFFCURVE",
+"309.5 388 OFFCURVE",
+"309.5 419 CURVE SMOOTH",
+"309.5 451 OFFCURVE",
+"280.5 477 OFFCURVE",
+"249.5 477 CURVE SMOOTH",
+"218.5 477 OFFCURVE",
+"190.5 451 OFFCURVE",
+"190.5 419 CURVE SMOOTH",
+"190.5 388 OFFCURVE",
+"218.5 362 OFFCURVE",
+"249.5 362 CURVE SMOOTH"
+);
+},
+{
+closed = 1;
+nodes = (
+"282.5 155 OFFCURVE",
+"309.5 181 OFFCURVE",
+"309.5 212 CURVE SMOOTH",
+"309.5 244 OFFCURVE",
+"280.5 270 OFFCURVE",
+"249.5 270 CURVE SMOOTH",
+"218.5 270 OFFCURVE",
+"190.5 244 OFFCURVE",
+"190.5 212 CURVE SMOOTH",
+"190.5 180 OFFCURVE",
+"216.5 155 OFFCURVE",
+"249.5 155 CURVE SMOOTH"
+);
+}
+);
+width = 500;
+},
+{
+layerId = "4196E4A4-01D0-4BE0-B812-9D3AF152A0E4";
+paths = (
+{
+closed = 1;
+nodes = (
+"520 407 LINE",
+"520 432 LINE",
+"-20 432 LINE",
+"-20 407 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"520 200 LINE",
+"520 225 LINE",
+"-20 225 LINE",
+"-20 200 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"265.5 392 OFFCURVE",
+"278.5 405 OFFCURVE",
+"278.5 419 CURVE SMOOTH",
+"278.5 435 OFFCURVE",
+"264.5 447 OFFCURVE",
+"249.5 447 CURVE SMOOTH",
+"235.5 447 OFFCURVE",
+"221.5 435 OFFCURVE",
+"221.5 419 CURVE SMOOTH",
+"221.5 405 OFFCURVE",
+"235.5 392 OFFCURVE",
+"249.5 392 CURVE SMOOTH"
+);
+},
+{
+closed = 1;
+nodes = (
+"265.5 185 OFFCURVE",
+"278.5 198 OFFCURVE",
+"278.5 212 CURVE SMOOTH",
+"278.5 228 OFFCURVE",
+"264.5 240 OFFCURVE",
+"249.5 240 CURVE SMOOTH",
+"235.5 240 OFFCURVE",
+"221.5 228 OFFCURVE",
+"221.5 212 CURVE SMOOTH",
+"221.5 197 OFFCURVE",
+"234.5 185 OFFCURVE",
+"249.5 185 CURVE SMOOTH"
+);
+}
+);
+width = 500;
+},
+{
+layerId = "37FE174D-E85B-4C4C-A1AE-51D7E67A9FC9";
+paths = (
+{
+closed = 1;
+nodes = (
+"520 368 LINE",
+"520 473 LINE",
+"-20 473 LINE",
+"-20 368 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"520 158 LINE",
+"520 263 LINE",
+"-20 263 LINE",
+"-20 158 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"299.5 332.5 OFFCURVE",
+"336.5 375.5 OFFCURVE",
+"336.5 420.5 CURVE SMOOTH",
+"336.5 469.5 OFFCURVE",
+"293.5 508.5 OFFCURVE",
+"249.5 508.5 CURVE",
+"201.5 508.5 OFFCURVE",
+"163.5 465.5 OFFCURVE",
+"163.5 420.5 CURVE SMOOTH",
+"163.5 375.5 OFFCURVE",
+"201.5 332.5 OFFCURVE",
+"249.5 332.5 CURVE SMOOTH"
+);
+},
+{
+closed = 1;
+nodes = (
+"300.5 122 OFFCURVE",
+"336.5 165 OFFCURVE",
+"336.5 209 CURVE SMOOTH",
+"336.5 258 OFFCURVE",
+"293.5 299 OFFCURVE",
+"249.5 299 CURVE",
+"201.5 299 OFFCURVE",
+"163.5 255 OFFCURVE",
+"163.5 209 CURVE SMOOTH",
+"163.5 164 OFFCURVE",
+"199.5 122 OFFCURVE",
+"249.5 122 CURVE SMOOTH"
+);
+}
+);
+width = 500;
+},
+{
+layerId = "7EB90DB1-9188-465D-93C7-E6C577A18003";
+paths = (
+{
+closed = 1;
+nodes = (
+"260 391 LINE",
+"260 449 LINE",
+"-10 449 LINE",
+"-10 391 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"260 184 LINE",
+"260 242 LINE",
+"-10 242 LINE",
+"-10 184 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"145 376 OFFCURVE",
+"161 396 OFFCURVE",
+"161 420 CURVE SMOOTH",
+"161 444 OFFCURVE",
+"145 464 OFFCURVE",
+"125 464 CURVE SMOOTH",
+"105 464 OFFCURVE",
+"89 444 OFFCURVE",
+"89 420 CURVE SMOOTH",
+"89 396 OFFCURVE",
+"105 376 OFFCURVE",
+"125 376 CURVE SMOOTH"
+);
+},
+{
+closed = 1;
+nodes = (
+"145 169 OFFCURVE",
+"161 189 OFFCURVE",
+"161 213 CURVE SMOOTH",
+"161 237 OFFCURVE",
+"145 257 OFFCURVE",
+"125 257 CURVE SMOOTH",
+"105 257 OFFCURVE",
+"89 237 OFFCURVE",
+"89 213 CURVE SMOOTH",
+"89 189 OFFCURVE",
+"105 169 OFFCURVE",
+"125 169 CURVE SMOOTH"
+);
+}
+);
+width = 250;
+},
+{
+layerId = "0E826D2B-F2D1-4058-A5E0-936DF7ED7520";
+paths = (
+{
+closed = 1;
+nodes = (
+"260 409 LINE",
+"260 431 LINE",
+"-10 431 LINE",
+"-10 409 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"260 202 LINE",
+"260 224 LINE",
+"-10 224 LINE",
+"-10 202 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"137.5 392.5 OFFCURVE",
+"147.5 405.5 OFFCURVE",
+"147.5 420.5 CURVE SMOOTH",
+"147.5 435.5 OFFCURVE",
+"137.5 447.5 OFFCURVE",
+"124.5 447.5 CURVE SMOOTH",
+"112.5 447.5 OFFCURVE",
+"102.5 435.5 OFFCURVE",
+"102.5 420.5 CURVE SMOOTH",
+"102.5 405.5 OFFCURVE",
+"112.5 392.5 OFFCURVE",
+"124.5 392.5 CURVE SMOOTH"
+);
+},
+{
+closed = 1;
+nodes = (
+"137.5 185.5 OFFCURVE",
+"147.5 198.5 OFFCURVE",
+"147.5 213.5 CURVE SMOOTH",
+"147.5 228.5 OFFCURVE",
+"137.5 240.5 OFFCURVE",
+"124.5 240.5 CURVE SMOOTH",
+"112.5 240.5 OFFCURVE",
+"102.5 228.5 OFFCURVE",
+"102.5 213.5 CURVE SMOOTH",
+"102.5 198.5 OFFCURVE",
+"112.5 185.5 OFFCURVE",
+"124.5 185.5 CURVE SMOOTH"
+);
+}
+);
+width = 250;
+},
+{
+layerId = "16CD5438-0A7A-495F-951A-DBB915DF0BEC";
+paths = (
+{
+closed = 1;
+nodes = (
+"1040 405 LINE",
+"1040 434 LINE",
+"-40 434 LINE",
+"-40 405 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"1040 198 LINE",
+"1040 227 LINE",
+"-40 227 LINE",
+"-40 198 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"521.5 381.5 OFFCURVE",
+"538.5 398.5 OFFCURVE",
+"538.5 419.5 CURVE SMOOTH",
+"538.5 440.5 OFFCURVE",
+"521.5 457.5 OFFCURVE",
+"500.5 457.5 CURVE SMOOTH",
+"479.5 457.5 OFFCURVE",
+"461.5 440.5 OFFCURVE",
+"461.5 419.5 CURVE SMOOTH",
+"461.5 398.5 OFFCURVE",
+"479.5 381.5 OFFCURVE",
+"500.5 381.5 CURVE SMOOTH"
+);
+},
+{
+closed = 1;
+nodes = (
+"521.5 174.5 OFFCURVE",
+"538.5 191.5 OFFCURVE",
+"538.5 212.5 CURVE SMOOTH",
+"538.5 233.5 OFFCURVE",
+"521.5 250.5 OFFCURVE",
+"500.5 250.5 CURVE SMOOTH",
+"479.5 250.5 OFFCURVE",
+"461.5 233.5 OFFCURVE",
+"461.5 212.5 CURVE SMOOTH",
+"461.5 191.5 OFFCURVE",
+"479.5 174.5 OFFCURVE",
+"500.5 174.5 CURVE SMOOTH"
+);
+}
+);
+width = 1000;
+},
+{
+layerId = "E49A0581-9397-4BB7-ADB1-45D6EDC9C316";
+paths = (
+{
+closed = 1;
+nodes = (
+"260 373 LINE",
+"260 467 LINE",
+"-10 467 LINE",
+"-10 373 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"260 166 LINE",
+"260 260 LINE",
+"-10 260 LINE",
+"-10 166 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"156.5 362.5 OFFCURVE",
+"184.5 388.5 OFFCURVE",
+"184.5 419.5 CURVE SMOOTH",
+"184.5 451.5 OFFCURVE",
+"155.5 477.5 OFFCURVE",
+"124.5 477.5 CURVE SMOOTH",
+"93.5 477.5 OFFCURVE",
+"65.5 451.5 OFFCURVE",
+"65.5 419.5 CURVE SMOOTH",
+"65.5 388.5 OFFCURVE",
+"93.5 362.5 OFFCURVE",
+"124.5 362.5 CURVE SMOOTH"
+);
+},
+{
+closed = 1;
+nodes = (
+"157.5 155.5 OFFCURVE",
+"184.5 181.5 OFFCURVE",
+"184.5 212.5 CURVE SMOOTH",
+"184.5 244.5 OFFCURVE",
+"155.5 270.5 OFFCURVE",
+"124.5 270.5 CURVE SMOOTH",
+"93.5 270.5 OFFCURVE",
+"65.5 244.5 OFFCURVE",
+"65.5 212.5 CURVE SMOOTH",
+"65.5 180.5 OFFCURVE",
+"91.5 155.5 OFFCURVE",
+"124.5 155.5 CURVE SMOOTH"
+);
+}
+);
+width = 250;
+},
+{
+layerId = "382F13D7-0CC9-4B85-A585-CBE12F4435D4";
+paths = (
+{
+closed = 1;
+nodes = (
+"1040 381 LINE",
+"1040 458 LINE",
+"-40 458 LINE",
+"-40 381 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"1040 174 LINE",
+"1040 251 LINE",
+"-40 251 LINE",
+"-40 174 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"537.5 351 OFFCURVE",
+"568.5 382 OFFCURVE",
+"568.5 419 CURVE SMOOTH",
+"568.5 457 OFFCURVE",
+"537.5 488 OFFCURVE",
+"500.5 488 CURVE SMOOTH",
+"462.5 488 OFFCURVE",
+"431.5 457 OFFCURVE",
+"431.5 419 CURVE SMOOTH",
+"431.5 382 OFFCURVE",
+"462.5 351 OFFCURVE",
+"500.5 351 CURVE SMOOTH"
+);
+},
+{
+closed = 1;
+nodes = (
+"537.5 144 OFFCURVE",
+"568.5 175 OFFCURVE",
+"568.5 212 CURVE SMOOTH",
+"568.5 250 OFFCURVE",
+"537.5 281 OFFCURVE",
+"500.5 281 CURVE SMOOTH",
+"462.5 281 OFFCURVE",
+"431.5 250 OFFCURVE",
+"431.5 212 CURVE SMOOTH",
+"431.5 175 OFFCURVE",
+"462.5 144 OFFCURVE",
+"500.5 144 CURVE SMOOTH"
+);
+}
+);
+width = 1000;
+},
+{
+layerId = "CC486EF6-6464-4B93-9956-4F2B932959EA";
+paths = (
+{
+closed = 1;
+nodes = (
+"1040 356 LINE",
+"1040 483 LINE",
+"-40 483 LINE",
+"-40 356 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"1040 149 LINE",
+"1040 276 LINE",
+"-40 276 LINE",
+"-40 149 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"553.5 322.5 OFFCURVE",
+"597.5 366.5 OFFCURVE",
+"597.5 419.5 CURVE SMOOTH",
+"597.5 472.5 OFFCURVE",
+"553.5 516.5 OFFCURVE",
+"500.5 516.5 CURVE SMOOTH",
+"446.5 516.5 OFFCURVE",
+"402.5 472.5 OFFCURVE",
+"402.5 419.5 CURVE SMOOTH",
+"402.5 366.5 OFFCURVE",
+"446.5 322.5 OFFCURVE",
+"500.5 322.5 CURVE SMOOTH"
+);
+},
+{
+closed = 1;
+nodes = (
+"553.5 115.5 OFFCURVE",
+"597.5 159.5 OFFCURVE",
+"597.5 212.5 CURVE SMOOTH",
+"597.5 265.5 OFFCURVE",
+"553.5 309.5 OFFCURVE",
+"500.5 309.5 CURVE SMOOTH",
+"446.5 309.5 OFFCURVE",
+"402.5 265.5 OFFCURVE",
+"402.5 212.5 CURVE SMOOTH",
+"402.5 159.5 OFFCURVE",
+"446.5 115.5 OFFCURVE",
+"500.5 115.5 CURVE SMOOTH"
+);
+}
+);
+width = 1000;
+}
+);
+},
+{
+glyphname = exclam_equal_middle.seq;
+layers = (
+{
+components = (
+{
+name = exclam;
+}
+);
+layerId = "051EFAE4-8BBE-4FBB-A016-4335C3E52F59";
+paths = (
+{
+closed = 1;
+nodes = (
+"520 389 LINE",
+"520 450 LINE",
+"-20 450 LINE",
+"-20 389 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"520 182 LINE",
+"520 243 LINE",
+"-20 243 LINE",
+"-20 182 LINE"
+);
+}
+);
+width = 500;
+},
+{
+components = (
+{
+name = exclam;
+}
+);
+layerId = "4196E4A4-01D0-4BE0-B812-9D3AF152A0E4";
+paths = (
+{
+closed = 1;
+nodes = (
+"520 407 LINE",
+"520 432 LINE",
+"-20 432 LINE",
+"-20 407 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"520 200 LINE",
+"520 225 LINE",
+"-20 225 LINE",
+"-20 200 LINE"
+);
+}
+);
+width = 500;
+},
+{
+components = (
+{
+name = exclam;
+}
+);
+layerId = "37FE174D-E85B-4C4C-A1AE-51D7E67A9FC9";
+paths = (
+{
+closed = 1;
+nodes = (
+"520 368 LINE",
+"520 473 LINE",
+"-20 473 LINE",
+"-20 368 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"520 158 LINE",
+"520 263 LINE",
+"-20 263 LINE",
+"-20 158 LINE"
+);
+}
+);
+width = 500;
+},
+{
+components = (
+{
+name = exclam;
+}
+);
+layerId = "7EB90DB1-9188-465D-93C7-E6C577A18003";
+paths = (
+{
+closed = 1;
+nodes = (
+"260 391 LINE",
+"260 449 LINE",
+"-10 449 LINE",
+"-10 391 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"260 184 LINE",
+"260 242 LINE",
+"-10 242 LINE",
+"-10 184 LINE"
+);
+}
+);
+width = 250;
+},
+{
+components = (
+{
+name = exclam;
+}
+);
+layerId = "0E826D2B-F2D1-4058-A5E0-936DF7ED7520";
+paths = (
+{
+closed = 1;
+nodes = (
+"260 409 LINE",
+"260 431 LINE",
+"-10 431 LINE",
+"-10 409 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"260 202 LINE",
+"260 224 LINE",
+"-10 224 LINE",
+"-10 202 LINE"
+);
+}
+);
+width = 250;
+},
+{
+components = (
+{
+name = exclam;
+}
+);
+layerId = "16CD5438-0A7A-495F-951A-DBB915DF0BEC";
+paths = (
+{
+closed = 1;
+nodes = (
+"1040 405 LINE",
+"1040 434 LINE",
+"-40 434 LINE",
+"-40 405 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"1040 198 LINE",
+"1040 227 LINE",
+"-40 227 LINE",
+"-40 198 LINE"
+);
+}
+);
+width = 1000;
+},
+{
+components = (
+{
+name = exclam;
+}
+);
+layerId = "E49A0581-9397-4BB7-ADB1-45D6EDC9C316";
+paths = (
+{
+closed = 1;
+nodes = (
+"260 373 LINE",
+"260 467 LINE",
+"-10 467 LINE",
+"-10 373 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"260 166 LINE",
+"260 260 LINE",
+"-10 260 LINE",
+"-10 166 LINE"
+);
+}
+);
+width = 250;
+},
+{
+components = (
+{
+name = exclam;
+}
+);
+layerId = "382F13D7-0CC9-4B85-A585-CBE12F4435D4";
+paths = (
+{
+closed = 1;
+nodes = (
+"1040 381 LINE",
+"1040 458 LINE",
+"-40 458 LINE",
+"-40 381 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"1040 174 LINE",
+"1040 251 LINE",
+"-40 251 LINE",
+"-40 174 LINE"
+);
+}
+);
+width = 1000;
+},
+{
+components = (
+{
+name = exclam;
+}
+);
+layerId = "CC486EF6-6464-4B93-9956-4F2B932959EA";
+paths = (
+{
+closed = 1;
+nodes = (
+"1040 356 LINE",
+"1040 483 LINE",
+"-40 483 LINE",
+"-40 356 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"1040 149 LINE",
+"1040 276 LINE",
+"-40 276 LINE",
+"-40 149 LINE"
+);
+}
+);
+width = 1000;
+}
+);
+},
+{
+glyphname = slash_equal_middle.seq;
+layers = (
+{
+components = (
+{
+name = slash;
+}
+);
+layerId = "051EFAE4-8BBE-4FBB-A016-4335C3E52F59";
+paths = (
+{
+closed = 1;
+nodes = (
+"520 389 LINE",
+"520 450 LINE",
+"-20 450 LINE",
+"-20 389 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"520 182 LINE",
+"520 243 LINE",
+"-20 243 LINE",
+"-20 182 LINE"
+);
+}
+);
+width = 500;
+},
+{
+components = (
+{
+name = slash;
+}
+);
+layerId = "4196E4A4-01D0-4BE0-B812-9D3AF152A0E4";
+paths = (
+{
+closed = 1;
+nodes = (
+"520 407 LINE",
+"520 432 LINE",
+"-20 432 LINE",
+"-20 407 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"520 200 LINE",
+"520 225 LINE",
+"-20 225 LINE",
+"-20 200 LINE"
+);
+}
+);
+width = 500;
+},
+{
+components = (
+{
+name = slash;
+}
+);
+layerId = "37FE174D-E85B-4C4C-A1AE-51D7E67A9FC9";
+paths = (
+{
+closed = 1;
+nodes = (
+"520 368 LINE",
+"520 473 LINE",
+"-20 473 LINE",
+"-20 368 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"520 158 LINE",
+"520 263 LINE",
+"-20 263 LINE",
+"-20 158 LINE"
+);
+}
+);
+width = 500;
+},
+{
+components = (
+{
+name = slash;
+}
+);
+layerId = "7EB90DB1-9188-465D-93C7-E6C577A18003";
+paths = (
+{
+closed = 1;
+nodes = (
+"260 391 LINE",
+"260 449 LINE",
+"-10 449 LINE",
+"-10 391 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"260 184 LINE",
+"260 242 LINE",
+"-10 242 LINE",
+"-10 184 LINE"
+);
+}
+);
+width = 250;
+},
+{
+components = (
+{
+name = slash;
+}
+);
+layerId = "0E826D2B-F2D1-4058-A5E0-936DF7ED7520";
+paths = (
+{
+closed = 1;
+nodes = (
+"260 409 LINE",
+"260 431 LINE",
+"-10 431 LINE",
+"-10 409 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"260 202 LINE",
+"260 224 LINE",
+"-10 224 LINE",
+"-10 202 LINE"
+);
+}
+);
+width = 250;
+},
+{
+components = (
+{
+name = slash;
+}
+);
+layerId = "16CD5438-0A7A-495F-951A-DBB915DF0BEC";
+paths = (
+{
+closed = 1;
+nodes = (
+"1040 405 LINE",
+"1040 434 LINE",
+"-40 434 LINE",
+"-40 405 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"1040 198 LINE",
+"1040 227 LINE",
+"-40 227 LINE",
+"-40 198 LINE"
+);
+}
+);
+width = 1000;
+},
+{
+components = (
+{
+name = slash;
+}
+);
+layerId = "E49A0581-9397-4BB7-ADB1-45D6EDC9C316";
+paths = (
+{
+closed = 1;
+nodes = (
+"260 373 LINE",
+"260 467 LINE",
+"-10 467 LINE",
+"-10 373 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"260 166 LINE",
+"260 260 LINE",
+"-10 260 LINE",
+"-10 166 LINE"
+);
+}
+);
+width = 250;
+},
+{
+components = (
+{
+name = slash;
+}
+);
+layerId = "382F13D7-0CC9-4B85-A585-CBE12F4435D4";
+paths = (
+{
+closed = 1;
+nodes = (
+"1040 381 LINE",
+"1040 458 LINE",
+"-40 458 LINE",
+"-40 381 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"1040 174 LINE",
+"1040 251 LINE",
+"-40 251 LINE",
+"-40 174 LINE"
+);
+}
+);
+width = 1000;
+},
+{
+components = (
+{
+name = slash;
+}
+);
+layerId = "CC486EF6-6464-4B93-9956-4F2B932959EA";
+paths = (
+{
+closed = 1;
+nodes = (
+"1040 356 LINE",
+"1040 483 LINE",
+"-40 483 LINE",
+"-40 356 LINE"
+);
+},
+{
+closed = 1;
+nodes = (
+"1040 149 LINE",
+"1040 276 LINE",
+"-40 276 LINE",
+"-40 149 LINE"
+);
+}
+);
+width = 1000;
+}
+);
+},
+{
+glyphname = colon.center;
+layers = (
+{
+layerId = "051EFAE4-8BBE-4FBB-A016-4335C3E52F59";
+paths = (
+{
+closed = 1;
+nodes = (
+"270 418 OFFCURVE",
+"298 444 OFFCURVE",
+"298 475 CURVE SMOOTH",
+"298 507 OFFCURVE",
+"269 533 OFFCURVE",
+"238 533 CURVE SMOOTH",
+"207 533 OFFCURVE",
+"179 507 OFFCURVE",
+"179 475 CURVE SMOOTH",
+"179 444 OFFCURVE",
+"207 418 OFFCURVE",
+"238 418 CURVE SMOOTH"
+);
+},
+{
+closed = 1;
+nodes = (
+"271 99 OFFCURVE",
+"298 125 OFFCURVE",
+"298 156 CURVE SMOOTH",
+"298 188 OFFCURVE",
+"269 214 OFFCURVE",
+"238 214 CURVE SMOOTH",
+"207 214 OFFCURVE",
+"179 188 OFFCURVE",
+"179 156 CURVE SMOOTH",
+"179 124 OFFCURVE",
+"205 99 OFFCURVE",
+"238 99 CURVE SMOOTH"
+);
+}
+);
+width = 500;
+},
+{
+layerId = "4196E4A4-01D0-4BE0-B812-9D3AF152A0E4";
+paths = (
+{
+closed = 1;
+nodes = (
+"254 463.5 OFFCURVE",
+"267 476.5 OFFCURVE",
+"267 490.5 CURVE SMOOTH",
+"267 506.5 OFFCURVE",
+"253 518.5 OFFCURVE",
+"238 518.5 CURVE SMOOTH",
+"224 518.5 OFFCURVE",
+"210 506.5 OFFCURVE",
+"210 490.5 CURVE SMOOTH",
+"210 476.5 OFFCURVE",
+"224 463.5 OFFCURVE",
+"238 463.5 CURVE SMOOTH"
+);
+},
+{
+closed = 1;
+nodes = (
+"254 113.5 OFFCURVE",
+"267 126.5 OFFCURVE",
+"267 140.5 CURVE SMOOTH",
+"267 156.5 OFFCURVE",
+"253 168.5 OFFCURVE",
+"238 168.5 CURVE SMOOTH",
+"224 168.5 OFFCURVE",
+"210 156.5 OFFCURVE",
+"210 140.5 CURVE SMOOTH",
+"210 125.5 OFFCURVE",
+"223 113.5 OFFCURVE",
+"238 113.5 CURVE SMOOTH"
+);
+}
+);
+width = 500;
+},
+{
+background = {
+paths = (
+{
+closed = 1;
+nodes = (
+"267 417 OFFCURVE",
+"253 423 OFFCURVE",
+"238 423 CURVE SMOOTH",
+"207 423 OFFCURVE",
+"179 397 OFFCURVE",
+"179 365 CURVE SMOOTH",
+"179 334 OFFCURVE",
+"207 308 OFFCURVE",
+"238 308 CURVE SMOOTH",
+"270 308 OFFCURVE",
+"298 334 OFFCURVE",
+"298 365 CURVE SMOOTH",
+"298 380 OFFCURVE",
+"292 394 OFFCURVE",
+"280 406 CURVE"
+);
+},
+{
+closed = 1;
+nodes = (
+"267 98 OFFCURVE",
+"253 104 OFFCURVE",
+"238 104 CURVE SMOOTH",
+"207 104 OFFCURVE",
+"179 78 OFFCURVE",
+"179 46 CURVE SMOOTH",
+"179 14 OFFCURVE",
+"205 -11 OFFCURVE",
+"238 -11 CURVE SMOOTH",
+"271 -11 OFFCURVE",
+"298 15 OFFCURVE",
+"298 46 CURVE SMOOTH",
+"298 61 OFFCURVE",
+"292 75 OFFCURVE",
+"280 87 CURVE"
+);
+}
+);
+};
+layerId = "37FE174D-E85B-4C4C-A1AE-51D7E67A9FC9";
+paths = (
+{
+closed = 1;
+nodes = (
+"283 373.5 OFFCURVE",
+"320 416.5 OFFCURVE",
+"320 461.5 CURVE SMOOTH",
+"320 510.5 OFFCURVE",
+"277 549.5 OFFCURVE",
+"233 549.5 CURVE",
+"185 549.5 OFFCURVE",
+"147 506.5 OFFCURVE",
+"147 461.5 CURVE SMOOTH",
+"147 416.5 OFFCURVE",
+"185 373.5 OFFCURVE",
+"233 373.5 CURVE SMOOTH"
+);
+},
+{
+closed = 1;
+nodes = (
+"284 81.5 OFFCURVE",
+"320 124.5 OFFCURVE",
+"320 168.5 CURVE SMOOTH",
+"320 217.5 OFFCURVE",
+"277 258.5 OFFCURVE",
+"233 258.5 CURVE",
+"185 258.5 OFFCURVE",
+"147 214.5 OFFCURVE",
+"147 168.5 CURVE SMOOTH",
+"147 123.5 OFFCURVE",
+"183 81.5 OFFCURVE",
+"233 81.5 CURVE SMOOTH"
+);
+}
+);
+width = 500;
+},
+{
+layerId = "7EB90DB1-9188-465D-93C7-E6C577A18003";
+paths = (
+{
+closed = 1;
+nodes = (
+"151 439 OFFCURVE",
+"167 459 OFFCURVE",
+"167 483 CURVE SMOOTH",
+"167 507 OFFCURVE",
+"151 527 OFFCURVE",
+"131 527 CURVE SMOOTH",
+"111 527 OFFCURVE",
+"95 507 OFFCURVE",
+"95 483 CURVE SMOOTH",
+"95 459 OFFCURVE",
+"111 439 OFFCURVE",
+"131 439 CURVE SMOOTH"
+);
+},
+{
+closed = 1;
+nodes = (
+"151 106 OFFCURVE",
+"167 126 OFFCURVE",
+"167 150 CURVE SMOOTH",
+"167 174 OFFCURVE",
+"151 194 OFFCURVE",
+"131 194 CURVE SMOOTH",
+"111 194 OFFCURVE",
+"95 174 OFFCURVE",
+"95 150 CURVE SMOOTH",
+"95 126 OFFCURVE",
+"111 106 OFFCURVE",
+"131 106 CURVE SMOOTH"
+);
+}
+);
+width = 250;
+},
+{
+layerId = "0E826D2B-F2D1-4058-A5E0-936DF7ED7520";
+paths = (
+{
+closed = 1;
+nodes = (
+"144 463.5 OFFCURVE",
+"154 476.5 OFFCURVE",
+"154 491.5 CURVE SMOOTH",
+"154 506.5 OFFCURVE",
+"144 518.5 OFFCURVE",
+"131 518.5 CURVE SMOOTH",
+"119 518.5 OFFCURVE",
+"109 506.5 OFFCURVE",
+"109 491.5 CURVE SMOOTH",
+"109 476.5 OFFCURVE",
+"119 463.5 OFFCURVE",
+"131 463.5 CURVE SMOOTH"
+);
+},
+{
+closed = 1;
+nodes = (
+"144 114.5 OFFCURVE",
+"154 127.5 OFFCURVE",
+"154 142.5 CURVE SMOOTH",
+"154 157.5 OFFCURVE",
+"144 169.5 OFFCURVE",
+"131 169.5 CURVE SMOOTH",
+"119 169.5 OFFCURVE",
+"109 157.5 OFFCURVE",
+"109 142.5 CURVE SMOOTH",
+"109 127.5 OFFCURVE",
+"119 114.5 OFFCURVE",
+"131 114.5 CURVE SMOOTH"
+);
+}
+);
+width = 250;
+},
+{
+layerId = "16CD5438-0A7A-495F-951A-DBB915DF0BEC";
+paths = (
+{
+closed = 1;
+nodes = (
+"509 448 OFFCURVE",
+"526 465 OFFCURVE",
+"526 486 CURVE SMOOTH",
+"526 507 OFFCURVE",
+"509 524 OFFCURVE",
+"488 524 CURVE SMOOTH",
+"467 524 OFFCURVE",
+"449 507 OFFCURVE",
+"449 486 CURVE SMOOTH",
+"449 465 OFFCURVE",
+"467 448 OFFCURVE",
+"488 448 CURVE SMOOTH"
+);
+},
+{
+closed = 1;
+nodes = (
+"509 108 OFFCURVE",
+"526 125 OFFCURVE",
+"526 146 CURVE SMOOTH",
+"526 167 OFFCURVE",
+"509 184 OFFCURVE",
+"488 184 CURVE SMOOTH",
+"467 184 OFFCURVE",
+"449 167 OFFCURVE",
+"449 146 CURVE SMOOTH",
+"449 125 OFFCURVE",
+"467 108 OFFCURVE",
+"488 108 CURVE SMOOTH"
+);
+}
+);
+width = 1000;
+},
+{
+layerId = "E49A0581-9397-4BB7-ADB1-45D6EDC9C316";
+paths = (
+{
+closed = 1;
+nodes = (
+"145 418.5 OFFCURVE",
+"173 444.5 OFFCURVE",
+"173 475.5 CURVE SMOOTH",
+"173 507.5 OFFCURVE",
+"144 533.5 OFFCURVE",
+"113 533.5 CURVE SMOOTH",
+"82 533.5 OFFCURVE",
+"54 507.5 OFFCURVE",
+"54 475.5 CURVE SMOOTH",
+"54 444.5 OFFCURVE",
+"82 418.5 OFFCURVE",
+"113 418.5 CURVE SMOOTH"
+);
+},
+{
+closed = 1;
+nodes = (
+"146 99.5 OFFCURVE",
+"173 125.5 OFFCURVE",
+"173 156.5 CURVE SMOOTH",
+"173 188.5 OFFCURVE",
+"144 214.5 OFFCURVE",
+"113 214.5 CURVE SMOOTH",
+"82 214.5 OFFCURVE",
+"54 188.5 OFFCURVE",
+"54 156.5 CURVE SMOOTH",
+"54 124.5 OFFCURVE",
+"80 99.5 OFFCURVE",
+"113 99.5 CURVE SMOOTH"
+);
+}
+);
+width = 250;
+},
+{
+layerId = "382F13D7-0CC9-4B85-A585-CBE12F4435D4";
+paths = (
+{
+closed = 1;
+nodes = (
+"526 403.5 OFFCURVE",
+"557 434.5 OFFCURVE",
+"557 471.5 CURVE SMOOTH",
+"557 509.5 OFFCURVE",
+"526 540.5 OFFCURVE",
+"489 540.5 CURVE SMOOTH",
+"451 540.5 OFFCURVE",
+"420 509.5 OFFCURVE",
+"420 471.5 CURVE SMOOTH",
+"420 434.5 OFFCURVE",
+"451 403.5 OFFCURVE",
+"489 403.5 CURVE SMOOTH"
+);
+},
+{
+closed = 1;
+nodes = (
+"526 91.5 OFFCURVE",
+"557 122.5 OFFCURVE",
+"557 159.5 CURVE SMOOTH",
+"557 197.5 OFFCURVE",
+"526 228.5 OFFCURVE",
+"489 228.5 CURVE SMOOTH",
+"451 228.5 OFFCURVE",
+"420 197.5 OFFCURVE",
+"420 159.5 CURVE SMOOTH",
+"420 122.5 OFFCURVE",
+"451 91.5 OFFCURVE",
+"489 91.5 CURVE SMOOTH"
+);
+}
+);
+width = 1000;
+},
+{
+layerId = "CC486EF6-6464-4B93-9956-4F2B932959EA";
+paths = (
+{
+closed = 1;
+nodes = (
+"541 359 OFFCURVE",
+"585 403 OFFCURVE",
+"585 456 CURVE SMOOTH",
+"585 509 OFFCURVE",
+"541 553 OFFCURVE",
+"488 553 CURVE SMOOTH",
+"434 553 OFFCURVE",
+"390 509 OFFCURVE",
+"390 456 CURVE SMOOTH",
+"390 403 OFFCURVE",
+"434 359 OFFCURVE",
+"488 359 CURVE SMOOTH"
+);
+},
+{
+closed = 1;
+nodes = (
+"541 79 OFFCURVE",
+"585 123 OFFCURVE",
+"585 176 CURVE SMOOTH",
+"585 229 OFFCURVE",
+"541 273 OFFCURVE",
+"488 273 CURVE SMOOTH",
+"434 273 OFFCURVE",
+"390 229 OFFCURVE",
+"390 176 CURVE SMOOTH",
+"390 123 OFFCURVE",
+"434 79 OFFCURVE",
+"488 79 CURVE SMOOTH"
+);
+}
+);
+width = 1000;
+}
+);
+},
+{
+glyphname = less.center;
+layers = (
+{
+layerId = "051EFAE4-8BBE-4FBB-A016-4335C3E52F59";
+paths = (
+{
+closed = 1;
+nodes = (
+"461 132 LINE",
+"111 328 LINE",
+"458 505 LINE",
+"458 576 LINE",
+"35 353 LINE",
+"35 305 LINE",
+"461 56 LINE"
+);
+}
+);
+width = 500;
+},
+{
+layerId = "4196E4A4-01D0-4BE0-B812-9D3AF152A0E4";
+paths = (
+{
+closed = 1;
+nodes = (
+"451 84 LINE",
+"73 329 LINE",
+"448 548 LINE",
+"448 576 LINE",
+"45 340 LINE",
+"45 318 LINE",
+"451 56 LINE"
+);
+}
+);
+width = 500;
+},
+{
+background = {
+paths = (
+{
+closed = 1;
+nodes = (
+"458 567 LINE",
+"35 344 LINE",
+"35 296 LINE",
+"461 47 LINE",
+"461 123 LINE",
+"111 319 LINE",
+"458 496 LINE"
+);
+}
+);
+};
+layerId = "37FE174D-E85B-4C4C-A1AE-51D7E67A9FC9";
+paths = (
+{
+closed = 1;
+nodes = (
+"469 167 LINE",
+"174 328 LINE",
+"466 472 LINE",
+"466 597 LINE",
+"32 364 LINE",
+"32 294 LINE",
+"469 34 LINE"
+);
+}
+);
+width = 500;
+},
+{
+layerId = "7EB90DB1-9188-465D-93C7-E6C577A18003";
+paths = (
+{
+closed = 1;
+nodes = (
+"230 132.5 LINE",
+"61 328.5 LINE",
+"229 505.5 LINE",
+"229 576.5 LINE",
+"17 350.5 LINE",
+"17 308.5 LINE",
+"230 56.5 LINE"
+);
+}
+);
+width = 250;
+},
+{
+layerId = "0E826D2B-F2D1-4058-A5E0-936DF7ED7520";
+paths = (
+{
+closed = 1;
+nodes = (
+"230 89.5 LINE",
+"38 328.5 LINE",
+"229 545.5 LINE",
+"229 576.5 LINE",
+"17 335.5 LINE",
+"17 321.5 LINE",
+"230 56.5 LINE"
+);
+}
+);
+width = 250;
+},
+{
+layerId = "16CD5438-0A7A-495F-951A-DBB915DF0BEC";
+paths = (
+{
+closed = 1;
+nodes = (
+"922 85 LINE",
+"129 328 LINE",
+"916 547 LINE",
+"916 576 LINE",
+"70 339 LINE",
+"70 319 LINE",
+"922 56 LINE"
+);
+}
+);
+width = 1000;
+},
+{
+layerId = "E49A0581-9397-4BB7-ADB1-45D6EDC9C316";
+paths = (
+{
+closed = 1;
+nodes = (
+"230 182.5 LINE",
+"101 328.5 LINE",
+"229 455.5 LINE",
+"229 576.5 LINE",
+"17 360.5 LINE",
+"17 298.5 LINE",
+"230 56.5 LINE"
+);
+}
+);
+width = 250;
+},
+{
+layerId = "382F13D7-0CC9-4B85-A585-CBE12F4435D4";
+paths = (
+{
+closed = 1;
+nodes = (
+"922 132 LINE",
+"252 329 LINE",
+"916 500 LINE",
+"916 576 LINE",
+"70 353 LINE",
+"70 305 LINE",
+"922 56 LINE"
+);
+}
+);
+width = 1000;
+},
+{
+layerId = "CC486EF6-6464-4B93-9956-4F2B932959EA";
+paths = (
+{
+closed = 1;
+nodes = (
+"922 182 LINE",
+"392 326 LINE",
+"916 450 LINE",
+"916 576 LINE",
+"70 373 LINE",
+"70 285 LINE",
+"922 56 LINE"
+);
+}
+);
+width = 1000;
+}
+);
+},
+{
+glyphname = greater.center;
+layers = (
+{
+layerId = "051EFAE4-8BBE-4FBB-A016-4335C3E52F59";
+paths = (
+{
+closed = 1;
+nodes = (
+"466 305 LINE",
+"466 353 LINE",
+"42 576 LINE",
+"42 505 LINE",
+"389 328 LINE",
+"40 132 LINE",
+"40 56 LINE"
+);
+}
+);
+width = 500;
+},
+{
+layerId = "4196E4A4-01D0-4BE0-B812-9D3AF152A0E4";
+paths = (
+{
+closed = 1;
+nodes = (
+"456 318 LINE",
+"456 340 LINE",
+"52 576 LINE",
+"52 548 LINE",
+"426 328 LINE",
+"50 87 LINE",
+"50 56 LINE"
+);
+}
+);
+width = 500;
+},
+{
+background = {
+paths = (
+{
+closed = 1;
+nodes = (
+"389 319 LINE",
+"40 123 LINE",
+"40 47 LINE",
+"466 296 LINE",
+"466 344 LINE",
+"42 567 LINE",
+"42 496 LINE"
+);
+}
+);
+};
+layerId = "37FE174D-E85B-4C4C-A1AE-51D7E67A9FC9";
+paths = (
+{
+closed = 1;
+nodes = (
+"474 294 LINE",
+"474 364 LINE",
+"38 597 LINE",
+"38 472 LINE",
+"331 328 LINE",
+"37 161 LINE",
+"37 34 LINE"
+);
+}
+);
+width = 500;
+},
+{
+layerId = "7EB90DB1-9188-465D-93C7-E6C577A18003";
+paths = (
+{
+closed = 1;
+nodes = (
+"233 308.5 LINE",
+"233 350.5 LINE",
+"21 576.5 LINE",
+"21 505.5 LINE",
+"189 328.5 LINE",
+"20 132.5 LINE",
+"20 56.5 LINE"
+);
+}
+);
+width = 250;
+},
+{
+layerId = "0E826D2B-F2D1-4058-A5E0-936DF7ED7520";
+paths = (
+{
+closed = 1;
+nodes = (
+"233 322.5 LINE",
+"233 335.5 LINE",
+"21 576.5 LINE",
+"21 545.5 LINE",
+"212 328.5 LINE",
+"20 89.5 LINE",
+"20 56.5 LINE"
+);
+}
+);
+width = 250;
+},
+{
+layerId = "16CD5438-0A7A-495F-951A-DBB915DF0BEC";
+paths = (
+{
+closed = 1;
+nodes = (
+"932 319 LINE",
+"932 339 LINE",
+"84 576 LINE",
+"84 547 LINE",
+"873 328 LINE",
+"80 85 LINE",
+"80 56 LINE"
+);
+}
+);
+width = 1000;
+},
+{
+layerId = "E49A0581-9397-4BB7-ADB1-45D6EDC9C316";
+paths = (
+{
+closed = 1;
+nodes = (
+"233 298.5 LINE",
+"233 360.5 LINE",
+"21 576.5 LINE",
+"21 455.5 LINE",
+"149 328.5 LINE",
+"20 182.5 LINE",
+"20 56.5 LINE"
+);
+}
+);
+width = 250;
+},
+{
+layerId = "382F13D7-0CC9-4B85-A585-CBE12F4435D4";
+paths = (
+{
+closed = 1;
+nodes = (
+"932 305 LINE",
+"932 353 LINE",
+"84 576 LINE",
+"84 505 LINE",
+"778 328 LINE",
+"80 132 LINE",
+"80 56 LINE"
+);
+}
+);
+width = 1000;
+},
+{
+layerId = "CC486EF6-6464-4B93-9956-4F2B932959EA";
+paths = (
+{
+closed = 1;
+nodes = (
+"932 285 LINE",
+"932 373 LINE",
+"84 576 LINE",
+"84 450 LINE",
+"610 328 LINE",
+"80 182 LINE",
+"80 56 LINE"
 );
 }
 );

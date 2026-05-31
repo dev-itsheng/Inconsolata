@@ -19,6 +19,10 @@ DEFAULT_SOURCE = ROOT / "sources" / "Inconsolata.glyphs"
 DEFAULT_FONT = Path("/tmp/ligconsolata-next-smoke/LigconsolataNext[wdth,wght].ttf")
 DEFAULT_SAMPLES = ROOT / "documentation" / "overview-samples.txt"
 DEFAULT_OUTPUT = ROOT / "documentation" / "img" / "ligconsolata-next-overview.svg"
+DEFAULT_TITLE = "Ligconsolata Next"
+DEFAULT_SUBTITLE = "Left: Ligconsolata Next shaping. Right: raw ASCII. Representative samples, not the full Fira Code feature set."
+DEFAULT_SUBTITLE_CN = "左侧为 Ligconsolata Next 连字渲染，右侧为原始 ASCII；这里只展示代表性样例，不是完整 Fira Code 特性集。"
+DEFAULT_BADGE = "Actual font shaping / 真实字体渲染"
 
 WIDTH = 1760
 SCALE = 0.019
@@ -48,6 +52,14 @@ CATEGORY_TRANSLATIONS = {
     "Calt-inspired": "calt 灵感",
     "Punctuation": "标点",
     "Separators": "分隔线",
+    "Inherited operators": "继承操作符",
+    "Common operators": "常用操作符",
+    "Fira-style triples": "Fira 风格三字符",
+    "Fira-style pairs": "Fira 风格双字符",
+    "Hash and underscore runs": "井号与下划线",
+    "Contextual arrows": "上下文箭头",
+    "Endpoint markers": "端点与标记",
+    "Alignment and separators": "对齐与分割线",
 }
 
 
@@ -88,6 +100,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--font", type=Path, default=DEFAULT_FONT, help="Built font to read outlines from.")
     parser.add_argument("--samples", type=Path, default=DEFAULT_SAMPLES, help="Text file with grouped ASCII samples.")
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT, help="SVG output path.")
+    parser.add_argument("--title", default=DEFAULT_TITLE, help="Main SVG title text.")
+    parser.add_argument("--subtitle", default=DEFAULT_SUBTITLE, help="English subtitle text.")
+    parser.add_argument("--subtitle-cn", default=DEFAULT_SUBTITLE_CN, help="Chinese subtitle text.")
+    parser.add_argument("--badge", default=DEFAULT_BADGE, help="Gradient badge text.")
     parser.add_argument("--build", action="store_true", help="Build a fresh temporary variable font before generating SVG.")
     return parser.parse_args()
 
@@ -312,7 +328,7 @@ def panel_rows(font: TTFont, font_path: Path, samples: list[Sample]) -> tuple[st
     return "\n".join(rows), cursor_y
 
 
-def render_svg(rows: str, sample_count: int, end_y: float) -> str:
+def render_svg(rows: str, sample_count: int, end_y: float, args: argparse.Namespace) -> str:
     panel_height = end_y - PANEL_Y + 22
     height = int(PANEL_Y + panel_height + 120)
     chips_y = int(PANEL_Y + panel_height + 42)
@@ -323,7 +339,7 @@ def render_svg(rows: str, sample_count: int, end_y: float) -> str:
     wave_c4 = WIDTH * 0.63
     wave_c5 = WIDTH * 0.76
     return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{WIDTH}" height="{height}" viewBox="0 0 {WIDTH} {height}" role="img" aria-labelledby="title desc">
-  <title id="title">Ligconsolata Next overview</title>
+  <title id="title">{html.escape(args.title)}</title>
   <desc id="desc">A left-right comparison graphic showing {sample_count} Ligconsolata Next samples. The left side is shaped from a smoke-built font with liga, dlig, and calt enabled, and the right side is the same raw ASCII source with ligatures disabled.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
@@ -361,11 +377,11 @@ def render_svg(rows: str, sample_count: int, end_y: float) -> str:
   <path d="M0 {height - 170} C{wave_c1:.0f} {height - 234} {wave_c2:.0f} {height - 116} {wave_c3:.0f} {height - 198} C{wave_c4:.0f} {height - 280} {wave_c5:.0f} {height - 230} {WIDTH} {height - 326} L{WIDTH} {height} L0 {height} Z" fill="#15191f" opacity=".72"/>
   <rect x="54" y="42" width="{shadow_width}" height="{height - 84}" rx="24" fill="#11151b" opacity=".78" filter="url(#softShadow)"/>
 
-  <text x="96" y="96" class="sans bright" font-size="42" font-weight="760">Ligconsolata Next</text>
-  <text x="98" y="128" class="sans muted" font-size="17">Left: Ligconsolata Next shaping. Right: raw ASCII. Representative samples, not the full Fira Code feature set.</text>
-  <text x="98" y="150" class="sans cn" font-size="13">左侧为 Ligconsolata Next 连字渲染，右侧为原始 ASCII；这里只展示代表性样例，不是完整 Fira Code 特性集。</text>
+  <text x="96" y="96" class="sans bright" font-size="42" font-weight="760">{html.escape(args.title)}</text>
+  <text x="98" y="128" class="sans muted" font-size="17">{html.escape(args.subtitle)}</text>
+  <text x="98" y="150" class="sans cn" font-size="13">{html.escape(args.subtitle_cn)}</text>
   <rect x="98" y="170" width="348" height="34" rx="17" fill="url(#accent)" opacity=".95"/>
-  <text x="118" y="192" class="sans" font-size="14" font-weight="800" fill="#0c1217">Actual font shaping / 真实字体渲染</text>
+  <text x="118" y="192" class="sans" font-size="14" font-weight="800" fill="#0c1217">{html.escape(args.badge)}</text>
 
   <rect x="{PANEL_X}" y="{PANEL_Y}" width="{PANEL_WIDTH}" height="{panel_height:.0f}" rx="16" class="panel"/>
   <text x="{LEFT_X}" y="{PANEL_Y + 38}" class="sans accent" font-size="20" font-weight="800">Ligconsolata Next</text>
@@ -405,7 +421,7 @@ def main() -> None:
     font = TTFont(args.font)
     rows, end_y = panel_rows(font, args.font, samples)
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(render_svg(rows, len(samples), end_y), encoding="utf-8")
+    args.output.write_text(render_svg(rows, len(samples), end_y, args), encoding="utf-8")
     print(args.output)
 
 
