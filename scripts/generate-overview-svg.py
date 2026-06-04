@@ -57,6 +57,7 @@ CATEGORY_TRANSLATIONS = {
     "Fira-style triples": "Fira 风格三字符",
     "Fira-style pairs": "Fira 风格双字符",
     "Hash and underscore runs": "井号与下划线",
+    "Underscore runs": "下划线",
     "Contextual arrows": "上下文箭头",
     "Endpoint markers": "端点与标记",
     "Alignment and separators": "对齐与分割线",

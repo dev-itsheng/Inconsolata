@@ -18,7 +18,7 @@ Ligconsolata Next 的方向是：参考 Fira Code 的行为和覆盖面，不复
 
 Inconsolata 源码原本就有一小组编程连字，但主要放在 `dlig`。很多编辑器打开“font ligatures”时启用的是标准 `liga`，不一定启用 discretionary ligatures。
 
-Ligconsolata Next 的第一步，是把上游已有连字继续保留在 `dlig`，同时同步暴露到 `liga`。这样用户不需要理解 OpenType feature 细节，只要在编辑器里打开普通字体连字，就能看到 `!=`、`=>`、`<=` 等效果。
+Ligconsolata Next 的第一步，是把上游已有连字继续保留在 `dlig`，同时同步暴露到 `liga`。这样用户不需要理解 OpenType feature 细节，只要在编辑器里打开普通字体连字，就能看到 `=>`、`<=` 等继承效果；随后补上的 `!=`、`==` 两字符形态，则用来让常见相等 / 不等操作符也符合现代编辑器预期。
 
 这也是早期 Ligconsolata 的核心思路。Ligconsolata Next 继续这条线，并跟进 Inconsolata v3 的可变字体源码。
 

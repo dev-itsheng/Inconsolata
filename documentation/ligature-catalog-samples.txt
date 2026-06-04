@@ -1,20 +1,24 @@
 # Detailed Ligconsolata Next catalog.
-# Each non-comment line is plain ASCII source. The generated catalog renders
-# the same source twice: Ligconsolata Next shaping on the left, raw ASCII on the right.
+# Each non-comment line is source text. Most samples are plain ASCII operators;
+# the CJK dash section intentionally includes U+2014 / U+2015 punctuation.
+# The generated catalog renders the same source twice: Ligconsolata Next shaping
+# on the left, raw source glyphs on the right.
 
-## Inherited operators
+## Comparison operators
 a != b
 a !== b
 a == b
 a === b
+a >= b
+a <= b
+a <=> b
+
+## Arrow operators
 a -> b
 a => b
-a >= b
 a <- b
-a <= b
 
 ## Common operators
-a <=> b
 a <-> b
 a --> b
 a <-- b
@@ -29,7 +33,8 @@ a || b
 i ++
 i --
 a ** b
-path // name
+// comment
+https://example.com
 /* block
 block */
 a ?? b
@@ -60,7 +65,8 @@ hash #_(x)
 range ..=
 range ..<
 a +++ b
-path /// name
+/// reference
+file:///tmp/font
 url www
 
 ## Fira-style pairs
@@ -106,14 +112,7 @@ path \\ name
 path /\ name
 tag />
 
-## Hash and underscore runs
-md ## title
-md ### title
-md #### title
-md ##### title
-md ###### title
-md ####### title
-md ######## title
+## Underscore runs
 snake __ name
 snake ___ name
 snake ____ name
@@ -184,6 +183,22 @@ a <: b
 a :> b
 a <:> b
 a >:< b
+
+## Case matching
+var-name
+a+b
+*ptr
+CONST:VALUE
+A:b
+a:B
+
+## CJK dash width and continuity
+a——b
+dash —— ———
+path ― marker
+bar ――
+
+## Separators
 // ====
 // =====
 // ----

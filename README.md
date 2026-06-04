@@ -31,7 +31,8 @@ Ligconsolata Next does not try to become a copy of Fira Code. The point of this 
 
 - The source family is now named `Ligconsolata Next`.
 - The existing Inconsolata operator ligatures are exposed through `liga` as well as `dlig`.
-- The current default-on set includes the inherited operators, Fira Code-inspired fixed operator coverage, a first batch of Fira Code `calt`-inspired fixed forms, contextual long arrows, and separator-run helpers for `====` / `----` style comment dividers.
+- The current default-on set includes the inherited operators, refined two-character equality forms, Fira Code-inspired fixed operator coverage, a first batch of Fira Code `calt`-inspired fixed forms, contextual long arrows, lowercase / uppercase operator matching, and separator-run helpers for `====` / `----` style comment dividers.
+- The CJK-friendly `emdash` (U+2014) and `horizontalbar` (U+2015) widths have been adjusted to two Latin cells, and their outlines now reach the advance edges so repeated Chinese dashes such as `——` render as one continuous rule.
 - The build notes now point at the files that exist in this repo: `sources/Inconsolata.glyphs` and `sources/config.yaml`.
 
 ## Ligatures
@@ -40,21 +41,30 @@ Inconsolata used `dlig` for programming ligatures. Ligconsolata Next keeps `dlig
 
 The current supported set is:
 
-- Inherited and refined: `!=`, `!==`, `==`, `===`, `->`, `=>`, `>=`, `<-`, `<=`.
-- Added common operators: `<=>`, `<->`, `-->`, `<--`, `==>`, `<==`, `...`, `<>`, `::`, `:=`, `&&`, `||`, `++`, `--`, `**`, `//`, `/*`, `*/`, `??`, `?.`.
-- Added Fira Code-inspired fixed coverage such as `<|>`, `<$>`, `<+>`, `</>`, `|>`, `<|`, `::=`, `:::`, `..=`, `..<`, `?=`, `!!`, `!!.`, `+++`, `***`, `///`, `#{`, `#[`, `#_(`, and related compact operator forms.
-- Added a cautious Fira Code `calt`-inspired fixed batch for forms that can be represented safely without importing Fira Code's full contextual machinery: `##` through `########`, `__` through `______`, `=/=`, `=!=`, `=:=`, `=~`, `!~`, `/=`, `/==`, `.=`, `.-`, `:-`, `[]`, `->>`, `<<-`, `=>>`, `=<<`, `>--`, `--<`, `|--`, `--|`, `>==`, `==<`, `|==`, `==|`, `==/`, `>>-`, `>-`, `-<`, `|->`, `<-|`, `|=>`, `<=|`, `||-`, `-||`, `|-`, `-|`.
+- Inherited from the current upstream `dlig` baseline: `!==`, `===`, `->`, `=>`, `>=`, `<-`, `<=`.
+- Added and refined two-character equality forms: `!=`, `==`.
+- Added common operators: `<=>`, `<->`, `-->`, `<--`, `==>`, `<==`, `...`, `<>`, `::`, `:=`, `&&`, `||`, `++`, `--`, `**`, a space-guarded `//` comment prefix, `/*`, `*/`, `??`, `?.`.
+- Added Fira Code-inspired fixed coverage such as `<|>`, `<$>`, `<+>`, `</>`, `|>`, `<|`, `::=`, `:::`, `..=`, `..<`, `?=`, `!!`, `!!.`, `+++`, `***`, `#{`, `#[`, `#_(`, and related compact operator forms.
+- Added a cautious Fira Code `calt`-inspired fixed batch for forms that can be represented safely without importing Fira Code's full contextual machinery: `__` through `______`, `=/=`, `=!=`, `=:=`, `=~`, `!~`, `/=`, `/==`, `.=`, `.-`, `:-`, `[]`, `->>`, `<<-`, `=>>`, `=<<`, `>--`, `--<`, `|--`, `--|`, `>==`, `==<`, `|==`, `==|`, `==/`, `>>-`, `>-`, `-<`, `|->`, `<-|`, `|=>`, `<=|`, `||-`, `-||`, `|-`, `-|`.
 - Added Fira Code-style contextual arrow extension for longer `-` and `=` arrows, using `calt` start/middle/end segment glyphs rather than enumerating every length.
 - Added the first contextual pipe/bar endpoint arrow batch for longer single-pipe endpoints such as `|--->`, `<---|`, `|===>`, and `<===|`, while keeping short forms like `|--` and `==|` as fixed glyphs.
 - Added a small contextual slash / marker batch for longer `=` runs, including `/===>`, `<===/`, `===/===`, `==:=`, and `==!=`, while keeping short forms such as `/=`, `/==`, `==/`, `=:=`, and `=!=` as fixed glyphs.
 - Added contextual punctuation alignment for `:<`, `:>`, `<:`, `>:`, `<:>`, and `>:<`. This uses `.center` visual alternates in `calt`; it is not a new `.dlig` ligature.
+- Added contextual lowercase / uppercase operator matching: `var-name`, `a+b`, and `*ptr` switch `-`, `+`, and `*` to lowercase-aligned alternates, while `CONST:VALUE` switches `:` to an uppercase-aligned alternate.
 - Added contextual underscore-run extension for runs longer than `______`, while keeping the shorter `__` through `______` fixed glyphs stable.
 - Separator-run helpers: `====`, `=====`, `----`, `-----`.
+
+The `//` and `///` ligatures are intentionally guarded: they only appear for comment prefixes followed by a normal space, such as `// comment` and `/// reference`. URLs such as `https://example.com` and `file:///tmp/font` keep their raw slash glyphs.
+
+Markdown heading markers stay raw: repeated `#` runs such as `##`, `###`, and `####` are not compacted into ligatures, because the exact count and spacing are more important than decorative compression.
+
+There is also one non-ligature punctuation fix: `emdash` (U+2014) and `horizontalbar` (U+2015) now keep two times the current Latin-cell advance width across the width axis, with edge-to-edge outlines so `——` and longer dash runs connect naturally. `endash` (U+2013) and `figuredash` (U+2012) stay one cell wide to avoid changing ordinary Latin punctuation and figure alignment.
 
 The ordered feature rules, contextual arrow rules, and generated glyph blocks are maintained by `scripts/update-ligature-glyphs.py`. Fira Code is useful as a coverage reference, but new outlines are drawn, assembled, or scaled from Inconsolata-family glyphs rather than copied.
 
 For implementation notes and migration pitfalls, see [Ligconsolata Next ligature porting notes](documentation/ligature-porting-notes.md).
 For a fuller visual catalog of the current changes, see [Ligconsolata Next optimization catalog](documentation/ligconsolata-next-optimizations.md).
+For a focused check of inherited Inconsolata / Ligconsolata-era ligatures such as `=>`, see [the inherited ligature comparison](documentation/img/ligconsolata-next-inherited-comparison.svg).
 
 For developer-oriented background reading, start with the font basics series:
 
@@ -124,6 +134,12 @@ python scripts/generate-overview-svg.py --build
 ```
 
 The samples are intentionally plain ASCII in `documentation/overview-samples.txt`; `##` headings become grouped sections in the generated SVG. The overview is representative rather than exhaustive; the supported rule source of truth is `scripts/update-ligature-glyphs.py`.
+
+To regenerate the inherited-ligature comparison against the upstream Inconsolata `dlig` baseline:
+
+```sh
+python scripts/generate-inherited-comparison-svg.py --build
+```
 
 To regenerate the generated ligature glyphs and rewrite the ordered `dlig` / `liga` rules:
 

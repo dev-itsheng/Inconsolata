@@ -1,17 +1,17 @@
-## Equality
+## Comparisons
 a != b
 a !== b
 a == b
 a === b
+x >= y
+x <= y
+a <=> b
 a !! b
 
 ## Arrows
 x -> y
 x => y
-x >= y
 x <- y
-x <= y
-a <=> b
 a <-> b
 x --> y
 x <-- y
@@ -72,8 +72,6 @@ x <===/ y
 x ===/=== y
 x ==:= y
 x ==!= y
-md ### title
-md ####### title
 __init__
 ______
 _______
@@ -81,6 +79,7 @@ _______
 ## Punctuation
 x ** y
 // note
+https://example.com
 /* ok */
 a ?? b
 obj?.x

@@ -28,26 +28,34 @@ python -m pip install --no-build-isolation -r requirements.txt
 
 - 迁移 Fira Code 连字时，先读 `documentation/ligature-porting-notes.md`。那里记录了本轮适配遇到的真实问题、解决方式和可复用验证流程。
 - 当前已启用的连字包括：
-  - 上游已有并继续优化：`!=`、`!==`、`==`、`===`、`->`、`=>`、`>=`、`<-`、`<=`。
-  - 新增常用操作符：`<=>`、`<->`、`-->`、`<--`、`==>`、`<==`、`...`、`<>`、`::`、`:=`、`&&`、`||`、`++`、`--`、`**`、`//`、`/*`、`*/`、`??`、`?.`。
-  - 参考 Fira Code 补充的一批固定操作符覆盖面由 `scripts/update-ligature-glyphs.py` 里的 `FIRA_CODE_COMPAT_SOURCES` 维护，例如 `<|>`、`<$>`、`<+>`、`</>`、`|>`、`<|`、`::=`、`..=`、`..<`、`?=`、`!!`、`!!.`、`+++`、`***`、`///`、`#{`、`#[`、`#_(` 等。
-  - 第一批参考 Fira Code `calt` 行为但按固定连字落地的低风险组合由 `FIRA_CODE_CALT_FIXED_LIGATURES` 维护，例如 `##` 到 `########`、`__` 到 `______`、`=/=`、`=!=`、`=:=`、`=~`、`!~`、`/=`、`/==`、`.=`、`.-`、`:-`、`[]`、`->>`、`<<-`、`=>>`、`=<<`、`>--`、`--<`、`|--`、`--|`、`>==`、`==<`、`|==`、`==|`、`==/`、`>>-`、`>-`、`-<`、`|->`、`<-|`、`|=>`、`<=|`、`||-`、`-||`、`|-`、`-|`。
+  - 当前上游 `dlig` baseline 已有并继续保留：`!==`、`===`、`->`、`=>`、`>=`、`<-`、`<=`。
+  - Next 补充并修正的两字符相等 / 不等形态：`!=`、`==`。
+  - 新增常用操作符：`<=>`、`<->`、`-->`、`<--`、`==>`、`<==`、`...`、`<>`、`::`、`:=`、`&&`、`||`、`++`、`--`、`**`、后接空格的 `//` 注释前缀、`/*`、`*/`、`??`、`?.`。
+  - 参考 Fira Code 补充的一批固定操作符覆盖面由 `scripts/update-ligature-glyphs.py` 里的 `FIRA_CODE_COMPAT_SOURCES` 维护，例如 `<|>`、`<$>`、`<+>`、`</>`、`|>`、`<|`、`::=`、`..=`、`..<`、`?=`、`!!`、`!!.`、`+++`、`***`、`#{`、`#[`、`#_(` 等；`//` / `///` 虽然有 glyph，但只在注释前缀上下文启用。
+  - 第一批参考 Fira Code `calt` 行为但按固定连字落地的低风险组合由 `FIRA_CODE_CALT_FIXED_LIGATURES` 维护，例如 `__` 到 `______`、`=/=`、`=!=`、`=:=`、`=~`、`!~`、`/=`、`/==`、`.=`、`.-`、`:-`、`[]`、`->>`、`<<-`、`=>>`、`=<<`、`>--`、`--<`、`|--`、`--|`、`>==`、`==<`、`|==`、`==|`、`==/`、`>>-`、`>-`、`-<`、`|->`、`<-|`、`|=>`、`<=|`、`||-`、`-||`、`|-`、`-|`。
   - `calt` 可变长度箭头：`---->`、`<----`、`====>`、`<====`、`<--->`、`<===>` 这类长度不固定的 `-` / `=` 箭头。
   - `calt` 端点和 marker 小批次：单 `|` 端点长箭头，以及长 `=` 串里的单 `/` 端点、单 `/` middle、`:` / `!` middle，例如 `|--->`、`<===|`、`/===>`、`<===/`、`===/===`、`==:=`、`==!=`。
   - `calt` center alignment 小批次：`:<`、`:>`、`<:`、`>:`、`<:>`、`>:<` 这类 `:` / `<` / `>` 相邻场景会切换到 `.center` 视觉变体。这是标点对齐，不是新增 `.dlig` 连字。
+  - `calt` lowercase / uppercase operator matching 小批次：`var-name`、`a+b`、`*ptr` 会把 `-` / `+` / `*` 切到 `.lc` 视觉变体；`CONST:VALUE` 会把 `:` 切到 `.uc` 视觉变体。混合大小写上下文如 `A:b`、`a:B` 不替换，避免误导。
   - 注释分割线辅助：`====`、`=====`、`----`、`-----`。
-- 上游已有的一组连字原本存在于 Inconsolata 的 `dlig` 中；Ligconsolata Next 继续保留 `dlig`，并把当前支持的 substitution 同步暴露到 `liga`。
+- 上游已有的一组连字原本存在于 Inconsolata 的 `dlig` 中；Ligconsolata Next 继续保留 `dlig`，并把当前支持的 substitution 同步暴露到 `liga`。当前可验证的上游 `dlig` baseline 不包含 `!=` / `==` 两字符形态；它们属于 Next 补充并修正过的 equality pair，不要在继承对比图里写成旧版已有。
 - glyph 名称可以继续沿用已有 `.dlig` 后缀。feature tag 和 glyph 命名不必强行一致，重点是 GSUB 里同时有 `dlig` 和 `liga` 规则。
 - 连字的 advance width 必须等于原始字符序列的总 advance width。Regular 默认位置里，两字符连字应为 1000，三字符连字应为 1500，四字符分割线应为 2000，五字符分割线应为 2500。新增连字时也要按所有相关 master 或最终构建产物检查宽度。
 - 新连字应从 Inconsolata 自己的笔画、比例和字面节奏里推出来。Fira Code 可以作为「程序员期待哪些连字」和「如何展示连字」的参考，但不能复制 Fira Code 的 outline。
 - 新增连字优先走脚本化小步：把可重复的派生逻辑写进 `scripts/update-ligature-glyphs.py`，再生成 Glyphs 源码、验证构建、GSUB、宽度和视觉。
 - `scripts/update-ligature-glyphs.py` 负责生成脚本派生 glyph，并同步改写 `calt` / `dlig` / `liga`。`liga` 规则必须保持长序列在短序列前面，例如 `=====` 在 `====` / `===` / `==` 前，`-->` 在 `--` / `->` 前。
 - `==` 和 `!=` 必须保持两条横线。不要把它们从 `===` / `!==` 直接横向缩放出来，否则 overview 和真实编辑器里会看起来像三横线，和 Fira Code 及程序员预期不一致。
+- `===` 和 `!==` 必须保持三条清楚可辨的横线，不能被 `==` / `!=` 的两横线策略误伤。三横线整体视觉中心应对齐原始 `equal` / `==` 的中心；优先移动 `===`，不要为了对齐把 `==` 从原始 `equal` 位置下移。`====` / `=====` 以及更长连续等号才属于注释分割线 / run 语义，继续使用两条连续长线。
+- `<=` / `>=` 是 comparison 语义，不是箭头语义。它们默认应画成 `<` / `>` 加一条同源、平行、等长的下斜线，参考 Fira Code 默认 `less_equal.liga` / `greater_equal.liga` 的思路；第二条斜线应与 `<` / `>` 的下斜边保持同一视觉跨度，并且两端使用竖切，不继承 `<` / `>` 内部连接处的斜切口。水平 bar 只适合作为未来 opt-in stylistic / character variant，不应作为默认。`<==`、`==>`、`<====`、`====>` 才属于 `=` 箭头族。
+- Unicode `emdash` (U+2014) 和 `horizontalbar` (U+2015) 属于中文混排标点问题，不是编程连字：它们应保持两倍当前 Latin cell 宽度，并且横线轮廓应从 x=0 延伸到当前 advance 右边缘，让 `——`、`――` 和更长 dash run 自然连成一条。Regular 默认位置是 1000，Ultra Condensed 是 500，Ultra Expanded 是 2000；`endash` (U+2013) 和 `figuredash` (U+2012) 继续保持一格和原本留白，避免影响西文范围和数字排版。不要为 `emdash emdash` 单独加 GSUB 连字来解决这个问题，除非之后有明确证据说明边缘连续方案在目标编辑器里有副作用。
 - 可变长度箭头参考 Fira Code 的处理思路，但只复用机制：用 `hyphen_start.seq` / `hyphen_middle.seq` / `greater_hyphen_end.seq`、`equal_start.seq` / `equal_middle.seq` / `greater_equal_end.seq` 等片段拼接，不复制 Fira Code outline。
 - `calt` 长箭头当前采用 start lookup 加多轮 extend lookup。不要把所有逻辑塞进一个 lookup；否则 `<====` / `<----` 这类左向长箭头容易被后续固定 `===` / `--` 抢走。
 - `calt` 规则要优先保证长箭头能随字符数自然延展；如果某条规则会破坏普通 `->` / `<-` / `=>` / `<=` / `==` / `===` / `!==` / `i--` 等既有 `liga` / `dlig`，宁可缩小 `calt` 覆盖范围，并用 `ignore sub` 明确避开这些固定连字。
+- `//` / `///` 只在后面跟普通空格时启用注释前缀连字，例如 `// comment`、`/// reference`。不要把裸 `//` / `///` 写成无条件 `liga` / `dlig` 规则，否则 `https://example.com`、`file:///tmp/font`、路径和其他非注释文本会被误伤。Fira Code 的源码里有 `slash_slash.liga` / `slash_slash_slash.liga` 和 `.spacer` 上下文机制，但本项目为 URL 可读性保留这个有意差异。
+- `[]` 使用 `bracket_pair` 生成真实路径，不走普通 `compact_components`。原因是 `bracketright` 本身由 `bracketleft` 镜像组件构成，继续嵌套组件会让小字号下的方框左右观感不均衡；生成时要保持两字符 advance width，并按真实外轮廓居中。
 - 新增与长箭头共享前缀的固定组合时，必须同步复核 `calt` 是否抢先替换。例如 `->>`、`=>>`、`<-|`、`<=|` 需要在 start lookup 中避让，`i--` 必须继续命中 `hyphen_hyphen.dlig`。
-- 自动生成 glyph 名称时避免过长的生产名。像 `######`、`____` 这种重复字符运行应使用 `numbersign_run6.dlig`、`underscore_run4.dlig` 这类短名；过长名称可能让 `public.postscriptNames` 写出 `None`，导致 Glyphs plist 保存失败。
+- 自动生成 glyph 名称时避免过长的生产名。像 `____` 这种重复字符运行应使用 `underscore_run4.dlig` 这类短名；如果未来重新启用 hash run，也必须使用 `numbersign_run6.dlig` 这类短名。过长名称可能让 `public.postscriptNames` 写出 `None`，导致 Glyphs plist 保存失败。
+- Markdown 标题里的连续 `#` 默认保持 raw glyph，不写入 `liga` / `dlig` / `calt` 压缩规则。原因是 `##`、`###`、`####` 的字符数量本身表示标题层级，压缩后会降低可数性，并在紧贴后续文本时造成“后面的字贴上来”的视觉误导。除非后续有专门设计并验证过的 `numbersign_start.seq` / `numbersign_middle.seq` / `numbersign_end.seq`，否则不要恢复 `numbersign_run*.dlig`。
 - `====` / `=====` 使用两条连续横线，`----` / `-----` 使用一条连续横线，用来改善注释分割线的视觉连续性。但字体不能修正源码里上下分割线字符数不一致的问题；生成注释分割线时仍应使用固定长度文本，避免手写差一个字符。
 - `--` 不要做成一条连续横线；它应该保留两个减号的分隔感，避免和长 dash 或注释分割线混淆。
 - `scripts/update-ligature-glyphs.py` 目前会全量重写大量 glyph block，新增覆盖面后耗时可能达到数分钟。后续优化优先把「只更新 feature」和「重建 glyph」拆开。
@@ -61,15 +69,15 @@ python -m pip install --no-build-isolation -r requirements.txt
 - [x] 覆盖 Fira Code 静态 `liga` 清单里的固定操作符，并保持 Inconsolata-family outline 来源。
 - [x] 建立真实 specimen 链路：`overview-samples.txt` -> 临时构建字体 -> `hb-shape` -> SVG outline。
 - [x] 建立浏览器真实对比 demo：`documentation/demo/index.html` + 本地生成字体。
-- [x] 迁移第一批 Fira Code `calt`-inspired 固定组合，包括 hash / underscore runs、`=/=` / `/=` 族、`->>` / `=>>` 族和 pipe endpoint 族。
-- [x] 迁移第二批低风险固定端点组合，包括 `>--` / `--<`、`|--` / `--|`、`>==` / `==<`、`|==` / `==|`、`==/`，并补充 `#` / `_` run 到 8 / 6 字符。
+- [x] 迁移第一批 Fira Code `calt`-inspired 固定组合，包括 underscore runs、`=/=` / `/=` 族、`->>` / `=>>` 族和 pipe endpoint 族。
+- [x] 迁移第二批低风险固定端点组合，包括 `>--` / `--<`、`|--` / `--|`、`>==` / `==<`、`|==` / `==|`、`==/`，并补充 `_` run 到 6 字符。
 - [x] 将 underscore runs 从有限固定清单推进到上下文型 `calt` 规则。已验证：`__` 到 `______` 继续命中固定 glyph，`_______` 及更长连续下划线使用 `underscore_start.seq` / `underscore_middle.seq` / `underscore_end.seq` 延展。
-- [x] 评估 hash runs 是否适合上下文型 `calt`。结论：暂缓上下文化，当前保留 `##` 到 `########` 固定覆盖，因为 `#` 不是单纯横线；后续若要做，先单独设计 `numbersign_start.seq` / `numbersign_middle.seq` / `numbersign_end.seq`，不要用自动拉伸的矩形近似。
+- [x] 评估 hash runs 是否适合上下文型 `calt`。结论：不默认启用 `##` 到 `########` 的固定覆盖，也暂缓上下文化。`#` 不是单纯横线，压缩固定 glyph 会降低 Markdown 标题层级的可数性；后续若要做，先单独设计 `numbersign_start.seq` / `numbersign_middle.seq` / `numbersign_end.seq` 并验证紧贴后续文本时不产生视觉重叠。
 - [x] 设计并迁移第一批任意长度 pipe/bar 端点箭头：`|---`、`---|`、`|--->`、`<---|`、`|===`、`===|`、`|===>`、`<===|` 这类单 `|` 端点，短组合 `|--` / `--|` / `|==` / `==|` 继续由固定 glyph 负责。
 - [x] 设计并迁移第一批 slash / colon / exclamation 上下文组合：单 `/` 端点长 `=` 箭头 `/===`、`===/`、`/===>`、`<===/`，以及 `==:=`、`==!=` 这类长 `=` 串 marker；短组合 `/=`、`/==`、`==/`、`=:=`、`=!=` 继续由固定 glyph 负责。
 - [x] 继续评估 Fira Code 更完整的 slash / colon / exclamation 机制。结论：先补单 `/` middle（如 `===/===`）；双 slash 端点和双字符端点依赖 Fira Code 的 `.spacer` 机制，容易和 `//` / `///` 注释、URL、路径冲突，暂缓迁移。
 - [x] 梳理并迁移 Fira Code center alignment 行为：默认启用 `:<`、`:>`、`<:`、`>:`、`<:>`、`>:<` 这类 `:` / `<` / `>` 视觉居中；`<::>` / `<:::>` 等多冒号组合会被现有 `::` / `:::` 固定 glyph 接管，暂不宣称完整覆盖；`ss07`、`cv25`、`cv26`、`cv32` 等风格项维持现有固定覆盖，完整边界留到 `cv` / `ss` 特性整理。
-- [ ] 评估 lowercase / uppercase operator matching，例如 `hyphen.lc`、`plus.lc`、`asterisk.lc`、`colon.uc` 是否适合 Inconsolata 气质。
+- [x] 评估并迁移第一批 lowercase / uppercase operator matching：默认启用 `hyphen.lc`、`plus.lc`、`asterisk.lc`、`colon.uc`，只做垂直对齐调整且保持一格宽；已验证 `var-name`、`a+b`、`*ptr`、`CONST:VALUE` 命中新变体，`A:b`、`a:B` 不替换，`i--`、`->`、`=>`、`==`、`===`、`====`、`-->`、`==>` 等既有固定连字不被 `calt` 抢走。
 - [ ] 评估 hexadecimal / multiplication `x` 行为，例如 `0xFF`、`800x600`，先设计视觉再加规则。
 - [ ] 整理 Fira Code `cv` / `ss` 特性边界：只吸收与编程连字体验直接相关的行为，不迁移 Fira Code 的风格化字母变体。
 
@@ -106,6 +114,7 @@ python -m pip install --no-build-isolation -r requirements.txt
 - `documentation/img/ligconsolata-next-overview.svg` 必须从实际构建出来的字体 outline 生成，不能用 Unicode 符号近似代替。
 - overview 图的代码样例配置在 `documentation/overview-samples.txt`，真实 ASCII 代码片段按行写，`##` 标题用于分组。overview 是代表性样例，不是完整清单；完整支持范围以 `scripts/update-ligature-glyphs.py` 为准。新增已支持连字或 `calt` 规则时，先改这个配置，再运行生成脚本。
 - 详细对比图使用 `documentation/ligature-catalog-samples.txt` 作为配置，输出到 `documentation/img/ligconsolata-next-ligature-catalog.svg`。它用于展示“相比默认 Inconsolata raw ASCII，Ligconsolata Next 做了哪些已验证优化”，可以比 README hero 更长、更完整，但仍不等同于全部未来计划。
+- 继承连字对比图使用 `documentation/inherited-ligature-comparison-samples.txt` 作为配置，输出到 `documentation/img/ligconsolata-next-inherited-comparison.svg`。它左侧 baseline 是 `fonts/variable/Inconsolata[wdth,wght].ttf` 开启 `dlig` 后的真实 outline，右侧是当前 Ligconsolata Next 开启 `liga` / `dlig` / `calt` 后的真实 outline。用户反馈 `=>`、`->`、`<=` 等旧版已有连字看起来漂移时，先生成并查看这张图，不要立刻改 glyph。
 - 生成脚本是 `scripts/generate-overview-svg.py`。默认读取 `/tmp/ligconsolata-next-smoke/LigconsolataNext[wdth,wght].ttf`，需要从 Glyphs 源码重新构建时加 `--build`。
 - overview 采用 Fira Code 式左右对比：同一组里左侧通过 `hb-shape` 展示 `calt` / `liga` / `dlig` shaping 后的真实 glyph，右侧展示同一 ASCII 源文本的 raw glyph 序列；同一行可以放多个相关样例。英文为主视觉，中文只作为弱化辅助信息；顶部字体名不加中文。
 - overview 的同组样例应尽量落在固定网格槽位上，让 shaped result 和 raw ASCII 都有清晰的左边界，避免右侧 raw 文本上下看起来散乱。表格内部每个样例槽位要留足呼吸感，左右两列之间也要保留明显空隙，避免 shaped result 和 raw ASCII 黏在一起。左侧分组标题作为表格第一列处理，水平左对齐，并在该组内容块内垂直居中；分组横线应从左侧标题列贯穿到右侧，左右边距保持一致，形成清晰的横线表格感。用户指出某个连字不好看时，优先按配置文件里的样例文本定位。
@@ -211,5 +220,7 @@ mkdir -p /tmp/ligconsolata-next-svg-preview
 ## Cursor Worker 协作
 
 - 如果用户因为额度希望把任务交给 Cursor worker，Codex 继续作为主控，负责拆任务、写清 workspace、关键文件、约束、停手条件和预期输出。
-- 适合交给 worker 的任务包括只读复核、候选连字清单、构建错误初筛和文档初稿。涉及最终源码修改、构建产物写入和对用户交付的结论，仍由 Codex 回收并复核。
-- worker 不应擅自覆盖字体二进制、不应清理用户本地文件，也不应把 Fira Code outline 引入本项目。
+- 适合交给 worker 的任务包括只读复核、候选连字清单、构建错误初筛、文档初稿，以及用户明确要求时的受控执行，例如局部代码、脚本或文档修改。
+- Codex 必须回收 worker 的 diff，回读关键文件，并按任务风险运行构建、GSUB、宽度、SVG 或文档验证；涉及最终源码修改、构建产物写入和对用户交付的结论，仍由 Codex 复核后再确认。
+- 对 `sources/Inconsolata.glyphs` 这种巨大源码，不要让 Cursor 长时间直接跑全量生成。更稳的拆法是：Cursor 写脚本 patch 或小范围文档/HTML 改动，Codex 回收后运行 `scripts/update-ligature-glyphs.py`、`fontmake` 和 `hb-shape`。
+- worker 不应提交、不应 push、不应擅自覆盖字体二进制、不应清理用户本地文件、不应做无边界重构，也不应把 Fira Code outline 引入本项目。

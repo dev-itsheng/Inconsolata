@@ -1,0 +1,17 @@
+# Compare upstream Inconsolata dlig shapes with current Ligconsolata Next.
+# Each non-comment line is rendered twice from real font outlines:
+# left = fonts/variable/Inconsolata[wdth,wght].ttf with dlig enabled
+# right = current Ligconsolata Next temporary build with liga/dlig/calt enabled
+
+## Existing dlig / 旧版已有
+a !== b
+a === b
+a -> b
+a => b
+a >= b
+a <- b
+a <= b
+
+## Added in Next / Next 新增
+a != b
+a == b
