@@ -67,7 +67,7 @@ range ..<
 a +++ b
 /// reference
 file:///tmp/font
-url www
+query ?= value
 
 ## Fira-style pairs
 a ^= b
@@ -120,6 +120,15 @@ snake _____ name
 snake ______ name
 snake _______ name
 
+## Numeric contexts
+hex 0xFF
+hex 0xff
+hex 0x10
+size 800x600
+size 1920x1080
+raw xray axb 0xG
+raw x86 0XFF 800X600
+
 ## Contextual arrows
 a ----> b
 a <---- b
@@ -131,6 +140,12 @@ a ------> b
 a <------ b
 a ======> b
 a <====== b
+a >--- b
+a ---< b
+a >=== b
+a ===< b
+a >----- b
+a -----< b
 
 ## Endpoint markers
 a ->> b
@@ -197,6 +212,30 @@ a——b
 dash —— ———
 path ― marker
 bar ――
+
+## Markdown heading badges
+\# title
+\## title
+\### title
+\#### title
+\##### title
+\###### title
+\####### title
+\######## title
+\##title
+a ## b
+\#include <stdio.h>
+
+## Hash operator guards
+hash #{
+hash #[
+hash #_(x)
+
+## Logic operator guards
+a /\ b
+regex /\d/
+x \/ y
+path \/tmp
 
 ## Separators
 // ====

@@ -29,20 +29,22 @@ Ligconsolata Next 的目标不是复制 Fira Code。我们喜欢 Fira Code 的�
 | `i--` 看起来像一条横线 | 两个减号直接连上，容易读成 dash 或分割线 | `--` 和 `----` 的语义不同，不能共用连续横线策略 | `--` 改成两个靠近但有明确间隔的减号；`----` / `-----` 继续作为注释分割线连续处理 |
 | `:=` 视觉不舒服 | 冒号和等号不在同一视觉中心线上 | 直接拼组件会继承原字符位置，不一定适合作为操作符整体 | 参考 Fira Code 的思路，将冒号 dot 对齐到等号两条横线的中心高度 |
 | `[]` 小字号下左右观感不均衡 | 编辑器里空方框像是一边更粗或一边更重 | `bracketright` 本身是 `bracketleft` 的镜像组件，`[]` 再用 `compact_components` 会形成嵌套镜像组件，并放大小字号栅格化和位置偏移 | 单独使用 `bracket_pair` 生成真实路径，仍保持两字符 advance width，再按真实外轮廓居中 |
-| Fira Code 静态 `liga` 清单与 `calt` 清单容易混在一起 | 看起来“都来自 Fira Code”，但实现风险完全不同 | 静态 `liga` 可以按固定 glyph 处理；复杂 `calt` 往往依赖上下文机器和大量 `ignore sub` | 先确认静态 `liga` 已完整覆盖，再把 `calt` 拆成低风险固定批次和需要专门设计的上下文批次 |
-| 重复字符运行的 glyph 名太长 | `######` / `____` 这类自动命名会生成很长的 production name，构建时出现 `public.postscriptNames... = None` | Glyphs 源文件里的 postscript name 元数据不适合无限展开字符名 | 保留 run glyph 时改用短名，例如 `underscore_run4.dlig`；历史 hash run 曾使用 `numbersign_run6.dlig` 这类短名，当前已从默认替换里移除 |
+| Fira Code 静态 `liga` 清单与 `calt` 清单容易混在一起 | 看起来“都来自 Fira Code”，但实现风险完全不同 | 静态 `liga` 可以按固定 glyph 处理；复杂 `calt` 往往依赖上下文机器和大量 `ignore sub` | 先确认哪些静态 `liga` 适合默认编辑器路径，再把 `calt` 拆成低风险固定批次和需要专门设计的上下文批次；`www` 这类收益不大的文本合并可以明确保留 raw |
+| 重复字符运行的 glyph 名太长 | `######` / `____` 这类自动命名会生成很长的 production name，构建时出现 `public.postscriptNames... = None` | Glyphs 源文件里的 postscript name 元数据不适合无限展开字符名 | 保留 run glyph 时改用短名，例如 `underscore_run4.dlig`、`numbersign_run6.dlig`；7 个及以上 hash run 使用 `numbersign_start.seq` / `numbersign_middle.seq` / `numbersign_end.seq` |
 | 新增固定组合被现有 `calt` 抢走 | `->>`、`=>>`、`<-|`、`<=|` 没有命中新增 `.dlig`，`i--` 又被长横线片段化 | 长箭头 start lookup 和新增固定连字共享前缀 | 在 `calt` start lookup 中添加更明确的 `ignore sub`，并把 `--` 与 `---` 分开：`i--` 仍命中 `hyphen_hyphen.dlig`，三字符以上再走长横线片段 |
 | 下划线 run 只靠固定清单会到头 | `__` 到 `______` 可以固定生成，但再长就需要继续枚举 | 下划线本质是横线，适合 Fira Code 那种 start / middle / end 片段 | 保留短运行固定 glyph；超过 6 个 `_` 后，用 `underscore_start.seq` / `underscore_middle.seq` / `underscore_end.seq` 延展 |
-| hash run 不适合默认压缩 | `##` / `###` / `####` 这类 Markdown 标题标记被紧凑固定 glyph 压缩后，字符数量不够直观，紧贴后续文本时还会像“后面的字贴上来” | `#` 的数量本身有语义，和下划线、等号、横线这类线性 run 不一样 | 移除 `numbersign_run*.dlig` 默认替换，让连续 `#` 保持 raw glyph；后续若要重做，先设计 hash start / middle / end 片段并验证紧贴文本场景 |
+| hash run 不能做成无编号压缩 | `##` / `###` / `####` 这类 Markdown 标题标记被紧凑固定 glyph 压缩后，字符数量不够直观，紧贴后续文本时还会像“后面的字贴上来”；但 7 个及以上常常更像分割线，raw glyph 又不够连续 | `#` 的数量本身有语义，和下划线、等号、横线这类线性 run 不一样；同时 `##title`、`a ## b` 这类非标题场景不应该变化；超过 Markdown 标题层级后，再加数字也没有语义 | 改成分层方案：只有位于 shaping run 开头并后接普通空格的 `## title` 到 `###### title` 保持原始总 advance width，把井号横杠连成一组，并在最后一个 `#` 的右上区域嵌入数字 `2` 到 `6`；`#######` 及更长 run 使用 start / middle / end 片段连成无编号长 run；`#`、`##title`、`a ## b` 保持 raw glyph |
 | pipe/bar 端点长箭头需要避开短固定项 | `|--`、`--|`、`|==`、`==|` 已经有固定 glyph，如果直接从两个字符起步做 `calt` 会抢替换 | 固定短组合和任意长度端点箭头共享前缀 | 第一批只在至少 3 个 `-` / `=` 时启动 pipe/bar seq，例如 `|---`、`---|`、`|--->`、`<---|`、`|===>`、`<===|` |
 | slash / marker 机制不能一口气全搬 | Fira Code 支持单 slash、双 slash、colon、exclamation 等多种 `=` 串上下文 | slash 很容易和 `/=`、`/==`、`//`、`///`、URL 和注释冲突；colon / exclamation 在 Fira Code 里更像 middle marker，不是完整端点 | 第一批只做单 `/` 长 `=` 端点、单 `/` middle 和 `:` / `!` middle marker，例如 `/===>`、`<===/`、`===/===`、`==:=`、`==!=`；短组合继续由固定 glyph 负责，并显式避让 `//===` / `///===` 这类注释前缀；双 slash 端点暂缓 |
 | `//` / `///` 注释前缀会误伤 URL | Fira Code 源码里有 `slash_slash.liga`、`slash_slash_slash.liga` 和 `.spacer` 机制，没有明显的“后接空格”限制 | 裸 `sub slash slash by slash_slash.dlig` 或 `sub slash slash slash by slash_slash_slash.dlig` 会让 URL 里的 slash 也连起来；普通嵌套 lookup 也会全局执行，仍会误伤 URL | 保留 `slash_slash.dlig` / `slash_slash_slash.dlig` glyph，但不再写无条件 `liga` / `dlig`；改用零宽 `slash_comment_spacer` 两步规则，只有 `// ` / `/// ` 后接普通空格时触发，URL、路径、`//TODO` 和裸 slash run 保持 raw slash |
+| `/\` / `\/` 不能继续无条件固定连字 | 这两个形态在 Fira Code 里表示逻辑与 / 逻辑或，但普通代码里也会出现在 regex、转义 slash 和路径里 | 如果放进无条件 `liga` / `dlig`，`/\d/`、`\/tmp` 这类文本也会被改形，读代码时容易误判 | 保留 `slash_backslash.dlig` / `backslash_slash.dlig` glyph，但从固定 feature 中排除；改用 `slash_logic_spacer` / `backslash_logic_spacer`，只有 `a /\ b`、`x \/ y` 这种两侧空格场景触发 |
 | center alignment 不是连字清单 | Fira Code 的 `calt/center.fea` 只是在 `:` / `<` / `>` 相邻时切换到 `.center` 视觉变体 | 如果写成“新增连字”，会误导读者；如果直接套到多冒号场景，又会和现有 `::` / `:::` 固定 glyph 冲突 | 默认迁移 `:<`、`:>`、`<:`、`>:`、`<:>`、`>:<` 小批次；多冒号 center 和更多 `cv` / `ss` 风格项暂缓 |
+| hexadecimal / multiplication `x` 要像语义替换，不像普通连字 | `0xFF` 和 `800x600` 中的小写 `x` 有明确语义，但普通单词、`0xG`、`0XFF` 不应该变化 | Fira Code 在 `features/calt/cross.fea` 里把 `0x` 和数字两侧的 `x` 换成 `x.multiply`，且另有 `onum` / `.tosf` 分支；Ligconsolata Next 没有这套 old-style figures | 只迁移不依赖 `onum` 的小写 `x` 分支：`@HexZero x [@Digit @HexDigit]` 与 `@Digit x @Digit`。`x.multiply` 从本字体 `multiply` 派生，并清空 Unicode，避免继承 U+00D7 |
 | 固定清单很容易漏项 | 手动维护 README、脚本、SVG 清单容易不同步 | 连字覆盖面跨多个文件，新增时容易只改一处 | 以 `scripts/update-ligature-glyphs.py` 的 `LIGATURES` / `FIRA_CODE_COMPAT_SOURCES` 为核心来源，SVG 脚本动态读取这份清单 |
 | 图片排版不利于复核 | 双栏 before / after 需要来回对照，右侧 raw 文本上下不容易对齐，窄网格下长样例容易贴近下一格 | specimen 是给人复核用的，不只是展示图 | 改成 Fira Code 式左右对比：左侧 shaped result，右侧 raw ASCII，同一行放多个相关样例；分组标题作为左侧表格列，水平左对齐、垂直居中，横线等距贯穿整行，并用更宽的固定网格槽位对齐 |
 | 双语信息容易抢主视觉 | README 顶部图需要中文辅助，但主视觉仍应像专业 specimen | 中英文同权会让标题和图例显得吵 | 英文保留主层级；中文用小字号、弱颜色贴近对应英文。胶囊标签使用 `English / 中文`，斜线两边各留一个空格 |
 | SVG 仍然不是交互式证据 | SVG 是生成时刻的静态 specimen | 用户需要确认浏览器和编辑器里真实字体开关如何表现 | 新增 `documentation/demo/index.html`，用 CSS `@font-face` 引入真实字体，并提供可编辑文本和 feature 开关 |
-| 全量脚本变慢 | 新增大量 glyph 后，`update-ligature-glyphs.py` 可能跑数分钟 | 每次都 parse / rewrite 大型 Glyphs 源文件 | 短期接受，后续应拆分「只更新 feature」和「重建 glyph」两条路径 |
+| 全量脚本变慢 | 新增大量 glyph 后，`update-ligature-glyphs.py` 可能跑数分钟 | 每次都 parse / rewrite 大型 Glyphs 源文件 | 增加 `--features-only` 快速路径；默认仍重建 glyph，需要只刷新 class / feature 时可以跳过 glyph block |
 
 ## Fira Code 给我们的关键启发
 
@@ -53,7 +55,7 @@ Fira Code 的价值不只是“有哪些连字”，更重要的是它处理上�
 - 大量 `ignore sub` 用来避免误伤普通代码，例如 `==`、`===`、`!==`、`--`、注释分割线和语言特定上下文。
 - specimen 很重视“同一 ASCII 源码变成什么效果”，这比单独展示最终 glyph 更能说明问题。
 
-Ligconsolata Next 当前已经覆盖 Fira Code 静态 `liga` 清单里的固定操作符，并迁移了其中比较稳的一层：`-` / `=` 长箭头、真实 specimen、浏览器 demo，以及第一批 Fira Code `calt`-inspired 固定组合，例如 underscore runs、`=/=` / `/=` 族、`=~` / `!~` / `.=` 这类 center-style 固定项、`->>` / `=>>` 族、`>--` / `==<` 族和 pipe endpoint 族。下划线 run 已经从固定清单继续推进到长运行 `calt` 延展；hash run 已评估并回退到 raw glyph，因为 Markdown 标题层级更依赖可数性；pipe/bar 端点长箭头已经先迁移单 `|` 端点批次；slash / colon / exclamation 先迁移了单 `/` 长 `=` 端点、单 `/` middle 和 `:` / `!` middle marker 小批次；Fira Code center alignment 已先迁移 `:` / `<` / `>` 的小批次视觉居中。Fira Code 更复杂的双 slash 端点、多冒号 center、lowercase operator、hexadecimal `x` 等 `calt` 行为还没有完整迁入，后续应按小批量继续验证。
+Ligconsolata Next 当前已经覆盖 Fira Code 静态 `liga` 清单里适合默认编辑器路径的大多数固定操作符，但不再宣称“完整照搬静态清单”：`www` 被有意保留为 raw 文本，方便 URL、域名和普通英文文本扫读。已经迁移的稳妥层包括 `-` / `=` 长箭头、真实 specimen、浏览器 demo，以及第一批 Fira Code `calt`-inspired 固定组合，例如 underscore runs、`=/=` / `/=` 族、`=~` / `!~` / `.=` 这类 center-style 固定项、`->>` / `=>>` 族、`>--` / `==<` 族和 pipe endpoint 族。下划线 run 已经从固定清单继续推进到长运行 `calt` 延展；hash run 采用分层方案：`## title` 到 `###### title` 在 shaping run 开头且后接普通空格时启用可数数字徽标，`#######` 及更长 run 用无编号 start / middle / end 片段保持横杠连续，`##title` 和 `a ## b` 仍保持 raw；pipe/bar 端点长箭头已经先迁移单 `|` 端点批次，单 `>` / `<` 端点长箭头也补到 `>---`、`---<`、`>===`、`===<`；slash / colon / exclamation 先迁移了单 `/` 长 `=` 端点、单 `/` middle 和 `:` / `!` middle marker 小批次；`/\` / `\/` 改成两侧空格才启用的上下文规则；Fira Code center alignment 已先迁移 `:` / `<` / `>` 的小批次视觉居中；hexadecimal / multiplication `x` 已迁移不依赖 `onum` 的默认小批次；thin backslash 已迁入默认 `calt` 路径，不再依赖 `ss06`。Fira Code 更复杂的双 slash 端点、多冒号 center、old-style figure / `.tosf` 分支、更多 `cv` / `ss` 行为还没有完整迁入，后续应按小批量继续验证。
 
 README 顶部 overview 是代表性样例，不是完整支持清单。完整规则以 `scripts/update-ligature-glyphs.py` 里的 `LIGATURES` 和 `FIRA_CODE_COMPAT_SOURCES` 为准。
 
@@ -104,11 +106,16 @@ python scripts/build-demo-assets.py
 ```sh
 /opt/homebrew/bin/hb-shape \
   "/tmp/ligconsolata-next-smoke/LigconsolataNext[wdth,wght].ttf" \
-  "a =/= b a /== b a =~ b a !~ b obj .= x a <:> b a :> b x ->> y x >-- y x ==< y f |---> g f <---| g f |===> g f <===| g f /===> g f <===/ g a ===/=== b a ==:= b a ==!= b md ####### title ______ _______" \
+  "a =/= b a /== b a =~ b a !~ b obj .= x a <:> b a :> b x ->> y x >-- y x ==< y f |---> g f <---| g f |===> g f <===| g f >--- g f ---< g f >=== g f ===< g f /===> g f <===/ g a ===/=== b a ==:= b a ==!= b a /\\ b regex /\\d/ x \\/ y path \\/tmp 0xFF 800x600 xray axb 0xG ______ _______" \
+  --features="liga=1,dlig=1,calt=1"
+
+/opt/homebrew/bin/hb-shape \
+  "/tmp/ligconsolata-next-smoke/LigconsolataNext[wdth,wght].ttf" \
+  "## title ###### title ####### title ######## title ####### ##title a ## b #include" \
   --features="liga=1,dlig=1,calt=1"
 ```
 
-期望看到 `equal_slash_equal.dlig`、`slash_equal_equal.dlig`、`equal_asciitilde.dlig`、`exclam_asciitilde.dlig`、`period_equal.dlig`、center alignment 里的 `less.center` / `greater.center` / `colon.center`、`hyphen_greater_greater.dlig`、`greater_hyphen_hyphen.dlig`、`equal_equal_less.dlig`、pipe/bar 长箭头里的 `bar_hyphen_start.seq` / `bar_hyphen_end.seq` / `bar_equal_start.seq` / `bar_equal_end.seq`、slash / marker 小批次里的 `slash_equal_start.seq` / `slash_equal_middle.seq` / `slash_equal_end.seq` / `colon_equal_middle.seq` / `exclam_equal_middle.seq`、`underscore_run6.dlig`，以及长下划线里的 `underscore_start.seq` / `underscore_middle.seq` / `underscore_end.seq`。`md ####### title` 应继续输出连续的 `numbersign` 原始 glyph，不应再出现 `numbersign_run*.dlig`。
+期望看到 `equal_slash_equal.dlig`、`slash_equal_equal.dlig`、`equal_asciitilde.dlig`、`exclam_asciitilde.dlig`、`period_equal.dlig`、center alignment 里的 `less.center` / `greater.center` / `colon.center`、`hyphen_greater_greater.dlig`、`greater_hyphen_hyphen.dlig`、`equal_equal_less.dlig`、pipe/bar 长箭头里的 `bar_hyphen_start.seq` / `bar_hyphen_end.seq` / `bar_equal_start.seq` / `bar_equal_end.seq`、单 `>` / `<` 长箭头里的 `greater_hyphen_start.seq` / `less_hyphen_end.seq` / `greater_equal_start.seq` / `less_equal_end.seq`、slash / marker 小批次里的 `slash_equal_start.seq` / `slash_equal_middle.seq` / `slash_equal_end.seq` / `colon_equal_middle.seq` / `exclam_equal_middle.seq`、`/\` / `\/` 空白上下文里的 `slash_backslash.dlig` / `backslash_slash.dlig`、数字上下文里的 `x.multiply`、`underscore_run6.dlig`，以及长下划线里的 `underscore_start.seq` / `underscore_middle.seq` / `underscore_end.seq`。单独的 hash 检查里，`## title` 和 `###### title` 应看到 `numbersign_run2.dlig` / `numbersign_run6.dlig`；`####### title`、`######## title` 和裸 `#######` 应看到 `numbersign_start.seq` / `numbersign_middle.seq` / `numbersign_end.seq`，但没有数字 glyph；`##title`、`a ## b`、`#include` 应继续输出连续的 `numbersign` 原始 glyph；`/\d/`、`\/tmp`、`xray`、`axb`、`0xG` 应继续输出 raw glyph。
 
 ## 当前仍要小心的边界
 

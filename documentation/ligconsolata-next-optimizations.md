@@ -59,23 +59,24 @@ Ligconsolata Next 做的是增量优化：
 这一组主要参考 Fira Code 静态 `liga` 覆盖面，但 glyph 仍从 Inconsolata 自己的笔画和比例推导：
 
 ```text
-<|> <$> <+> </> |> <| ::= ::: ..= ..< ?= !! !!. +++ *** www
+<|> <$> <+> </> |> <| ::= ::: ..= ..< ?= !! !!. +++ ***
 |||> <||| <!-- ~~> >>> <~~ <~> <*> <|| <<< #_( #{ #[ #: #= #! #( #? #_
 ^= ~~ ~@ ~> ~- *> \/ |} |] {| [| ]# $> >> -~ <~ <* <$ << <+ </ %% .. .? +> ;; \\ /\ />
 ```
 
-这类固定覆盖适合先迁移，因为它们不需要复杂上下文判断，也更容易做宽度校验。
+这类固定覆盖适合先迁移，因为它们不需要复杂上下文判断，也更容易做宽度校验。Fira Code 默认支持 `www` 合并，但 Ligconsolata Next 不把它放进默认规则：URL、域名和普通文本里 `www` 本来就足够清楚，合并后收益不大，还可能让真实地址更难扫读。
 
 ### 运行符和分割线
 
 当前对 hash、underscore、equal、hyphen 运行符做了分层处理：
 
 ```text
+## ### #### ##### ###### ####### ########
 __ ___ ____ _____ ______
 ==== ===== ---- -----
 ```
 
-更长的 underscore run 已经用 `calt` 做上下文延展。Markdown 标题里的 hash run 保持原始字符，不做紧凑连字，因为 `#` 的数量本身表示标题层级；压缩 `##` / `###` / `####` 会降低可数性，并在紧贴后续文本时造成视觉拥挤。后续如果重新设计 hash run，应先做 start / middle / end 片段并验证紧贴文本的真实编辑器效果。
+更长的 underscore run 已经用 `calt` 做上下文延展。Markdown 标题里的 hash run 改成了分层方案：位于 shaping run 开头且后接普通空格的 `## title` 到 `###### title` 保持原始字符序列的总 advance width，把井号横杠连成一组，并在最后一个 `#` 的右上区域嵌入数字 `2` 到 `6`，让标题层级仍然一眼可数。单个 `#`、紧贴文本的 `##title`、行内文本 `a ## b` 保持 raw glyph，避免行内文本误伤；`#######` 及更长 run 会用 start / middle / end 片段连成无编号井号横杠序列，让长分割线连续，但不假装成 Markdown 标题层级。
 
 ### 上下文箭头
 
@@ -83,6 +84,7 @@ Fira Code 的长箭头体验很好，但不能直接照搬 outline。Ligconsolat
 
 ```text
 ----> <---- ====> <==== <---> <===>
+>--- ---< >=== ===<
 ```
 
 这类规则需要小心 lookup 顺序。普通 `==`、`===`、`!==`、`--`、`->`、`=>` 等固定连字不能被长箭头 `calt` 抢走。
@@ -100,6 +102,8 @@ Fira Code 的长箭头体验很好，但不能直接照搬 outline。Ligconsolat
 ```
 
 双 slash 端点、双字符端点和更完整 `.spacer` 机制暂缓。它们容易和 `//`、`///`、URL、路径、注释前缀冲突，需要更完整的测试样例和视觉设计。
+
+`/\` 和 `\/` 也参考 Fira Code 的逻辑与 / 逻辑或思路，但默认只在两侧都有普通空格时启用，例如 `a /\ b`、`x \/ y`。正则 `/\d/`、转义路径 `\/tmp` 和普通字符串里的 slash / backslash 保持 raw，避免为了一个操作符把代码里的转义序列变模糊。
 
 ### 标点对齐
 
@@ -137,14 +141,27 @@ Ligconsolata Next 将 U+2014 和 U+2015 调整为两倍当前 Latin cell 宽度�
 
 这不是 Fira Code 式操作符连字，也不由 `scripts/update-ligature-glyphs.py` 生成；它是 Glyphs 源码里的基础标点宽度和轮廓连续性修正。
 
+### 数字上下文里的 x
+
+Fira Code 会在 `0xFF` 和 `800x600` 这类上下文中把小写 `x` 换成乘号语义的形态。Ligconsolata Next 迁移了不依赖 `onum` 的默认小批次：
+
+```text
+0xFF 0xff 0x10
+800x600 1920x1080
+```
+
+这里不是把所有 `x` 都换掉。`xray`、`axb`、`0xG`、`0XFF`、`800X600`、`x86`、`x64` 继续保持 raw glyph，避免误伤单词、变量名和常见架构名。
+
+`x.multiply` 从 Inconsolata 自己的 `multiply` 符号派生，保持一格 advance width，并且在生成脚本里清空 Unicode，避免把上下文替换 glyph 当作 U+00D7 本体。
+
 ## 还没有宣称完成的部分
 
-这些方向已经进入队列，但还没有写成默认支持：
+这些方向已经评估过，目前不写成默认支持：
 
-- hexadecimal / multiplication `x` 行为，例如 `0xFF`、`800x600`。
-- hash run 的上下文型 start / middle / end 设计；默认不恢复紧凑固定 glyph。
 - double slash endpoint、多冒号 center、更多 Fira Code `.spacer` 行为。
-- `cv` / `ss` 特性边界，以及哪些视觉变体应该默认启用、哪些应该作为 opt-in。
+- `bar_underscore_middle.seq` / `_|_` 这类 diagram 或 progress-bar 机制。
+- Greek 大写变音、`fi` / `fl` 文本连字、`twoemdash` / `threeemdash` GSUB、`asteriskmath`、old-style figure `.tosf` 分支。
+- 更完整的 opt-in `ss` / `cv` feature 包，例如水平 bar 版 `<=` / `>=`、零形态、括号风格或其他字符变体。thin backslash 已经按当前产品决策迁到默认 `calt` 路径：它把反斜杠换成更细的内部 glyph `backslash.thin`，方便用户在 regex / escape 里弱化转义符本身；后续不要再把核心编码体验放进新 `ssXX` / `cvXX`，除非同时给出主流编辑器可用性的明确证据。
 - 多 master、多字重、多编辑器的系统视觉 QA。
 
 ## 更新方式
@@ -182,3 +199,9 @@ python scripts/generate-inherited-comparison-svg.py --build
 ```
 
 这张图的 baseline 是 `fonts/variable/Inconsolata[wdth,wght].ttf`，不是 raw ASCII。它只用于检查 Ligconsolata Next 是否改变了上游已有 `dlig` 的视觉形态，不替代完整 catalog。
+
+## QA 和外部参考
+
+更偏 review 的视觉样例放在 [Ligconsolata Next 视觉 QA](ligconsolata-next-qa.md)。那里单独覆盖易混字符、`==` / `===`、`!=` / `!==`、URL/comment 边界、Markdown `#` 标题、不同字号和不同字重。QA SVG 由 `scripts/generate-qa-svg.py` 生成，和 overview / catalog 一样读取真实构建字体的 outline。
+
+外部编码字体的借鉴边界放在 [外部编码字体参考索引](external-font-reference-index.md)。当前结论是：Fira Code 作为连字行为主参考，JetBrains Mono 参考易读性 QA，Cascadia Code 参考发行拆分，Iosevka 参考可配置边界，Monaspace 参考 texture healing 的 QA 思路，Intel One Mono 参考可访问性和 opt-in 连字策略。这些项目只提供行为、文档和 QA 启发，不提供 Ligconsolata Next 的 outline 来源。

@@ -4,6 +4,7 @@ from __future__ import annotations
 import copy
 import io
 import unicodedata
+import argparse
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -45,6 +46,7 @@ CHAR_GLYPHS = {
     "}": "braceright",
     "~": "asciitilde",
     "w": "w",
+    "x": "x",
 }
 
 
@@ -89,7 +91,6 @@ FIRA_CODE_COMPAT_SOURCES = [
     "..<",
     "+++",
     "///",
-    "www",
     "^=",
     "~~",
     "~@",
@@ -177,8 +178,20 @@ FIRA_CODE_CALT_FIXED_LIGATURES = [
     Ligature("|-", glyph_name_for_source("|-"), "compact_components"),
 ]
 
+HASH_BADGE_LIGATURES = [
+    Ligature("######", "numbersign_run6.dlig", "numbersign_badge"),
+    Ligature("#####", "numbersign_run5.dlig", "numbersign_badge"),
+    Ligature("####", "numbersign_run4.dlig", "numbersign_badge"),
+    Ligature("###", "numbersign_run3.dlig", "numbersign_badge"),
+    Ligature("##", "numbersign_run2.dlig", "numbersign_badge"),
+]
+
+CONTEXTUAL_CALT_ONLY_LIGATURE_SOURCES = {ligature.source for ligature in HASH_BADGE_LIGATURES}
+CONTEXTUAL_SPACE_AROUND_LIGATURE_SOURCES = {"/\\", "\\/"}
+
 
 OBSOLETE_GENERATED_GLYPHS = [
+    "backslash.ss06",
     "numbersign_run8.dlig",
     "numbersign_run7.dlig",
     "numbersign_run6.dlig",
@@ -194,10 +207,12 @@ OBSOLETE_GENERATED_GLYPHS = [
     glyph_name_for_source("____"),
     glyph_name_for_source("___"),
     glyph_name_for_source("__"),
+    glyph_name_for_source("www"),
 ]
 
 
 LIGATURES = [
+    *HASH_BADGE_LIGATURES,
     Ligature("=====", "equal_equal_equal_equal_equal.dlig", "equal_run"),
     Ligature("-----", "hyphen_hyphen_hyphen_hyphen_hyphen.dlig", "hyphen_run"),
     Ligature("====", "equal_equal_equal_equal.dlig", "equal_run"),
@@ -246,11 +261,15 @@ SEQ_GLYPHS = [
     "hyphen_middle.seq",
     "hyphen_end.seq",
     "less_hyphen_start.seq",
+    "less_hyphen_end.seq",
+    "greater_hyphen_start.seq",
     "greater_hyphen_end.seq",
     "equal_start.seq",
     "equal_middle.seq",
     "equal_end.seq",
     "less_equal_start.seq",
+    "less_equal_end.seq",
+    "greater_equal_start.seq",
     "greater_equal_end.seq",
     "underscore_start.seq",
     "underscore_middle.seq",
@@ -264,10 +283,16 @@ SEQ_GLYPHS = [
     "slash_equal_end.seq",
     "colon_equal_middle.seq",
     "exclam_equal_middle.seq",
+    "numbersign_start.seq",
+    "numbersign_middle.seq",
+    "numbersign_end.seq",
 ]
 
 SPACER_GLYPHS = [
     "slash_comment_spacer",
+    "slash_logic_spacer",
+    "backslash_logic_spacer",
+    "numbersign_badge_spacer",
 ]
 
 CENTER_GLYPHS = {
@@ -282,6 +307,55 @@ CASE_GLYPHS = {
     "asterisk.lc": ("asterisk", "x"),
     "colon.uc": ("colon", "H"),
 }
+
+CONTEXT_GLYPHS = {
+    "x.multiply": "multiply",
+}
+
+STYLE_GLYPHS = {
+    "backslash.thin": "backslash",
+}
+
+HEX_ZERO_CLASS_GLYPHS = [
+    "zero",
+    "zero.zero",
+]
+
+DIGIT_CLASS_GLYPHS = [
+    "zero",
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine",
+]
+
+BADGE_DIGIT_GLYPHS = {
+    2: "two",
+    3: "three",
+    4: "four",
+    5: "five",
+    6: "six",
+}
+
+HEX_DIGIT_CLASS_GLYPHS = [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+]
 
 TALL_CLASS_EXTRAS = [
     "zero",
@@ -320,6 +394,8 @@ def clear_layer(layer) -> None:
 def empty_glyph(font, target: str, template: str = "equal_equal_equal.dlig"):
     glyph = copy.deepcopy(font.glyphs[template])
     glyph.name = target
+    glyph.unicode = None
+    glyph.unicodes = []
     for layer in glyph.layers:
         clear_layer(layer)
     return glyph
@@ -329,6 +405,44 @@ def zero_width_spacer_glyph(font, target: str):
     glyph = empty_glyph(font, target)
     for layer in glyph.layers:
         layer.width = 0
+    return glyph
+
+
+def cloned_outline_glyph(font, target: str, source_name: str):
+    glyph = empty_glyph(font, target, source_name)
+    source_layers = layer_map(font.glyphs[source_name])
+    for layer in glyph.layers:
+        source_layer = source_layers[layer.layerId]
+        layer.width = source_layer.width
+        for path in source_layer.paths:
+            layer.paths.append(clone_path(path))
+        for component in source_layer.components:
+            layer.components.append(copy.deepcopy(component))
+    return glyph
+
+
+def thin_backslash_glyph(font, target: str, source_name: str):
+    glyph = cloned_outline_glyph(font, target, source_name)
+    glyph.unicode = None
+    glyph.unicodes = []
+    factor = 0.48
+    for layer in glyph.layers:
+        for path in layer.paths:
+            if len(path.nodes) != 4:
+                continue
+            p0, p1, p2, p3 = [node.position for node in path.nodes]
+            bottom_center_x = (p0.x + p3.x) / 2
+            bottom_center_y = (p0.y + p3.y) / 2
+            top_center_x = (p1.x + p2.x) / 2
+            top_center_y = (p1.y + p2.y) / 2
+            bottom_half_x = (p0.x - p3.x) * factor / 2
+            bottom_half_y = (p0.y - p3.y) * factor / 2
+            top_half_x = (p1.x - p2.x) * factor / 2
+            top_half_y = (p1.y - p2.y) * factor / 2
+            path.nodes[0].position = (bottom_center_x + bottom_half_x, bottom_center_y + bottom_half_y)
+            path.nodes[1].position = (top_center_x + top_half_x, top_center_y + top_half_y)
+            path.nodes[2].position = (top_center_x - top_half_x, top_center_y - top_half_y)
+            path.nodes[3].position = (bottom_center_x - bottom_half_x, bottom_center_y - bottom_half_y)
     return glyph
 
 
@@ -345,6 +459,14 @@ def rect_path(x_min: float, y_min: float, x_max: float, y_max: float) -> GSPath:
     path.nodes.append(GSNode((x_max, y_max), "line"))
     path.nodes.append(GSNode((x_min, y_max), "line"))
     path.nodes.append(GSNode((x_min, y_min), "line"))
+    return path
+
+
+def polygon_path(points: list[tuple[float, float]]) -> GSPath:
+    path = GSPath()
+    path.closed = True
+    for point in points:
+        path.nodes.append(GSNode(point, "line"))
     return path
 
 
@@ -707,6 +829,193 @@ def continuous_run(font, source: str, target: str, base_name: str):
     return line_run_glyph(font, target, base_name, len(source))
 
 
+def horizontal_stroke_bands(layer, center_y: float, min_width: float) -> tuple[tuple[float, float], tuple[float, float]]:
+    top_y_values = []
+    bottom_y_values = []
+    for path in layer.paths:
+        nodes = list(path.nodes)
+        for index, first in enumerate(nodes):
+            second = nodes[(index + 1) % len(nodes)]
+            if first.type != "line" or second.type != "line":
+                continue
+            y1 = first.position.y
+            y2 = second.position.y
+            x1 = first.position.x
+            x2 = second.position.x
+            if abs(y1 - y2) > 1 or abs(x1 - x2) < min_width:
+                continue
+            if y1 > center_y:
+                top_y_values.append(y1)
+            else:
+                bottom_y_values.append(y1)
+    if not top_y_values or not bottom_y_values:
+        raise ValueError(f"Could not infer # horizontal stroke bands for {layer.name}")
+    return (min(top_y_values), max(top_y_values)), (min(bottom_y_values), max(bottom_y_values))
+
+
+def edge_stem_corners(layer, sign_bounds: tuple[float, float, float, float]):
+    sign_x_min, sign_y_min, sign_x_max, sign_y_max = sign_bounds
+    sign_height = sign_y_max - sign_y_min
+    y_tolerance = max(8, sign_height * 0.04)
+    bottom_xs = sorted(
+        {
+            round(node.position.x, 3)
+            for path in layer.paths
+            for node in path.nodes
+            if node.position.y <= sign_y_min + y_tolerance
+        }
+    )
+    top_xs = sorted(
+        {
+            round(node.position.x, 3)
+            for path in layer.paths
+            for node in path.nodes
+            if node.position.y >= sign_y_max - y_tolerance
+        }
+    )
+    if len(bottom_xs) < 4 or len(top_xs) < 4:
+        stem_width = (sign_x_max - sign_x_min) * 0.14
+        left_bottom = (sign_x_min + stem_width * 1.4, sign_x_min + stem_width * 2.4)
+        right_bottom = (sign_x_max - stem_width * 2.4, sign_x_max - stem_width * 1.4)
+        slant = (sign_x_max - sign_x_min) * 0.16
+        left_top = (left_bottom[0] + slant, left_bottom[1] + slant)
+        right_top = (right_bottom[0] + slant, right_bottom[1] + slant)
+    else:
+        left_bottom = (bottom_xs[0], bottom_xs[1])
+        right_bottom = (bottom_xs[-2], bottom_xs[-1])
+        left_top = (top_xs[0], top_xs[1])
+        right_top = (top_xs[-2], top_xs[-1])
+    return left_bottom, right_bottom, left_top, right_top
+
+
+def slanted_stem_path(
+    bottom_pair: tuple[float, float],
+    top_pair: tuple[float, float],
+    y_min: float,
+    y_max: float,
+    dx: float = 0,
+    trim_top_to: float | None = None,
+) -> GSPath:
+    top_y = y_max if trim_top_to is None else min(max(trim_top_to, y_min), y_max)
+    progress = 0 if y_max == y_min else (top_y - y_min) / (y_max - y_min)
+    left_top_x = bottom_pair[0] + (top_pair[0] - bottom_pair[0]) * progress
+    right_top_x = bottom_pair[1] + (top_pair[1] - bottom_pair[1]) * progress
+    return polygon_path(
+        [
+            (bottom_pair[0] + dx, y_min),
+            (bottom_pair[1] + dx, y_min),
+            (right_top_x + dx, top_y),
+            (left_top_x + dx, top_y),
+        ]
+    )
+
+
+def numbersign_badge(font, source: str, target: str):
+    glyph = empty_glyph(font, target)
+    count = len(source)
+    digit_name = BADGE_DIGIT_GLYPHS[count]
+    numbersign_layers = layer_map(font.glyphs["numbersign"])
+    digit_layers = layer_map(font.glyphs[digit_name])
+    for layer in glyph.layers:
+        numbersign_layer = numbersign_layers[layer.layerId]
+        digit_layer = digit_layers[layer.layerId]
+        cell = numbersign_layer.width
+        layer.width = cell * count
+
+        digit_bounds = layer_visual_bounds(font, digit_layer)
+        sign_bounds = layer_visual_bounds(font, numbersign_layer)
+        if digit_bounds is None or sign_bounds is None:
+            continue
+        sign_x_min, sign_y_min, sign_x_max, sign_y_max = sign_bounds
+        sign_width = sign_x_max - sign_x_min
+        sign_height = sign_y_max - sign_y_min
+        center_y = (sign_y_min + sign_y_max) / 2
+        top_band, bottom_band = horizontal_stroke_bands(numbersign_layer, center_y, cell * 0.18)
+        left_bottom, right_bottom, left_top, right_top = edge_stem_corners(numbersign_layer, sign_bounds)
+
+        cutout_width = sign_width * 0.72
+        cutout_height = sign_height * 0.72
+        cutout_x_max = cell * (count - 1) + sign_x_max
+        cutout_x_min = cutout_x_max - cutout_width
+        cutout_y_max = sign_y_max
+        cutout_y_min = cutout_y_max - cutout_height
+
+        digit_x_min, digit_y_min, digit_x_max, digit_y_max = digit_bounds
+        digit_box_width = cutout_width * 0.8
+        digit_box_height = cutout_height * 0.84
+        scale = min(
+            digit_box_width / (digit_x_max - digit_x_min),
+            digit_box_height / (digit_y_max - digit_y_min),
+        )
+        digit_width = (digit_x_max - digit_x_min) * scale
+        digit_height = (digit_y_max - digit_y_min) * scale
+        digit_bold_offset = cell * 0.02
+        digit_dx = cutout_x_min + (cutout_width - digit_width) / 2 - digit_x_min * scale + cell * 0.02
+        digit_dy = cutout_y_min + (cutout_height - digit_height) / 2 - digit_y_min * scale - sign_height * 0.01
+        digit_visual_x_min = digit_dx + digit_x_min * scale - digit_bold_offset / 2
+        digit_visual_y_min = digit_dy + digit_y_min * scale
+        badge_clear_x = digit_visual_x_min - cell * 0.12
+        badge_clear_y = digit_visual_y_min - sign_height * 0.12
+
+        top_x_start = sign_x_min
+        top_x_end = badge_clear_x
+        bottom_x_start = sign_x_min
+        bottom_x_end = badge_clear_x
+        layer.paths.append(rect_path(top_x_start, top_band[0], top_x_end, top_band[1]))
+        layer.paths.append(rect_path(bottom_x_start, bottom_band[0], bottom_x_end, bottom_band[1]))
+
+        for index in range(count):
+            dx = cell * index
+            if index == count - 1:
+                layer.paths.append(
+                    slanted_stem_path(left_bottom, left_top, sign_y_min, sign_y_max, dx, badge_clear_y)
+                )
+                layer.paths.append(
+                    slanted_stem_path(right_bottom, right_top, sign_y_min, sign_y_max, dx, badge_clear_y)
+                )
+            else:
+                layer.paths.append(slanted_stem_path(left_bottom, left_top, sign_y_min, sign_y_max, dx))
+                layer.paths.append(slanted_stem_path(right_bottom, right_top, sign_y_min, sign_y_max, dx))
+
+        append_layer_outlines(font, layer, digit_layer, (scale, 0, 0, scale, digit_dx - digit_bold_offset / 2, digit_dy))
+        append_layer_outlines(font, layer, digit_layer, (scale, 0, 0, scale, digit_dx + digit_bold_offset / 2, digit_dy))
+    return glyph
+
+
+def numbersign_seq_glyph(font, target: str):
+    glyph = empty_glyph(font, target)
+    numbersign_layers = layer_map(font.glyphs["numbersign"])
+    mode = target.removeprefix("numbersign_").removesuffix(".seq")
+    for layer in glyph.layers:
+        numbersign_layer = numbersign_layers[layer.layerId]
+        cell = numbersign_layer.width
+        layer.width = cell
+
+        sign_bounds = layer_visual_bounds(font, numbersign_layer)
+        if sign_bounds is None:
+            continue
+        sign_x_min, sign_y_min, sign_x_max, sign_y_max = sign_bounds
+        center_y = (sign_y_min + sign_y_max) / 2
+        top_band, bottom_band = horizontal_stroke_bands(numbersign_layer, center_y, cell * 0.18)
+        left_bottom, right_bottom, left_top, right_top = edge_stem_corners(numbersign_layer, sign_bounds)
+        overlap = cell * 0.04
+
+        if mode == "start":
+            rail_x_start, rail_x_end = sign_x_min, cell + overlap
+        elif mode == "middle":
+            rail_x_start, rail_x_end = -overlap, cell + overlap
+        elif mode == "end":
+            rail_x_start, rail_x_end = -overlap, sign_x_max
+        else:
+            raise ValueError(target)
+
+        layer.paths.append(rect_path(rail_x_start, top_band[0], rail_x_end, top_band[1]))
+        layer.paths.append(rect_path(rail_x_start, bottom_band[0], rail_x_end, bottom_band[1]))
+        layer.paths.append(slanted_stem_path(left_bottom, left_top, sign_y_min, sign_y_max))
+        layer.paths.append(slanted_stem_path(right_bottom, right_top, sign_y_min, sign_y_max))
+    return glyph
+
+
 def arrow_body(font, target: str, line_name: str, head_left: bool, head_right: bool, double_line: bool = False):
     glyph = empty_glyph(font, target)
     line_layers = layer_map(font.glyphs[line_name])
@@ -801,6 +1110,10 @@ def seq_arrow_end(font, target: str, base_name: str, direction: str):
 
 
 def seq_bar_endpoint(font, target: str, base_name: str, mode: str):
+    return seq_sign_endpoint(font, target, base_name, "bar", mode)
+
+
+def seq_sign_endpoint(font, target: str, base_name: str, sign_name: str, mode: str):
     glyph = empty_glyph(font, target)
     base_layers = layer_map(font.glyphs[base_name])
     for layer in glyph.layers:
@@ -817,7 +1130,7 @@ def seq_bar_endpoint(font, target: str, base_name: str, mode: str):
         for source_path in base_layer.paths:
             _, y_min, _, y_max = path_bounds(source_path)
             layer.paths.append(rect_path(line_start, y_min, line_end, y_max))
-        layer.components.append(GSComponent("bar", offset=(0, 0)))
+        layer.components.append(GSComponent(sign_name, offset=(0, 0)))
     return glyph
 
 
@@ -876,10 +1189,18 @@ def seq_glyph(font, target: str):
         return seq_line(font, target, "underscore", target.removeprefix("underscore_").removesuffix(".seq"))
     if target == "less_hyphen_start.seq":
         return seq_arrow_end(font, target, "hyphen", "left")
+    if target == "less_hyphen_end.seq":
+        return seq_sign_endpoint(font, target, "hyphen", "less", "end")
+    if target == "greater_hyphen_start.seq":
+        return seq_sign_endpoint(font, target, "hyphen", "greater", "start")
     if target == "greater_hyphen_end.seq":
         return seq_arrow_end(font, target, "hyphen", "right")
     if target == "less_equal_start.seq":
         return seq_arrow_end(font, target, "equal", "left")
+    if target == "less_equal_end.seq":
+        return seq_sign_endpoint(font, target, "equal", "less", "end")
+    if target == "greater_equal_start.seq":
+        return seq_sign_endpoint(font, target, "equal", "greater", "start")
     if target == "greater_equal_end.seq":
         return seq_arrow_end(font, target, "equal", "right")
     if target == "bar_hyphen_start.seq":
@@ -900,6 +1221,8 @@ def seq_glyph(font, target: str):
         return seq_equal_marker_middle(font, target, "colon")
     if target == "exclam_equal_middle.seq":
         return seq_equal_marker_middle(font, target, "exclam")
+    if target.startswith("numbersign_"):
+        return numbersign_seq_glyph(font, target)
     raise ValueError(target)
 
 
@@ -981,6 +1304,8 @@ def make_glyph(font, ligature: Ligature):
         return continuous_run(font, ligature.source, ligature.glyph, "hyphen")
     if generator == "underscore_run":
         return continuous_run(font, ligature.source, ligature.glyph, "underscore")
+    if generator == "numbersign_badge":
+        return numbersign_badge(font, ligature.source, ligature.glyph)
     if generator == "spaceship_equal":
         return arrow_body(font, ligature.glyph, "equal", head_left=True, head_right=True, double_line=True)
     if generator == "spaceship_hyphen":
@@ -1056,7 +1381,11 @@ def upsert_glyph_block(text: str, glyphname: str, block: str, anchor: str = "{\n
 def feature_code(namespace: str) -> str:
     lines = []
     for ligature in LIGATURES:
-        if ligature.source in CONTEXTUAL_SPACE_LIGATURE_SOURCES:
+        if (
+            ligature.source in CONTEXTUAL_SPACE_LIGATURE_SOURCES
+            or ligature.source in CONTEXTUAL_SPACE_AROUND_LIGATURE_SOURCES
+            or ligature.source in CONTEXTUAL_CALT_ONLY_LIGATURE_SOURCES
+        ):
             continue
         glyph_names = " ".join(CHAR_GLYPHS[char] for char in ligature.source)
         lines.append(f"sub {glyph_names} by {ligature.glyph};")
@@ -1127,28 +1456,103 @@ def run_stop_ignores(base_name: str, min_length: int = 3, max_length: int = 10) 
     return "\n".join(lines)
 
 
+def hash_badge_code() -> str:
+    preceder_ignores = [
+        "space",
+        "@Lowercase",
+        "@Tall",
+        "@Digit",
+        "[exclam ampersand dollar percent asterisk plus hyphen period slash colon semicolon less equal greater question at bracketleft backslash bracketright asciicircum underscore parenleft parenright braceleft braceright bar asciitilde comma quotedbl quotesingle quoteleft quoteright quotedblleft quotedblright grave]",
+    ]
+    lookups = []
+    for ligature in HASH_BADGE_LIGATURES:
+        count = len(ligature.source)
+        lines = [f"lookup ligconsolata_hash_badge_{count} {{"]
+        preceded_tail = " ".join(["numbersign"] * (count - 1))
+        first_suffix = " ".join(["numbersign"] * (count - 1))
+        for preceder in preceder_ignores:
+            lines.append(f"  ignore sub {preceder} numbersign' {first_suffix} space;")
+        lines.append(f"  ignore sub numbersign numbersign' {preceded_tail} space;")
+        final_prefix = " ".join(["numbersign_badge_spacer"] * (count - 1))
+        lines.append(f"  sub {final_prefix} numbersign' space by {ligature.glyph};")
+        for consumed in range(count - 2, 0, -1):
+            prefix = " ".join(["numbersign_badge_spacer"] * consumed)
+            suffix = " ".join(["numbersign"] * (count - consumed - 1))
+            lines.append(f"  sub {prefix} numbersign' {suffix} space by numbersign_badge_spacer;")
+        lines.append(f"  sub numbersign' {first_suffix} space by numbersign_badge_spacer;")
+        lines.append(f"}} ligconsolata_hash_badge_{count};")
+        lookups.append("\n".join(lines))
+    return "\n\n".join(lookups)
+
+
+def hash_long_code(max_extenders: int = 96) -> str:
+    extenders = []
+    for index in range(max_extenders):
+        extenders.append(
+            f"""lookup ligconsolata_hash_long_extend_{index + 1} {{
+  sub [numbersign_start.seq numbersign_middle.seq] numbersign' numbersign by numbersign_middle.seq;
+  sub [numbersign_start.seq numbersign_middle.seq] numbersign' by numbersign_end.seq;
+}} ligconsolata_hash_long_extend_{index + 1};"""
+        )
+    return f"""lookup ligconsolata_hash_long_start {{
+  ignore sub [numbersign numbersign_start.seq numbersign_middle.seq] numbersign' numbersign numbersign numbersign numbersign numbersign numbersign;
+  sub numbersign' numbersign numbersign numbersign numbersign numbersign numbersign by numbersign_start.seq;
+}} ligconsolata_hash_long_start;
+
+{chr(10).join(extenders)}"""
+
+
+def logic_conjunction_code() -> str:
+    return """lookup ligconsolata_slash_backslash_logic {
+  sub space slash_logic_spacer backslash' space by slash_backslash.dlig;
+  sub space slash' backslash space by slash_logic_spacer;
+} ligconsolata_slash_backslash_logic;
+
+lookup ligconsolata_backslash_slash_logic {
+  sub space backslash_logic_spacer slash' space by backslash_slash.dlig;
+  sub space backslash' slash space by backslash_logic_spacer;
+} ligconsolata_backslash_slash_logic;"""
+
+
+def thin_backslash_code() -> str:
+    return """lookup ligconsolata_backslash_thin {
+  ignore sub backslash.thin backslash';
+  sub backslash' by backslash.thin;
+} ligconsolata_backslash_thin;"""
+
+
+def zero_code() -> str:
+    return """sub zero by zero.zero;
+sub zeroinferior by zeroinferior.zero;
+sub zero.dnom by zero.dnom.zero;
+sub zero.numr by zero.numr.zero;
+sub zerosuperior by zerosuperior.zero;"""
+
+
 def calt_code() -> str:
     hyphen_extenders = []
     equal_extenders = []
     for index in range(8):
         hyphen_extenders.append(
             f"""lookup ligconsolata_hyphen_arrow_extend_{index + 1} {{
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] hyphen' [hyphen greater bar] by hyphen_middle.seq;
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] hyphen' by hyphen_end.seq;
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] greater' by greater_hyphen_end.seq;
-  sub [less_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] bar' by bar_hyphen_end.seq;
+  sub [less_hyphen_start.seq greater_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] hyphen' [hyphen less greater bar] by hyphen_middle.seq;
+  sub [less_hyphen_start.seq greater_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] hyphen' by hyphen_end.seq;
+  sub [less_hyphen_start.seq greater_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] less' by less_hyphen_end.seq;
+  sub [less_hyphen_start.seq greater_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] greater' by greater_hyphen_end.seq;
+  sub [less_hyphen_start.seq greater_hyphen_start.seq hyphen_start.seq hyphen_middle.seq bar_hyphen_start.seq] bar' by bar_hyphen_end.seq;
 }} ligconsolata_hyphen_arrow_extend_{index + 1};"""
         )
         equal_extenders.append(
             f"""lookup ligconsolata_equal_arrow_extend_{index + 1} {{
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' [equal greater bar slash] by equal_middle.seq;
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' colon equal by equal_middle.seq;
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' exclam equal by equal_middle.seq;
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' by equal_end.seq;
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] greater' by greater_equal_end.seq;
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] bar' by bar_equal_end.seq;
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] slash' equal by slash_equal_middle.seq;
-  sub [less_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] slash' by slash_equal_end.seq;
+  sub [less_equal_start.seq greater_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' [equal less greater bar slash] by equal_middle.seq;
+  sub [less_equal_start.seq greater_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' colon equal by equal_middle.seq;
+  sub [less_equal_start.seq greater_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' exclam equal by equal_middle.seq;
+  sub [less_equal_start.seq greater_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' by equal_end.seq;
+  sub [less_equal_start.seq greater_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] less' by less_equal_end.seq;
+  sub [less_equal_start.seq greater_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] greater' by greater_equal_end.seq;
+  sub [less_equal_start.seq greater_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] bar' by bar_equal_end.seq;
+  sub [less_equal_start.seq greater_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] slash' equal by slash_equal_middle.seq;
+  sub [less_equal_start.seq greater_equal_start.seq equal_start.seq equal_middle.seq bar_equal_start.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] slash' by slash_equal_end.seq;
   sub [equal_start.seq equal_middle.seq] colon' equal by colon_equal_middle.seq;
   sub [equal_start.seq equal_middle.seq] exclam' equal by exclam_equal_middle.seq;
 }} ligconsolata_equal_arrow_extend_{index + 1};"""
@@ -1169,11 +1573,14 @@ def calt_code() -> str:
   ignore sub hyphen hyphen' [hyphen greater];
   ignore sub hyphen_start.seq hyphen' [hyphen greater];
   ignore sub less_hyphen_start.seq hyphen' [hyphen greater];
+  ignore sub greater_hyphen_start.seq hyphen' [hyphen less];
   ignore sub bar_hyphen_start.seq hyphen' [hyphen greater bar];
   ignore sub hyphen' greater greater;
+  ignore sub hyphen' less less;
   ignore sub less' hyphen bar;
 {run_stop_ignores("hyphen")}
   sub bar' hyphen hyphen hyphen by bar_hyphen_start.seq;
+  sub greater' hyphen hyphen hyphen by greater_hyphen_start.seq;
   sub less' hyphen hyphen hyphen by less_hyphen_start.seq;
   sub hyphen' hyphen hyphen by hyphen_start.seq;
 }} ligconsolata_hyphen_arrow_start;
@@ -1193,9 +1600,11 @@ lookup ligconsolata_equal_arrow_start {{
   ignore sub equal equal' [equal greater];
   ignore sub equal_start.seq equal' [equal greater];
   ignore sub less_equal_start.seq equal' [equal greater];
+  ignore sub greater_equal_start.seq equal' [equal less];
   ignore sub bar_equal_start.seq equal' [equal greater bar];
   ignore sub slash_equal_start.seq equal' [equal greater slash colon exclam];
   ignore sub equal' greater greater;
+  ignore sub equal' less less;
   ignore sub equal' equal [less bar slash];
   ignore sub less' equal bar;
 {run_stop_ignores("equal")}
@@ -1204,6 +1613,7 @@ lookup ligconsolata_equal_arrow_start {{
   ignore sub equal equal equal slash' equal;
   ignore sub equal_start.seq equal equal slash' equal;
   sub slash' equal equal equal by slash_equal_start.seq;
+  sub greater' equal equal equal by greater_equal_start.seq;
   sub less' equal equal equal by less_equal_start.seq;
   sub equal' equal equal by equal_start.seq;
 }} ligconsolata_equal_arrow_start;
@@ -1220,7 +1630,20 @@ lookup ligconsolata_center {{
   sub colon' [less greater] by colon.center;
 }} ligconsolata_center;
 
+lookup ligconsolata_hex_multiply_x {{
+  sub @HexZero x' [@Digit @HexDigit] by x.multiply;
+  sub @Digit x' @Digit by x.multiply;
+}} ligconsolata_hex_multiply_x;
+
 {match_case_code()}
+
+{logic_conjunction_code()}
+
+{thin_backslash_code()}
+
+{hash_badge_code()}
+
+{hash_long_code()}
 
 lookup ligconsolata_underscore_run_start {{
   ignore sub [underscore underscore_start.seq underscore_middle.seq] underscore' underscore underscore underscore underscore underscore underscore;
@@ -1231,11 +1654,40 @@ lookup ligconsolata_underscore_run_start {{
 """
 
 
-def replace_feature(text: str, name: str, code: str) -> str:
+def feature_section_bounds(text: str) -> tuple[int, int]:
+    start = text.index("features = (")
+    end = text.index(");\nfontMaster", start)
+    return start, end
+
+
+def find_feature_block(text: str, name: str) -> tuple[int, int] | None:
+    section_start, section_end = feature_section_bounds(text)
     name_marker = f"name = {name};"
-    name_index = text.index(name_marker)
+    name_index = text.find(name_marker, section_start, section_end)
+    if name_index < 0:
+        return None
+    start = text.rfind("{\nautomatic = 1;", section_start, name_index)
+    if start < 0:
+        raise ValueError(f"Could not find feature block start for {name}")
+    depth = 0
+    for index in range(start, section_end):
+        char = text[index]
+        if char == "{":
+            depth += 1
+        elif char == "}":
+            depth -= 1
+            if depth == 0:
+                return start, index + 1
+    raise ValueError(f"Could not find feature block end for {name}")
+
+
+def replace_feature(text: str, name: str, code: str) -> str:
+    feature_block = find_feature_block(text, name)
+    if feature_block is None:
+        raise ValueError(f"Could not find feature {name}")
+    start, end = feature_block
     code_marker = 'code = "'
-    code_start = text.rfind(code_marker, 0, name_index)
+    code_start = text.find(code_marker, start, end)
     if code_start < 0:
         raise ValueError(f"Could not find code block for feature {name}")
     value_start = code_start + len(code_marker)
@@ -1244,14 +1696,26 @@ def replace_feature(text: str, name: str, code: str) -> str:
 
 
 def upsert_feature(text: str, name: str, code: str, before_name: str) -> str:
-    if f"name = {name};" in text:
+    if find_feature_block(text, name) is not None:
         return replace_feature(text, name, code)
-    before_index = text.index(f"name = {before_name};")
-    block_start = text.rfind("{\nautomatic = 1;", 0, before_index)
-    if block_start < 0:
+    before_block = find_feature_block(text, before_name)
+    if before_block is None:
         raise ValueError(f"Could not find insertion point before feature {before_name}")
+    block_start, _ = before_block
     block = f'{{\nautomatic = 1;\ncode = "{code}";\nname = {name};\n}},\n'
     return text[:block_start] + block + text[block_start:]
+
+
+def delete_feature(text: str, name: str) -> str:
+    feature_block = find_feature_block(text, name)
+    if feature_block is None:
+        return text
+    start, end = feature_block
+    if text[end : end + 2] == ",\n":
+        end += 2
+    elif text[start - 2 : start] == ",\n":
+        start -= 2
+    return text[:start] + text[end:]
 
 
 def class_code_for_lowercase(font) -> str:
@@ -1271,6 +1735,10 @@ def class_code_for_lowercase(font) -> str:
 def class_code_for_tall(font) -> str:
     extras = " ".join(name for name in TALL_CLASS_EXTRAS if glyph_exists(font, name))
     return f"@Uppercase {extras}".strip()
+
+
+def class_code_for_names(font, names: list[str]) -> str:
+    return " ".join(name for name in names if glyph_exists(font, name))
 
 
 def find_class_block(text: str, name: str) -> tuple[int, int] | None:
@@ -1295,6 +1763,18 @@ def find_class_block(text: str, name: str) -> tuple[int, int] | None:
     raise ValueError(f"Could not find class block end for {name}")
 
 
+def delete_class(text: str, name: str) -> str:
+    existing = find_class_block(text, name)
+    if existing is None:
+        return text
+    start, end = existing
+    if text[end : end + 2] == ",\n":
+        end += 2
+    elif text[start - 2 : start] == ",\n":
+        start -= 2
+    return text[:start] + text[end:]
+
+
 def upsert_class(text: str, name: str, code: str) -> str:
     block = f'{{\ncode = "{code}";\nname = {name};\n}}'
     existing = find_class_block(text, name)
@@ -1309,47 +1789,74 @@ def upsert_class(text: str, name: str, code: str) -> str:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description="Regenerate Ligconsolata Next ligature glyphs and feature code.")
+    parser.add_argument(
+        "--features-only",
+        action="store_true",
+        help="Only update OpenType classes/features; skip generated glyph blocks.",
+    )
+    args = parser.parse_args()
+
     print(f"Loading {SOURCE} ...", flush=True)
     with SOURCE.open("r", encoding="utf-8") as fp:
         font = glyphsLib.load(fp)
 
     text = SOURCE.read_text(encoding="utf-8")
     generated_count = 0
-    for glyph_name in OBSOLETE_GENERATED_GLYPHS:
-        text = delete_glyph_block(text, glyph_name)
-    for glyph_name, source_name in CENTER_GLYPHS.items():
-        glyph = center_glyph(font, glyph_name, source_name)
-        text = upsert_glyph_block(text, glyph_name, write_glyph(glyph))
-        generated_count += 1
-        print(f"  generated center glyph {glyph_name}", flush=True)
-    for glyph_name, (source_name, reference_name) in CASE_GLYPHS.items():
-        glyph = vertically_aligned_glyph(font, glyph_name, source_name, reference_name)
-        text = upsert_glyph_block(text, glyph_name, write_glyph(glyph))
-        generated_count += 1
-        print(f"  generated case glyph {glyph_name}", flush=True)
-    for glyph_name in SEQ_GLYPHS:
-        glyph = seq_glyph(font, glyph_name)
-        text = upsert_glyph_block(text, glyph_name, write_glyph(glyph))
-        generated_count += 1
-        print(f"  generated sequence glyph {glyph_name}", flush=True)
-    for glyph_name in SPACER_GLYPHS:
-        glyph = zero_width_spacer_glyph(font, glyph_name)
-        text = upsert_glyph_block(text, glyph_name, write_glyph(glyph))
-        generated_count += 1
-        print(f"  generated spacer glyph {glyph_name}", flush=True)
-    for ligature in LIGATURES:
-        if ligature.generator is None:
-            continue
-        glyph = make_glyph(font, ligature)
-        text = upsert_glyph_block(text, ligature.glyph, write_glyph(glyph))
-        generated_count += 1
-        print(f"  generated {ligature.source} -> {ligature.glyph}", flush=True)
+    if not args.features_only:
+        for glyph_name in OBSOLETE_GENERATED_GLYPHS:
+            text = delete_glyph_block(text, glyph_name)
+        for glyph_name, source_name in CENTER_GLYPHS.items():
+            glyph = center_glyph(font, glyph_name, source_name)
+            text = upsert_glyph_block(text, glyph_name, write_glyph(glyph))
+            generated_count += 1
+            print(f"  generated center glyph {glyph_name}", flush=True)
+        for glyph_name, (source_name, reference_name) in CASE_GLYPHS.items():
+            glyph = vertically_aligned_glyph(font, glyph_name, source_name, reference_name)
+            text = upsert_glyph_block(text, glyph_name, write_glyph(glyph))
+            generated_count += 1
+            print(f"  generated case glyph {glyph_name}", flush=True)
+        for glyph_name, source_name in CONTEXT_GLYPHS.items():
+            glyph = cloned_outline_glyph(font, glyph_name, source_name)
+            text = upsert_glyph_block(text, glyph_name, write_glyph(glyph))
+            generated_count += 1
+            print(f"  generated context glyph {glyph_name}", flush=True)
+        for glyph_name, source_name in STYLE_GLYPHS.items():
+            glyph = thin_backslash_glyph(font, glyph_name, source_name)
+            text = upsert_glyph_block(text, glyph_name, write_glyph(glyph))
+            generated_count += 1
+            print(f"  generated style glyph {glyph_name}", flush=True)
+        for glyph_name in SEQ_GLYPHS:
+            glyph = seq_glyph(font, glyph_name)
+            text = upsert_glyph_block(text, glyph_name, write_glyph(glyph))
+            generated_count += 1
+            print(f"  generated sequence glyph {glyph_name}", flush=True)
+        for glyph_name in SPACER_GLYPHS:
+            glyph = zero_width_spacer_glyph(font, glyph_name)
+            text = upsert_glyph_block(text, glyph_name, write_glyph(glyph))
+            generated_count += 1
+            print(f"  generated spacer glyph {glyph_name}", flush=True)
+        for ligature in LIGATURES:
+            if ligature.generator is None:
+                continue
+            glyph = make_glyph(font, ligature)
+            text = upsert_glyph_block(text, ligature.glyph, write_glyph(glyph))
+            generated_count += 1
+            print(f"  generated {ligature.source} -> {ligature.glyph}", flush=True)
+    else:
+        print("  skipped generated glyph blocks (--features-only)", flush=True)
 
     text = upsert_class(text, "Lowercase", class_code_for_lowercase(font))
     text = upsert_class(text, "Tall", class_code_for_tall(font))
+    text = upsert_class(text, "Digit", class_code_for_names(font, DIGIT_CLASS_GLYPHS))
+    text = upsert_class(text, "HexDigit", class_code_for_names(font, HEX_DIGIT_CLASS_GLYPHS))
+    text = upsert_class(text, "HexZero", class_code_for_names(font, HEX_ZERO_CLASS_GLYPHS))
+    text = delete_class(text, "HashBadgePreceder")
     text = upsert_feature(text, "calt", calt_code(), "dlig")
     text = replace_feature(text, "dlig", feature_code("dlig"))
     text = replace_feature(text, "liga", feature_code("liga"))
+    text = replace_feature(text, "zero", zero_code())
+    text = delete_feature(text, "ss06")
     SOURCE.write_text(text, encoding="utf-8")
     print(f"Updated {SOURCE} with {generated_count} generated glyphs and {len(LIGATURES)} feature rules.")
 

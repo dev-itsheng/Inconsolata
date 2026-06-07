@@ -38,6 +38,8 @@ Inconsolata 源码里本来就有一小组编程连字，例如 `!==`、`=>`、`
 更详细的适配问题、解决方式和可迁移经验，见 [Ligconsolata Next 连字迁移复盘](documentation/ligature-porting-notes.md)。
 更完整的视觉清单和分类说明，见 [Ligconsolata Next 优化目录](documentation/ligconsolata-next-optimizations.md)。
 如果只想检查 `=>` 这类旧版已经支持的继承连字有没有跑偏，见 [继承连字对比图](documentation/img/ligconsolata-next-inherited-comparison.svg)。
+后续借鉴外部编码字体时，先看 [外部编码字体参考索引](documentation/external-font-reference-index.md)。
+要检查易混字符、操作符歧义、字号、字重和深浅背景，见 [Ligconsolata Next 视觉 QA](documentation/ligconsolata-next-qa.md)。
 
 如果想了解这轮改造背后的字体设计基础、历史脉络和 AI review 方法，可以继续看：
 
@@ -107,6 +109,13 @@ python scripts/generate-overview-svg.py --build
 python scripts/generate-inherited-comparison-svg.py --build
 ```
 
+重新生成视觉 QA SVG：
+
+```sh
+python scripts/generate-qa-svg.py \
+  --font "/tmp/ligconsolata-next-smoke/LigconsolataNext[wdth,wght].ttf"
+```
+
 重新生成脚本派生的连字 glyph，并同步改写 `dlig` / `liga` 规则：
 
 ```sh
@@ -125,23 +134,31 @@ python scripts/build-demo-assets.py
 
 后续可以参考 Fira Code 的连字类别和展示方式，但不要复制 Fira Code 的字形轮廓。Ligconsolata Next 应该继续从 Inconsolata 自己的笔画、比例和节奏里长出来。
 
+如果想按功能组查看当前已经实现了什么，可以看 [Ligconsolata Next feature gallery](documentation/ligconsolata-next-feature-gallery.md)。这个文档会为每类特性生成一张单独的 SVG，并在最后列出脚本当前维护的完整规则清单。
+
 当前支持范围：
 
 - 当前上游 `dlig` baseline 已有并继续保留：`!==`、`===`、`->`、`=>`、`>=`、`<-`、`<=`。
 - Next 补充并修正的两字符相等 / 不等形态：`!=`、`==`。
 - 新增常用操作符：`<=>`、`<->`、`-->`、`<--`、`==>`、`<==`、`...`、`<>`、`::`、`:=`、`&&`、`||`、`++`、`--`、`**`、后接空格的 `//` 注释前缀、`/*`、`*/`、`??`、`?.`。
 - 参考 Fira Code 补充的固定操作符：例如 `<|>`、`<$>`、`<+>`、`</>`、`|>`、`<|`、`::=`、`:::`、`..=`、`..<`、`?=`、`!!`、`!!.`、`+++`、`***`、`#{`、`#[`、`#_(` 等，以及一批相关的紧凑操作符组合；`//` / `///` 虽然有 glyph，但只在注释前缀上下文启用。
+- `www` 保持 raw 文本，不放进默认合并规则，这样 URL、域名和普通英文文本仍然容易扫读。
 - 参考 Fira Code `calt` 行为补充的低风险固定组合：`__` 到 `______`、`=/=`、`=!=`、`=:=`、`=~`、`!~`、`/=`、`/==`、`.=`、`.-`、`:-`、`[]`、`->>`、`<<-`、`=>>`、`=<<`、`>--`、`--<`、`|--`、`--|`、`>==`、`==<`、`|==`、`==|`、`==/`、`>>-`、`>-`、`-<`、`|->`、`<-|`、`|=>`、`<=|`、`||-`、`-||`、`|-`、`-|`。这些先按固定连字处理，不假装已经完整迁入 Fira Code 的所有上下文型 `calt` 机器。
-- 可变长度箭头：参考 Fira Code 的 `calt` 思路，用 start / middle / end 片段支持更长的 `-` / `=` 箭头，例如 `---->`、`<----`、`====>`、`<====`、`<--->`、`<===>`。
+- 可变长度箭头：参考 Fira Code 的 `calt` 思路，用 start / middle / end 片段支持更长的 `-` / `=` 箭头，例如 `---->`、`<----`、`====>`、`<====`、`<--->`、`<===>`，以及单 `>` / `<` 端点的 `>---`、`---<`、`>===`、`===<`。
 - 第一批 pipe/bar 端点长箭头：支持单 `|` 端点的长 `-` / `=` 箭头，例如 `|--->`、`<---|`、`|===>`、`<===|`；短组合 `|--`、`--|`、`|==`、`==|` 仍由固定 glyph 负责。
 - 第一批 slash / marker 上下文组合：支持长 `=` 串里的 `/` 端点、单 `/` 中间标记和 `:` / `!` 中间标记，例如 `/===>`、`<===/`、`===/===`、`==:=`、`==!=`；短组合 `/=`、`/==`、`==/`、`=:=`、`=!=` 仍由固定 glyph 负责。
 - 第一批标点居中：`:<`、`:>`、`<:`、`>:`、`<:>`、`>:<` 会在 `calt` 中切换到 `.center` 视觉变体。这只是标点对齐，不是新增 `.dlig` 连字。
 - 第一批大小写上下文标点：`var-name`、`a+b`、`*ptr` 会把 `-`、`+`、`*` 切换到更贴近小写字母高度的 `.lc` 视觉变体；`CONST:VALUE` 会把 `:` 切换到更贴近大写字母高度的 `.uc` 视觉变体。
+- 数字上下文里的小写 `x`：`0xFF`、`0xff`、`800x600` 会把 `x` 切换成从 Inconsolata 自身 `multiply` 派生的乘号形态；普通单词 `xray`、`axb`、无效十六进制样式 `0xG` 和大写 `X` 保持原样。
 - 可变长度下划线：`__` 到 `______` 继续使用固定 glyph，超过这个长度后用 `underscore_start.seq` / `underscore_middle.seq` / `underscore_end.seq` 片段延展。
-- Markdown 标题里的连续 `#` 保持原始字符，不做紧凑连字。`##`、`###`、`####` 这类标记的层级数量和普通等宽节奏比装饰性压缩更重要。
+- Markdown 标题里的连续 `#` 采用分层方案：行首且后接普通空格的 `## title` 到 `###### title` 保持原始总 advance width，把井号横杠连成一组，并在最后一个 `#` 的右上区域嵌入数字 `2` 到 `6`；单个 `#`、`##title`、`a ## b` 保持原始字符；`#######` 及更长 run 会连成无编号的井号横杠序列，让长分割线保持连续，但不假装成 Markdown 标题层级。
 - 注释分割线辅助：`====`、`=====`、`----`、`-----`。
 
 `//` / `///` 连字是有意加了上下文限制的：只有 `// comment`、`/// reference` 这种后面跟普通空格的注释前缀会触发；`https://example.com`、`file:///tmp/font` 这类 URL 会保留原始斜线，避免阅读链接时被误伤。
+
+`/\` / `\/` 也改成了上下文规则：只有 `a /\ b`、`x \/ y` 这种两侧都有空格的独立逻辑操作符会触发；`/\d/`、`\/tmp` 这类正则和路径保持原始斜线 / 反斜线。
+
+Fira Code 还有很多可选 character variants 和 stylistic sets。Ligconsolata Next 不把整套 variant 系统塞进默认连写里；当前编码体验仍然只依赖 `liga` 和 `calt`。细反斜杠通过 `calt` 把 `backslash` 换成 `backslash.thin`，这样普通编辑器的“启用连写”路径也能看到它，不需要额外开启 stylistic set。
 
 另有一个不属于 GSUB 连字的标点修正：`emdash` (U+2014) 和 `horizontalbar` (U+2015) 现在会保持两倍当前 Latin cell advance width，并且横线轮廓延伸到当前 advance 两端，所以 `——`、`———` 这类连续中文破折号会自然连成一整条。`endash` (U+2013) 和 `figuredash` (U+2012) 仍保持一格，避免影响普通西文标点和数字排版。
 
@@ -154,6 +171,12 @@ python scripts/build-demo-assets.py
 5. 构建临时字体，检查 GSUB、name table 和连字 advance width。
 6. 用真实构建产物重新生成 overview SVG 或其他 specimen。
 7. 视觉确认后，再把新连字写进 README。
+
+如果要重新生成分组图库：
+
+```sh
+python scripts/generate-feature-gallery.py
+```
 
 最重要的宽度规则是：连字 glyph 的 advance width 必须等于原始字符序列的总 advance width。比如当前 Regular 默认位置里，`=>` 和 `<=` 都应保持 1000，`!==` 应保持 1500。这样编辑器里光标移动、对齐和代码列宽才不会被破坏。
 

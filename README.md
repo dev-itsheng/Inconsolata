@@ -31,7 +31,7 @@ Ligconsolata Next does not try to become a copy of Fira Code. The point of this 
 
 - The source family is now named `Ligconsolata Next`.
 - The existing Inconsolata operator ligatures are exposed through `liga` as well as `dlig`.
-- The current default-on set includes the inherited operators, refined two-character equality forms, Fira Code-inspired fixed operator coverage, a first batch of Fira Code `calt`-inspired fixed forms, contextual long arrows, lowercase / uppercase operator matching, and separator-run helpers for `====` / `----` style comment dividers.
+- The current default-on set includes the inherited operators, refined two-character equality forms, Fira Code-inspired fixed operator coverage, a first batch of Fira Code `calt`-inspired fixed forms, contextual long arrows, countable Markdown heading badges, lowercase / uppercase operator matching, and separator-run helpers for `====` / `----` style comment dividers.
 - The CJK-friendly `emdash` (U+2014) and `horizontalbar` (U+2015) widths have been adjusted to two Latin cells, and their outlines now reach the advance edges so repeated Chinese dashes such as `——` render as one continuous rule.
 - The build notes now point at the files that exist in this repo: `sources/Inconsolata.glyphs` and `sources/config.yaml`.
 
@@ -45,18 +45,23 @@ The current supported set is:
 - Added and refined two-character equality forms: `!=`, `==`.
 - Added common operators: `<=>`, `<->`, `-->`, `<--`, `==>`, `<==`, `...`, `<>`, `::`, `:=`, `&&`, `||`, `++`, `--`, `**`, a space-guarded `//` comment prefix, `/*`, `*/`, `??`, `?.`.
 - Added Fira Code-inspired fixed coverage such as `<|>`, `<$>`, `<+>`, `</>`, `|>`, `<|`, `::=`, `:::`, `..=`, `..<`, `?=`, `!!`, `!!.`, `+++`, `***`, `#{`, `#[`, `#_(`, and related compact operator forms.
+- Kept `www` as raw text rather than merging it by default, so URLs, domains, and ordinary prose remain easy to scan.
 - Added a cautious Fira Code `calt`-inspired fixed batch for forms that can be represented safely without importing Fira Code's full contextual machinery: `__` through `______`, `=/=`, `=!=`, `=:=`, `=~`, `!~`, `/=`, `/==`, `.=`, `.-`, `:-`, `[]`, `->>`, `<<-`, `=>>`, `=<<`, `>--`, `--<`, `|--`, `--|`, `>==`, `==<`, `|==`, `==|`, `==/`, `>>-`, `>-`, `-<`, `|->`, `<-|`, `|=>`, `<=|`, `||-`, `-||`, `|-`, `-|`.
-- Added Fira Code-style contextual arrow extension for longer `-` and `=` arrows, using `calt` start/middle/end segment glyphs rather than enumerating every length.
+- Added Fira Code-style contextual arrow extension for longer `-` and `=` arrows, using `calt` start/middle/end segment glyphs rather than enumerating every length. This now includes single `>` / `<` endpoints such as `>---`, `---<`, `>===`, and `===<`.
 - Added the first contextual pipe/bar endpoint arrow batch for longer single-pipe endpoints such as `|--->`, `<---|`, `|===>`, and `<===|`, while keeping short forms like `|--` and `==|` as fixed glyphs.
 - Added a small contextual slash / marker batch for longer `=` runs, including `/===>`, `<===/`, `===/===`, `==:=`, and `==!=`, while keeping short forms such as `/=`, `/==`, `==/`, `=:=`, and `=!=` as fixed glyphs.
 - Added contextual punctuation alignment for `:<`, `:>`, `<:`, `>:`, `<:>`, and `>:<`. This uses `.center` visual alternates in `calt`; it is not a new `.dlig` ligature.
 - Added contextual lowercase / uppercase operator matching: `var-name`, `a+b`, and `*ptr` switch `-`, `+`, and `*` to lowercase-aligned alternates, while `CONST:VALUE` switches `:` to an uppercase-aligned alternate.
+- Added contextual numeric `x` matching: `0xFF`, `0xff`, and `800x600` switch the lowercase `x` to an Inconsolata-derived multiply glyph. Ordinary words such as `xray`, `axb`, invalid hex-like text such as `0xG`, and uppercase `X` stay raw.
 - Added contextual underscore-run extension for runs longer than `______`, while keeping the shorter `__` through `______` fixed glyphs stable.
+- Added countable Markdown heading badges for line-start heading markers followed by a normal space: `## title` through `###### title` keep their original total advance width, connect the hash rails into one run, and embed a `2` through `6` badge into the top-right area of the last `#`. Single `#`, inline text such as `##title` or `a ## b`, stays raw. Runs of `#######` or longer connect into an unnumbered hash rail sequence, so long separators stay continuous without pretending to be Markdown heading levels.
 - Separator-run helpers: `====`, `=====`, `----`, `-----`.
 
 The `//` and `///` ligatures are intentionally guarded: they only appear for comment prefixes followed by a normal space, such as `// comment` and `/// reference`. URLs such as `https://example.com` and `file:///tmp/font` keep their raw slash glyphs.
 
-Markdown heading markers stay raw: repeated `#` runs such as `##`, `###`, and `####` are not compacted into ligatures, because the exact count and spacing are more important than decorative compression.
+The `/\` and `\/` logical conjunction / disjunction forms are also guarded: they only appear when surrounded by spaces, such as `a /\ b` and `x \/ y`. Regexes and paths such as `/\d/` and `\/tmp` keep raw slash and backslash glyphs.
+
+Fira Code also has many optional character variants and stylistic sets. Ligconsolata Next does not migrate that whole variant system into default ligatures. The current coding-focused path stays on `liga` and `calt`; the thin backslash variant is exposed through `calt` as `backslash.thin`, so ordinary editor ligature toggles can reach it without a separate stylistic-set switch.
 
 There is also one non-ligature punctuation fix: `emdash` (U+2014) and `horizontalbar` (U+2015) now keep two times the current Latin-cell advance width across the width axis, with edge-to-edge outlines so `——` and longer dash runs connect naturally. `endash` (U+2013) and `figuredash` (U+2012) stay one cell wide to avoid changing ordinary Latin punctuation and figure alignment.
 
@@ -64,7 +69,10 @@ The ordered feature rules, contextual arrow rules, and generated glyph blocks ar
 
 For implementation notes and migration pitfalls, see [Ligconsolata Next ligature porting notes](documentation/ligature-porting-notes.md).
 For a fuller visual catalog of the current changes, see [Ligconsolata Next optimization catalog](documentation/ligconsolata-next-optimizations.md).
+For per-feature focused SVGs and a complete generated rule inventory, see [Ligconsolata Next feature gallery](documentation/ligconsolata-next-feature-gallery.md).
 For a focused check of inherited Inconsolata / Ligconsolata-era ligatures such as `=>`, see [the inherited ligature comparison](documentation/img/ligconsolata-next-inherited-comparison.svg).
+For the external coding-font references behind future decisions, see [External coding-font reference index](documentation/external-font-reference-index.md).
+For visual QA samples covering confusable glyphs, operator ambiguity, size, weight, and background checks, see [Ligconsolata Next visual QA](documentation/ligconsolata-next-qa.md).
 
 For developer-oriented background reading, start with the font basics series:
 
@@ -139,6 +147,19 @@ To regenerate the inherited-ligature comparison against the upstream Inconsolata
 
 ```sh
 python scripts/generate-inherited-comparison-svg.py --build
+```
+
+To regenerate the visual QA SVGs:
+
+```sh
+python scripts/generate-qa-svg.py \
+  --font "/tmp/ligconsolata-next-smoke/LigconsolataNext[wdth,wght].ttf"
+```
+
+To regenerate the per-feature gallery:
+
+```sh
+python scripts/generate-feature-gallery.py
 ```
 
 To regenerate the generated ligature glyphs and rewrite the ordered `dlig` / `liga` rules:

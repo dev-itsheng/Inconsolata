@@ -222,6 +222,10 @@ x ----> y
 x <---- y
 x ====> y
 x <==== y
+x >--- y
+x ---< y
+x >=== y
+x ===< y
 i++
 i--
 value |> fn
@@ -262,8 +266,24 @@ case var-name
 case a+b
 case *ptr
 case CONST:VALUE
-md ### title
-md ####### title
+hex 0xFF
+hex 0xff
+size 800x600
+raw xray axb 0xG
+logic a /\ b
+regex /\d/
+regex /\w+\s?/
+escape \n \t \d
+path C:\Users\name
+logic x \/ y
+path \/tmp
+## title
+###### title
+### title
+####### title
+######## title
+##title
+macro a ## b
 __init__
 ______
 _______
@@ -289,6 +309,12 @@ https://example.com
       const original = document.querySelector("#original");
       const next = document.querySelector("#next");
       const controls = ["liga", "calt", "dlig"].map((id) => document.querySelector(`#${id}`));
+      const params = new URLSearchParams(window.location.search);
+      const linkedSample = params.get("sample") || params.get("text");
+
+      if (linkedSample !== null) {
+        source.value = linkedSample;
+      }
 
       function featureSettings() {
         return controls.map((control) => `"${control.id}" ${control.checked ? 1 : 0}`).join(", ");

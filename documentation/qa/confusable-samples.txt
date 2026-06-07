@@ -1,0 +1,39 @@
+## Confusable glyphs / 易混字符
+0O O0 00 OO
+1lI Il1 l1I
+5S S5 2Z Z2
+. , : ;
+() [] {} <>
+
+## Operator ambiguity / 操作符歧义
+a == b
+a === b
+a != b
+a !== b
+value <= max
+value >= min
+left <=> right
+
+## Context guards / 上下文保护
+// comment
+/// reference
+https://example.com
+file:///tmp/font
+/\d/ + \/tmp
+a /\ b + x \/ y
+0xFF + 800x600
+0xG + xray
+
+## Countable runs / 可数字符
+# title
+## title
+### title
+#### title
+##### title
+###### title
+####### title
+######## title
+##title
+a ## b
+______
+_______
