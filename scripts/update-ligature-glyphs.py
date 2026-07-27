@@ -187,6 +187,7 @@ HASH_BADGE_LIGATURES = [
 ]
 
 CONTEXTUAL_CALT_ONLY_LIGATURE_SOURCES = {ligature.source for ligature in HASH_BADGE_LIGATURES}
+CONTEXTUAL_BLOCK_COMMENT_LIGATURE_SOURCES = {"/*", "*/"}
 CONTEXTUAL_SPACE_AROUND_LIGATURE_SOURCES = {"/\\", "\\/"}
 
 
@@ -1385,6 +1386,7 @@ def feature_code(namespace: str) -> str:
             ligature.source in CONTEXTUAL_SPACE_LIGATURE_SOURCES
             or ligature.source in CONTEXTUAL_SPACE_AROUND_LIGATURE_SOURCES
             or ligature.source in CONTEXTUAL_CALT_ONLY_LIGATURE_SOURCES
+            or ligature.source in CONTEXTUAL_BLOCK_COMMENT_LIGATURE_SOURCES
         ):
             continue
         glyph_names = " ".join(CHAR_GLYPHS[char] for char in ligature.source)
@@ -1514,6 +1516,18 @@ lookup ligconsolata_backslash_slash_logic {
 } ligconsolata_backslash_slash_logic;"""
 
 
+def block_comment_code() -> str:
+    return """lookup ligconsolata_block_comment_start {
+  sub slash_comment_spacer asterisk' space by slash_asterisk.dlig;
+  sub slash' asterisk space by slash_comment_spacer;
+} ligconsolata_block_comment_start;
+
+lookup ligconsolata_block_comment_end {
+  sub space slash_comment_spacer slash' by asterisk_slash.dlig;
+  sub space asterisk' slash by slash_comment_spacer;
+} ligconsolata_block_comment_end;"""
+
+
 def thin_backslash_code() -> str:
     return """lookup ligconsolata_backslash_thin {
   ignore sub backslash.thin backslash';
@@ -1638,6 +1652,8 @@ lookup ligconsolata_hex_multiply_x {{
 {match_case_code()}
 
 {logic_conjunction_code()}
+
+{block_comment_code()}
 
 {thin_backslash_code()}
 

@@ -111,6 +111,7 @@ x ** y
 // note
 https://example.com
 /* ok */
+glob **/*.{ts,tsx}
 a ?? b
 obj?.x
 ...args

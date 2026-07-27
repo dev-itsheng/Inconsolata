@@ -40,7 +40,7 @@ python -m pip install --no-build-isolation -r requirements.txt
 - 当前已启用的连字包括：
   - 当前上游 `dlig` baseline 已有并继续保留：`!==`、`===`、`->`、`=>`、`>=`、`<-`、`<=`。
   - Next 补充并修正的两字符相等 / 不等形态：`!=`、`==`。
-  - 新增常用操作符：`<=>`、`<->`、`-->`、`<--`、`==>`、`<==`、`...`、`<>`、`::`、`:=`、`&&`、`||`、`++`、`--`、`**`、后接空格的 `//` 注释前缀、`/*`、`*/`、`??`、`?.`。
+  - 新增常用操作符：`<=>`、`<->`、`-->`、`<--`、`==>`、`<==`、`...`、`<>`、`::`、`:=`、`&&`、`||`、`++`、`--`、`**`、带上下文保护的行注释前缀和块注释边界、`??`、`?.`。
   - 参考 Fira Code 补充的一批默认固定操作符覆盖面由 `scripts/update-ligature-glyphs.py` 里的 `FIRA_CODE_COMPAT_SOURCES` 维护，例如 `<|>`、`<$>`、`<+>`、`</>`、`|>`、`<|`、`::=`、`..=`、`..<`、`?=`、`!!`、`!!.`、`+++`、`***`、`#{`、`#[`、`#_(` 等；`www` 不进入默认连字，保持 URL / 域名 raw 可读；`//` / `///` 虽然有 glyph，但只在注释前缀上下文启用。
   - 第一批参考 Fira Code `calt` 行为但按固定连字落地的低风险组合由 `FIRA_CODE_CALT_FIXED_LIGATURES` 维护，例如 `__` 到 `______`、`=/=`、`=!=`、`=:=`、`=~`、`!~`、`/=`、`/==`、`.=`、`.-`、`:-`、`[]`、`->>`、`<<-`、`=>>`、`=<<`、`>--`、`--<`、`|--`、`--|`、`>==`、`==<`、`|==`、`==|`、`==/`、`>>-`、`>-`、`-<`、`|->`、`<-|`、`|=>`、`<=|`、`||-`、`-||`、`|-`、`-|`。
   - `calt` 可变长度箭头：`---->`、`<----`、`====>`、`<====`、`<--->`、`<===>` 这类长度不固定的 `-` / `=` 箭头，以及单 `>` / `<` 端点的 `>---`、`---<`、`>===`、`===<`。
@@ -49,6 +49,7 @@ python -m pip install --no-build-isolation -r requirements.txt
   - `calt` lowercase / uppercase operator matching 小批次：`var-name`、`a+b`、`*ptr` 会把 `-` / `+` / `*` 切到 `.lc` 视觉变体；`CONST:VALUE` 会把 `:` 切到 `.uc` 视觉变体。混合大小写上下文如 `A:b`、`a:B` 不替换，避免误导。
   - `calt` numeric `x` 小批次：`0xFF`、`0xff`、`0x10`、`800x600`、`1920x1080` 里的小写 `x` 会切换成 `x.multiply`。普通单词、字母两侧的 `x`、无效十六进制样式如 `0xG`、大写 `X` 不替换。
   - `calt` Markdown heading hash badge：行首 / shaping run 开头且后接普通空格的 `## title` 到 `###### title` 保持原始总 advance width，把井号横杠连成一组，并在最后一个 `#` 的右上区域嵌入数字 `2` 到 `6`；单个 `#`、`##title`、`a ## b` 保持 raw glyph；`#######` 及更长 run 使用 `numbersign_start.seq` / `numbersign_middle.seq` / `numbersign_end.seq` 连成无编号井号横杠序列。
+  - `calt` 块注释边界：`/*` 只有后接普通空格时触发，`*/` 只有前接普通空格时触发；`**/*.{ts,tsx}`、`!**/composables/**/*.ts` 等 glob / path 场景保持 raw slash / asterisk，但 `**` 仍可作为 globstar 连写。
   - `calt` 逻辑 `/\` / `\/` 小批次：只有两侧都有普通空格的 `a /\ b`、`x \/ y` 触发；`/\d/`、`\/tmp` 等 regex / 路径场景保持 raw glyph。
   - 注释分割线辅助：`====`、`=====`、`----`、`-----`。
 - 上游已有的一组连字原本存在于 Inconsolata 的 `dlig` 中；Ligconsolata Next 继续保留 `dlig`，并把当前支持的 substitution 同步暴露到 `liga`。当前可验证的上游 `dlig` baseline 不包含 `!=` / `==` 两字符形态；它们属于 Next 补充并修正过的 equality pair，不要在继承对比图里写成旧版已有。
@@ -65,6 +66,7 @@ python -m pip install --no-build-isolation -r requirements.txt
 - `calt` 长箭头当前采用 start lookup 加多轮 extend lookup。不要把所有逻辑塞进一个 lookup；否则 `<====` / `<----` 这类左向长箭头容易被后续固定 `===` / `--` 抢走。
 - `calt` 规则要优先保证长箭头能随字符数自然延展；如果某条规则会破坏普通 `->` / `<-` / `=>` / `<=` / `==` / `===` / `!==` / `i--` 等既有 `liga` / `dlig`，宁可缩小 `calt` 覆盖范围，并用 `ignore sub` 明确避开这些固定连字。
 - `//` / `///` 只在后面跟普通空格时启用注释前缀连字，例如 `// comment`、`/// reference`。不要把裸 `//` / `///` 写成无条件 `liga` / `dlig` 规则，否则 `https://example.com`、`file:///tmp/font`、路径和其他非注释文本会被误伤。Fira Code 的源码里有 `slash_slash.liga` / `slash_slash_slash.liga` 和 `.spacer` 上下文机制，但本项目为 URL 可读性保留这个有意差异。
+- `/*` / `*/` 是块注释边界，不是 glob-star 或路径辅助符号。不要把它们写成无条件 `liga` / `dlig`；默认只在 `calt` 中用 spacer 两步保护：`/*` 需要后接普通空格，`*/` 需要前接普通空格。像 `**/*.{ts,tsx}`、`!**/composables/**/*.ts`、`src/*.ts` 这类 glob / path 样例必须保持 raw `/*` / `*/`。
 - `www` 不默认合并。Fira Code 支持 `w_w_w.liga`，但本项目把 URL、域名和普通文本里的 `www` 保持 raw，以便扫读真实地址。后续不要把 `www` 加回 `FIRA_CODE_COMPAT_SOURCES`，除非先提供明确收益和 URL 可读性验证。
 - `[]` 使用 `bracket_pair` 生成真实路径，不走普通 `compact_components`。原因是 `bracketright` 本身由 `bracketleft` 镜像组件构成，继续嵌套组件会让小字号下的方框左右观感不均衡；生成时要保持两字符 advance width，并按真实外轮廓居中。
 - `x.multiply` 从 Inconsolata 自己的 `multiply` glyph 派生，不复制 Fira Code outline，并且必须显式清空 Unicode，避免继承 U+00D7。当前只迁移 Fira Code `features/calt/cross.fea` 里不依赖 `onum` 的小写 `x` 分支：`@HexZero x [@Digit @HexDigit]` 和 `@Digit x @Digit`。不要默认迁移 `x.multiply.tosf`、old-style figures、大写 `X` 或带空格的 `3 x 4`。
@@ -74,6 +76,7 @@ python -m pip install --no-build-isolation -r requirements.txt
 - `====` / `=====` 使用两条连续横线，`----` / `-----` 使用一条连续横线，用来改善注释分割线的视觉连续性。但字体不能修正源码里上下分割线字符数不一致的问题；生成注释分割线时仍应使用固定长度文本，避免手写差一个字符。
 - `--` 不要做成一条连续横线；它应该保留两个减号的分隔感，避免和长 dash 或注释分割线混淆。
 - `scripts/update-ligature-glyphs.py` 默认会全量重写大量 glyph block，新增覆盖面后耗时可能达到数分钟；只需要刷新 class / feature 时可以使用 `--features-only` 跳过 glyph block。
+- 兼容性 guard 要有可执行测试。新增或改动 `//` / `///`、`/*` / `*/`、`/\` / `\/`、numeric `x`、Markdown hash badge、长箭头与固定连字避让等特殊处理时，同步更新 `tests/test_ligature_context_guards.py`，用 `hb-shape` 验证真实 demo 字体输出，而不是只看 feature 源码。
 
 ## 目标编辑器与 OpenType feature 策略
 
@@ -189,7 +192,7 @@ hb-shape "documentation/demo/fonts/LigconsolataNext[wdth,wght].ttf" \
 - SVG 只是生成时刻的 specimen，不是实时预览。只要修改了 glyph 或 OpenType feature，就要重新 smoke build，再重新生成 SVG。
 - SVG 视觉上要保留足够左右留白；组标题与本组内容要比与上一组更近，遵守亲密性原则。不要让组间距和组内距看起来一样。
 - 如果某个新增连字在 overview 里看不出变化，不能只因为 GSUB 替换成功就算完成；要么改成可辨认的派生形态，要么先从公开展示中移除并标为待设计。
-- `documentation/demo/index.html` 是真实浏览器对比 demo。先运行 `python scripts/build-demo-assets.py`，生成 `documentation/demo/fonts/` 下的本地字体，再打开 HTML。这个 demo 的输入框应保持 raw ASCII，不要在输入框里开启 ligature；左右对比区域再通过 CSS feature 开关展示真实字体行为。
+- `documentation/demo/index.html` 是真实浏览器对比 demo。先运行 `python scripts/build-demo-assets.py`，生成 `documentation/demo/fonts/` 下的本地字体，再打开 HTML。脚本会读取上一份 `LigconsolataNext[wdth,wght].ttf` 的内部版本，并在新产物上自动 +1，方便 macOS / Font Book 把本地安装识别成新版本；不要为了这个安装递增去改 `sources/Inconsolata.glyphs` 的基础版本。这个 demo 的输入框应保持 raw ASCII，不要在输入框里开启 ligature；左右对比区域再通过 CSS feature 开关展示真实字体行为。
 - QA 图使用 `documentation/qa/confusable-samples.txt` 和 `documentation/qa/matrix-samples.txt` 作为配置，生成脚本是 `scripts/generate-qa-svg.py`，输出到 `documentation/img/ligconsolata-next-confusables-qa.svg` 和 `documentation/img/ligconsolata-next-size-weight-matrix.svg`。它们用于 review 易混字符、操作符歧义、上下文误伤、字号、字重和深浅背景；不是 README hero，也不替代 overview / catalog。
 
 ## 验证清单

@@ -43,7 +43,7 @@ The current supported set is:
 
 - Inherited from the current upstream `dlig` baseline: `!==`, `===`, `->`, `=>`, `>=`, `<-`, `<=`.
 - Added and refined two-character equality forms: `!=`, `==`.
-- Added common operators: `<=>`, `<->`, `-->`, `<--`, `==>`, `<==`, `...`, `<>`, `::`, `:=`, `&&`, `||`, `++`, `--`, `**`, a space-guarded `//` comment prefix, `/*`, `*/`, `??`, `?.`.
+- Added common operators: `<=>`, `<->`, `-->`, `<--`, `==>`, `<==`, `...`, `<>`, `::`, `:=`, `&&`, `||`, `++`, `--`, `**`, space-guarded line-comment prefixes, block-comment boundary forms, `??`, `?.`.
 - Added Fira Code-inspired fixed coverage such as `<|>`, `<$>`, `<+>`, `</>`, `|>`, `<|`, `::=`, `:::`, `..=`, `..<`, `?=`, `!!`, `!!.`, `+++`, `***`, `#{`, `#[`, `#_(`, and related compact operator forms.
 - Kept `www` as raw text rather than merging it by default, so URLs, domains, and ordinary prose remain easy to scan.
 - Added a cautious Fira Code `calt`-inspired fixed batch for forms that can be represented safely without importing Fira Code's full contextual machinery: `__` through `______`, `=/=`, `=!=`, `=:=`, `=~`, `!~`, `/=`, `/==`, `.=`, `.-`, `:-`, `[]`, `->>`, `<<-`, `=>>`, `=<<`, `>--`, `--<`, `|--`, `--|`, `>==`, `==<`, `|==`, `==|`, `==/`, `>>-`, `>-`, `-<`, `|->`, `<-|`, `|=>`, `<=|`, `||-`, `-||`, `|-`, `-|`.
@@ -58,6 +58,8 @@ The current supported set is:
 - Separator-run helpers: `====`, `=====`, `----`, `-----`.
 
 The `//` and `///` ligatures are intentionally guarded: they only appear for comment prefixes followed by a normal space, such as `// comment` and `/// reference`. URLs such as `https://example.com` and `file:///tmp/font` keep their raw slash glyphs.
+
+The `/*` and `*/` block-comment boundary forms are guarded too: `/*` needs a following normal space and `*/` needs a preceding normal space. Glob patterns such as `**/*.{ts,tsx}` and `!**/composables/**/*.ts` keep `/*` and `*/` raw while still allowing `**` to ligate.
 
 The `/\` and `\/` logical conjunction / disjunction forms are also guarded: they only appear when surrounded by spaces, such as `a /\ b` and `x \/ y`. Regexes and paths such as `/\d/` and `\/tmp` keep raw slash and backslash glyphs.
 
@@ -174,7 +176,7 @@ To build the editable browser comparison demo:
 python scripts/build-demo-assets.py
 ```
 
-Then open `documentation/demo/index.html`. The generated demo font files live under `documentation/demo/fonts/` and are intentionally ignored by git.
+Then open `documentation/demo/index.html`. The generated demo font files live under `documentation/demo/fonts/` and are intentionally ignored by git. The Ligconsolata Next demo font automatically bumps its install-facing internal version on each build, so local macOS installs can distinguish fresh builds without changing the source `versionMajor` / `versionMinor`.
 
 ## Adding More Ligatures
 

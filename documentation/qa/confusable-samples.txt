@@ -19,6 +19,8 @@ left <=> right
 /// reference
 https://example.com
 file:///tmp/font
+glob **/*.{ts,tsx}
+glob !**/composables/**/*.ts
 /\d/ + \/tmp
 a /\ b + x \/ y
 0xFF + 800x600

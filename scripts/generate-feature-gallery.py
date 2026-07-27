@@ -99,12 +99,14 @@ PANELS = [
             "a ?. b",
         ),
         notes=(
-            "`//` and `///` only ligate as comment prefixes followed by a normal space.",
-            "URLs and paths keep raw slash glyphs.",
+            "`//` / `///` only ligate as comment prefixes followed by a normal space.",
+            "`/*` requires a following space, and `*/` requires a preceding space.",
+            "URLs, paths, and glob patterns keep raw slash glyphs.",
         ),
         notes_cn=(
             "`//` 和 `///` 只有后面跟普通空格、像注释前缀时才连写。",
-            "URL 和路径里的斜线保持原始字形。",
+            "`/*` 需要后接空格，`*/` 需要前接空格。",
+            "URL、路径和 glob 模式里的斜线保持原始字形。",
         ),
     ),
     FeaturePanel(
@@ -422,8 +424,11 @@ PANELS = [
         samples=(
             "// comment",
             "/// reference",
+            "/* block */",
             "https://example.com",
             "file:///tmp/font",
+            "glob **/*.{ts,tsx}",
+            "glob !**/composables/**/*.ts",
             "a /\\ b",
             "regex /\\d/",
             "x \\/ y",
@@ -431,10 +436,12 @@ PANELS = [
         ),
         notes=(
             "`//` / `///` require a following normal space.",
+            "`/*` / `*/` are block-comment boundaries, not glob-star helpers.",
             "`/\\` / `\\/` require ordinary spaces on both sides.",
         ),
         notes_cn=(
             "`//` / `///` 必须后接普通空格才触发。",
+            "`/*` / `*/` 是块注释边界，不是 glob-star 辅助符号。",
             "`/\\` / `\\/` 必须左右都有普通空格才触发。",
         ),
     ),
@@ -693,9 +700,11 @@ def render_markdown(output: Path, image_paths: dict[str, Path], update_module, f
         if source not in update_module.CONTEXTUAL_CALT_ONLY_LIGATURE_SOURCES
         and source not in update_module.CONTEXTUAL_SPACE_LIGATURE_SOURCES
         and source not in update_module.CONTEXTUAL_SPACE_AROUND_LIGATURE_SOURCES
+        and source not in update_module.CONTEXTUAL_BLOCK_COMMENT_LIGATURE_SOURCES
     ]
     contextual_badges = [ligature.source for ligature in update_module.HASH_BADGE_LIGATURES]
     comment_prefix_sources = sorted(update_module.CONTEXTUAL_SPACE_LIGATURE_SOURCES)
+    block_comment_sources = sorted(update_module.CONTEXTUAL_BLOCK_COMMENT_LIGATURE_SOURCES)
     logic_guard_sources = sorted(update_module.CONTEXTUAL_SPACE_AROUND_LIGATURE_SOURCES)
     sequence_glyphs = list(update_module.SEQ_GLYPHS)
     center_glyphs = list(update_module.CENTER_GLYPHS.keys())
@@ -766,6 +775,10 @@ def render_markdown(output: Path, image_paths: dict[str, Path], update_module, f
             "Comment-prefix guarded sources:",
             "",
             code_block_lines(comment_prefix_sources),
+            "",
+            "Block-comment guarded sources:",
+            "",
+            code_block_lines(block_comment_sources),
             "",
             "Space-around logic guard sources:",
             "",

@@ -37,6 +37,8 @@ a ** b
 https://example.com
 /* block
 block */
+glob **/*.{ts,tsx}
+glob !**/composables/**/*.ts
 a ?? b
 a ?. b
 

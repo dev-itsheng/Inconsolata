@@ -326,13 +326,16 @@ Tags: `liga`, `calt`
 
 ![Slash And Logic Guards](img/features/11-guards-slashes-logic.svg)
 
-Samples / 样例: [Open in playground / 在 Playground 打开](demo/index.html?sample=%2F%2F%20comment%0A%2F%2F%2F%20reference%0Ahttps%3A%2F%2Fexample.com%0Afile%3A%2F%2F%2Ftmp%2Ffont%0Aa%20%2F%5C%20b%0Aregex%20%2F%5Cd%2F%0Ax%20%5C%2F%20y%0Apath%20%5C%2Ftmp)
+Samples / 样例: [Open in playground / 在 Playground 打开](demo/index.html?sample=%2F%2F%20comment%0A%2F%2F%2F%20reference%0A%2F%2A%20block%20%2A%2F%0Ahttps%3A%2F%2Fexample.com%0Afile%3A%2F%2F%2Ftmp%2Ffont%0Aglob%20%2A%2A%2F%2A.%7Bts%2Ctsx%7D%0Aglob%20%21%2A%2A%2Fcomposables%2F%2A%2A%2F%2A.ts%0Aa%20%2F%5C%20b%0Aregex%20%2F%5Cd%2F%0Ax%20%5C%2F%20y%0Apath%20%5C%2Ftmp)
 
 ```text
 // comment
 /// reference
+/* block */
 https://example.com
 file:///tmp/font
+glob **/*.{ts,tsx}
+glob !**/composables/**/*.ts
 a /\ b
 regex /\d/
 x \/ y
@@ -400,15 +403,15 @@ logic a /\ b
 `==/` `>>-` `>-` `-<` `||-` `-||` `|->` `<-|`
 `|=>` `<=|` `-|` `|-` `...` `!=` `==` `->`
 `=>` `>=` `<-` `<=` `<>` `::` `:=` `&&`
-`||` `++` `--` `**` `/*` `*/` `??` `?.`
-`|||>` `<|||` `<!--` `~~>` `***` `|||` `||>` `:::`
-`::=` `!!.` `>>>` `<~~` `<~>` `<*>` `<||` `<|>`
-`<$>` `<<<` `<+>` `</>` `#_(` `..=` `..<` `+++`
-`^=` `~~` `~@` `~>` `~-` `*>` `|}` `|]`
-`|>` `{|` `[|` `]#` `$>` `!!` `>>` `-~`
-`<~` `<*` `<|` `<$` `<<` `<+` `</` `#{`
-`#[` `#:` `#=` `#!` `#(` `#?` `#_` `%%`
-`..` `.?` `+>` `?=` `;;` `\\` `/>`
+`||` `++` `--` `**` `??` `?.` `|||>` `<|||`
+`<!--` `~~>` `***` `|||` `||>` `:::` `::=` `!!.`
+`>>>` `<~~` `<~>` `<*>` `<||` `<|>` `<$>` `<<<`
+`<+>` `</>` `#_(` `..=` `..<` `+++` `^=` `~~`
+`~@` `~>` `~-` `*>` `|}` `|]` `|>` `{|`
+`[|` `]#` `$>` `!!` `>>` `-~` `<~` `<*`
+`<|` `<$` `<<` `<+` `</` `#{` `#[` `#:`
+`#=` `#!` `#(` `#?` `#_` `%%` `..` `.?`
+`+>` `?=` `;;` `\\` `/>`
 
 Contextual Markdown badge sources:
 
@@ -417,6 +420,10 @@ Contextual Markdown badge sources:
 Comment-prefix guarded sources:
 
 `//` `///`
+
+Block-comment guarded sources:
+
+`*/` `/*`
 
 Space-around logic guard sources:
 
